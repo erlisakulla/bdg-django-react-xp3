@@ -94,7 +94,7 @@ export default class SignIn extends Component {
                             </select> 
                             
                             <div className="buttonContainer">
-                                <button id='userSubmit' onClick={this.sendForm}>Sign in</button>
+                                <button id='userSubmit' onClick={this.sendForm}>Log in</button>
                             </div>
                             <small className="form-text">
                              Not <Link to="signup">Signed Up</Link> yet?
