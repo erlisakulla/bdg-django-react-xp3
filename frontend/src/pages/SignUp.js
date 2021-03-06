@@ -58,29 +58,31 @@ class SignUp extends Component {
         <div>
         <section className="content-wrapper">
             <div className="login">
-                <h1>Welcome to the Beer Game!</h1>
-                
-                <form id="userCredentials" className= "loginbox">
-                    <h2>SIGN UP</h2>
-                    <label for="username">Username</label>
-                    <input type="text" id="identifier" name="identifier" value={this.state.identifier} onChange={this.onChangeUsername}/>
-                    <label for="username">E-Mail</label>
-                    <input type="text" id="identifier" name="identifier" value={this.state.identifier} onChange={this.onChangePassword}/>
-                    <label for="password" >Password</label>
-                    <input type="password" id="password" name="password" value={this.state.password} onChange={this.onChangePassword}/>
-                    <label for="playerOrInstructor" >Are you an instructor or student? </label>
-                    <select name="playerOrInstructor" id="playerOrInstructor" onChange={this.onChangePlayerOrInstructor}> 
-                        <option value="instructor">Instructor</option> 
-                        <option value="student" selected>Student</option> 
-                    </select> 
+                <div className = "box">
+                    <h1>Welcome to the Beer Game!</h1>
                     
-                    <div className="buttonContainer">
-                        <button id='userSubmit' onClick={this.sendForm}>Sign Up</button>
-                    </div>
-                    <small className="form-text">
-                        Already Sign Up? Go to <Link to="signin">Log In</Link>.
-                    </small>
-                </form>
+                    <form id="userCredentials" className= "loginbox">
+                        <h2>SIGN UP</h2>
+                        <label for="username">Username</label>
+                        <input type="text" id="identifier" name="identifier" value={this.state.identifier} onChange={this.onChangeUsername}/>
+                        <label for="username">E-Mail</label>
+                        <input type="text" id="identifier" name="identifier" value={this.state.identifier} onChange={this.onChangePassword}/>
+                        <label for="password" >Password</label>
+                        <input type="password" id="password" name="password" value={this.state.password} onChange={this.onChangePassword}/>
+                        <label for="playerOrInstructor" >Are you an instructor or student? </label>
+                        <select name="playerOrInstructor" id="playerOrInstructor" onChange={this.onChangePlayerOrInstructor}> 
+                            <option value="instructor">Instructor</option> 
+                            <option value="student" selected>Student</option> 
+                        </select> 
+                        
+                        <div className="buttonContainer">
+                            <button id='userSubmit' onClick={this.sendForm}>Sign Up</button>
+                        </div>
+                        <small className="form-text">
+                            Already Sign Up? Go to <Link to="signin">Log In</Link>.
+                        </small>
+                    </form>
+                </div>
             </div>
         </section>
         
