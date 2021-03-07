@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   user.init({
-    name: DataTypes.STRING,
+    username: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     isInstructor: DataTypes.BOOLEAN
@@ -22,5 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'user',
   });
+
+  user.associate = models => {
+    user.belongsToMany(models.role, { through: "roleUsers"});
+  };
+
   return user;
 };

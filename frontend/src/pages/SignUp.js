@@ -11,7 +11,7 @@ class SignUp extends Component {
       username: '',
       email: '',
       password: '',
-      error: '',
+      isInstructor: false,
     };
   }
   onChangeUsername = (e) => {
@@ -24,25 +24,36 @@ class SignUp extends Component {
     this.setState({ password: e.target.value });
   };
 
+  onChangePlayerOrInstructor = (e) => {
+    if(e.target.value === "instructor"){
+      this.setState({isInstructor: true});
+    }
+    else{
+      this.setState({isInstructor: false});
+    }
+  };
+
   sendForm = (e) => {
     e.preventDefault();
     axios
-      .post('/api/user/register', {
+      .post('http://localhost:3001/signup', {
         username: this.state.username,
         email: this.state.email,
         password: this.state.password,
+        isInstructor: this.state.isInstructor
+      }, {
+        crossDomain: true
       })
-      .then((res) =>
-        this.props.history.push('/message/registration', {
-          heading: 'Registeration was succesfull',
-          title: 'Please verify your E-Mail and then log in',
-          message: 'Please check your spam!',
-          link: '/signin',
-          button: 'SignIn',
-        })
-      )
+      .then((res) => {
+        if(res.status===201){
+          alert("Successfully registered. Now sign in!");
+          window.location = '/login';
+        }else{
+          console.log(res.data)
+          alert("hey");
+        }
+      })
       .catch((err) => this.errorHandler(err.response.data, err));
-      window.location = '/signin'
   };
 
   errorHandler = (error, full) => {
@@ -50,7 +61,7 @@ class SignUp extends Component {
     this.setState({ error: error.msg });
     setTimeout(() => {
       this.setState({ error: '' });
-    }, 3000);
+    }, 0);
   };
 
   render() {
@@ -66,20 +77,20 @@ class SignUp extends Component {
                         <label for="username">Username</label>
                         <input type="text" id="identifier" name="identifier" value={this.state.identifier} onChange={this.onChangeUsername}/>
                         <label for="username">E-Mail</label>
-                        <input type="text" id="identifier" name="identifier" value={this.state.identifier} onChange={this.onChangePassword}/>
+                        <input type="text" id="identifier" name="identifier" value={this.state.identifier} onChange={this.onChangeEmail}/>
                         <label for="password" >Password</label>
                         <input type="password" id="password" name="password" value={this.state.password} onChange={this.onChangePassword}/>
                         <label for="playerOrInstructor" >Are you an instructor or student? </label>
-                        <select name="playerOrInstructor" id="playerOrInstructor" onChange={this.onChangePlayerOrInstructor}> 
+                        <select name="playerOrInstructor" defaultValue="student" id="playerOrInstructor" onChange={this.onChangePlayerOrInstructor}> 
                             <option value="instructor">Instructor</option> 
-                            <option value="student" selected>Student</option> 
+                            <option value="student" >Student</option> 
                         </select> 
                         
                         <div className="buttonContainer">
                             <button id='userSubmit' onClick={this.sendForm}>Sign Up</button>
                         </div>
                         <small className="form-text">
-                            Already Sign Up? Go to <Link to="signin">Log In</Link>.
+                            Already Sign Up? Go to <Link to="login">Log In</Link>.
                         </small>
                     </form>
                 </div>

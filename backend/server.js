@@ -1,14 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const user_router = require('./routes/UserAPI');
+
 
 const app = express();
 
-var corsOptions = {
-  origin: "http://localhost:8081"
-};
 
-app.use(cors(corsOptions));
+app.use(cors());
+app.use(express.json());
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -22,11 +22,14 @@ app.get("/", (req, res) => {
 });
 
 
-const db = require("./app/models");
+
+app.use('', user_router);
+
+const db = require("./models");
 db.sequelize.sync();
 
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
+const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });

@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
   role.associate = models => {
     role.belongsToMany(models.game, { through: "roleGames"});
     role.belongsToMany(models.week, { through: "roleWeeks"});
+    role.belongsToMany(models.user, {through: "roleUsers"});
   };
 
   return role;

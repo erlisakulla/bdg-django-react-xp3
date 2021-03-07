@@ -14,7 +14,7 @@ export default class SignIn extends Component {
             identifier: '',
             password: '',
             error: '', 
-            playerOrInstructor: 'student'
+            isInstructor: false
         };
     }
 
@@ -24,15 +24,6 @@ export default class SignIn extends Component {
     onChangePassword = (e) => {
         this.setState({ password: e.target.value });
     };
-
-    onChangePlayerOrInstructor = (e) => {
-        this.setState({playerOrInstructor: e.target.value})
-    };
-    // checkKey = (e) => {
-    //     if (e.target.value === 'Enter') {
-    //         this.sendForm();
-    //     }
-    // };
 
     sendForm = (e) => {
         e.preventDefault();
@@ -49,7 +40,6 @@ export default class SignIn extends Component {
             })
             .then((res) => console.log(res))
             .catch((err) => console.log(err));
-    
         } else {
             if(this.state.playerOrInstructor==="student"){
                 route = '/api/player/login';
@@ -63,6 +53,7 @@ export default class SignIn extends Component {
             .then((res) => this.props.loadAuthApp(res))
             .catch((err) => console.log(this.errorHandler(err.response.data, err)));
         }
+        window.location = 'http://localhost:3000/instructor'
     };
 
     errorHandler = (error, full) => {
@@ -87,11 +78,11 @@ export default class SignIn extends Component {
                                 <input type="text" id="identifier" name="identifier" value={this.state.identifier} onChange={this.onChangeIdentifier}/>
                                 <label for="password" >Password</label>
                                 <input type="password" id="password" name="password" value={this.state.password} onChange={this.onChangePassword}/>
-                                <label for="playerOrInstructor" >Are you an instructor or student? </label>
+                                {/* <label for="playerOrInstructor" >Are you an instructor or student? </label>
                                 <select name="playerOrInstructor" id="playerOrInstructor" onChange={this.onChangePlayerOrInstructor}> 
                                     <option value="instructor">Instructor</option> 
                                     <option value="student" selected>Student</option> 
-                                </select> 
+                                </select>  */}
                                 
                                 <div className="buttonContainer">
                                     <button id='userSubmit' onClick={this.sendForm}>Log in</button>
