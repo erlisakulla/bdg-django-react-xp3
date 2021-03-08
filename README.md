@@ -20,12 +20,13 @@ In the backend, **Node Js** is used, together with its web framework **Express J
 * **Axios** is used to make HTTP request to the server.
 ## Setup
 * **Server side**\
-MySql must be locally installed. You have to manually create a database named "game". Then in order to create the entities with the corresponding data:
+MySql must be locally installed. You have to manually create a database named "game". Put the credentials in the config.json found in backend/config directory. Then in order to create the entities with the corresponding data:
 ```
 $ cd backend
 $ npm install
 $ npx sequelize-cli db:migrate
 ```
+Create a .env file as shown in the .env.example (inside the backend folder) where you will store the token used for authentication.
 After the database is created, just start the server:
 ```
 $ npm start
