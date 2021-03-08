@@ -31,7 +31,7 @@ After the database is created, just start the server:
 ```
 $ npm start
 ```
-* **Client Side** \
+* **Client Side**
 ```
 $ cd ../frontend
 $ npm install
