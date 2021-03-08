@@ -20,7 +20,7 @@ In the backend, **Node Js** is used, together with its web framework **Express J
 * **Axios** is used to make HTTP request to the server.
 ## Setup
 To run this project, install it locally using npm:
-* Server side
+* **Server side**\
 MySql must be locally installed. You have to manually create a database named "game". Then in order to create the entities with the corresponding data:
 ```
 $ cd backend
@@ -31,7 +31,7 @@ After the database is created, just start the server:
 ```
 $ npm start
 ```
-* Client Side
+* **Client Side** \
 ```
 $ cd ../frontend
 $ npm install
