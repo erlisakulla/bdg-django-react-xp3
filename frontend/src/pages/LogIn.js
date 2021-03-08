@@ -13,9 +13,8 @@ export default class SignIn extends Component {
         this.state = {
             identifier: '',
             password: '',
-            error: '', 
-            isInstructor: false
         };
+        this.sendForm=this.sendForm.bind(this);
     }
 
     onChangeIdentifier = (e) => {
@@ -27,41 +26,38 @@ export default class SignIn extends Component {
 
     sendForm = (e) => {
         e.preventDefault();
-        let route = '';
         if (this.state.identifier.includes('@')) {
-            if(this.state.playerOrInstructor==="student"){
-                route = '/api/player/login';
-            }else{
-                route = '/api/instrutor/login';
-            }
-            axios.post(route, {
+            console.log("Email");
+            axios.post('http://localhost:3001/login', {
                 email: this.state.identifier,
                 password: this.state.password,
             })
-            .then((res) => console.log(res))
+            .then((res) => {
+                alert(res.data.msg);
+                if(res.data.user.isInstructor){
+                    window.location='/instructor';
+                }else{
+                    window.location='/student';
+                }
+            })
             .catch((err) => console.log(err));
         } else {
-            if(this.state.playerOrInstructor==="student"){
-                route = '/api/player/login';
-            }else{
-                route = '/api/instrutor/login';
-            }
-            axios.post(route, {
+            console.log("Username");
+            axios.post('http://localhost:3001/login', {
                 username: this.state.identifier,
                 password: this.state.password,
             })
-            .then((res) => this.props.loadAuthApp(res))
-            .catch((err) => console.log(this.errorHandler(err.response.data, err)));
+            .then((res) => {
+                alert(res.data.msg);
+                if(res.data.user.isInstructor){
+                    window.location='/instructor';
+                }else{
+                    window.location='/student';
+                }
+            })
+            .catch((err) => console.log(err));
         }
-        window.location = 'http://localhost:3000/instructor'
-    };
-
-    errorHandler = (error, full) => {
-        console.log(error);
-        this.setState({ error: error.msg });
-        setTimeout(() => {
-        this.setState({ error: '' });
-        }, 3000);
+        //window.location = 'http://localhost:3000/instructor'
     };
 
 
@@ -78,12 +74,6 @@ export default class SignIn extends Component {
                                 <input type="text" id="identifier" name="identifier" value={this.state.identifier} onChange={this.onChangeIdentifier}/>
                                 <label for="password" >Password</label>
                                 <input type="password" id="password" name="password" value={this.state.password} onChange={this.onChangePassword}/>
-                                {/* <label for="playerOrInstructor" >Are you an instructor or student? </label>
-                                <select name="playerOrInstructor" id="playerOrInstructor" onChange={this.onChangePlayerOrInstructor}> 
-                                    <option value="instructor">Instructor</option> 
-                                    <option value="student" selected>Student</option> 
-                                </select>  */}
-                                
                                 <div className="buttonContainer">
                                     <button id='userSubmit' onClick={this.sendForm}>Log in</button>
                                 </div>

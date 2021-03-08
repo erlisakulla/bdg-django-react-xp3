@@ -1,8 +1,9 @@
 const db = require("../models");
-const User = db.users;
+const User = db.user;
 const Op = db.Sequelize.Op;
-const { registerInputValidation,  loginInputValidation, findUser, issueToken } = require('../helpers/UserControllerHelper');
-const bcrypt = require('bcrypt');
+const { registerInputValidation, userExistCheck, loginInputValidation, findUser, issueToken} = require('../helpers/UserControllerHelper');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 // Write controller
 class UserController {
@@ -12,54 +13,62 @@ class UserController {
         const { error } = registerInputValidation(userToRegister);
         if (error) return { status: 406, success: false, msg: `ERROR: ${error.details[0].message}` };
 
-        // const userExist = await userExistCheck(username, email);
-        // if (userExist.success) return { status: 406, success: false, msg: `Heyy: ${userExist.msg}` };
-
-        const usernameExist = await User.findOne({where: { username: username }});
-        try{
-          if(usernameExist) return {msg:'yeah'};
-          else return {msg: 'No'};
-        }catch(e){
-          return {msg: 'Err'};
-        }
+        const userExist = await userExistCheck(username, email);
+        if (userExist.success) return { status: 406, success: false, msg: `ERROR: ${userExist.msg}` };
 
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(password, salt);
 
         const newUser = { username: username, email: email, password: hashPassword,isInstructor: isInstructor };
-        User.create(newUser)
-        .then(data => {
-          return {status: 201, success: true, msg: 'Successfully registered', data: data};
-        })
-        .catch(err => {
+        try{
+          const entity= await User.create(newUser);
+          return {status: 201, success: true, msg: 'Successfully registered! Redirecting to Login Page', entity: entity};
+        }catch(err){
           return {status: 500, success: false, msg: `ERROR: ${err}`};
-        });
+        }
   }
 
-  async login(userToLogin) {
-      // identifier can be username or email
+  // async login(userToLogin) {
+  //     // identifier can be username or email
       
-      const validatedInput = loginInputValidation(userToLogin);
-      const { error } = validatedInput.validatedInput;
-      if (error) return {status: 401, success: false, msg: error.details[0].message};
+  //     const {error} = loginInputValidation(userToLogin);
+  //     if (error) return {status: 401, success: false, msg: error.details[0].message};
 
-      const user = await findUser(userToLogin);
-      if (!user) return { status: 401, success: false, msg: 'We dont know this user! Do you want to register?' };
+  //     const user = await findUser(userToLogin);
+  //     //user does not exist in the db
+  //     if (!user) return { status: 401, success: false, msg: 'Wrong username/password' };
+  //     else{
+  //       bcrypt.compare(userToLogin.password,user.password, (err, res)=>{
+  //         console.log("hab");
+  //         console.log(res);
+  //         if(res){
+  //           console.log("bii");
+  //           const id = user.id;
+  //           const token = jwt.sign({id},process.env.TOKEN_SECRET, {
+  //             expiresIn: 300,
+  //           });
+  //           console.log(token);
+  //           return {status: 200, success:true, token: token, user: user, msg: "Successfully signed in!"};
+  //         }else{
+  //           return {status: 401, success:false, msg: `${error}`};
+  //         }
+  //       });
+  //     }
+  // }
+  async login(userToLogin) {
+    // identifier can be username or email
+    
+    const validatedInput = loginInputValidation(userToLogin);
+    const { error } = validatedInput.validatedInput;
+    if (error) return {status: 401, success: false, msg: error.details[0].message};
 
-      const token = await issueToken(user, userToLogin);
-      return { token: token, status: 200, success: true, msg: 'login' };
+    const user = await findUser(userToLogin);
+    if (!user) return { status: 401, success: false, msg: 'User not registered! Do you want to register?' };
+
+    const token = await issueToken(user, userToLogin);
+    return { token: token, status: 200, success: true, msg: 'Successfully logged in!', user: user };
   }
 
-
-  // async deleteUser(userToDelete) {
-  //     try {
-  //       const user = await User.findById(userToDelete._id);
-  //       await User.deleteOne(user);
-  //       return { status: 200, success: true, msg: `${user.username} was deleted` };
-  //     } catch (error) {
-  //       return { status: 400, success: false, msg: `User was not found`, error: error };
-  //     }
-  //   }
 }
 
 const userController = new UserController();

@@ -45,23 +45,16 @@ class SignUp extends Component {
         crossDomain: true
       })
       .then((res) => {
-        if(res.status===201){
-          alert("Successfully registered. Now sign in!");
-          window.location = '/login';
-        }else{
-          console.log(res.data)
-          alert("hey");
-        }
+          alert(res.data.msg);
+          if(res.data.status===201) window.location='/login';
+        // if(!res.data){
+        //   alert("Successfully registered. Now sign in!");
+        //   window.location = '/login';
+        // }else{
+        //   alert(res.data.msg);
+        // }
       })
-      .catch((err) => this.errorHandler(err.response.data, err));
-  };
-
-  errorHandler = (error, full) => {
-    console.log(full);
-    this.setState({ error: error.msg });
-    setTimeout(() => {
-      this.setState({ error: '' });
-    }, 0);
+      .catch((err) => {console.log(err)});
   };
 
   render() {
@@ -75,9 +68,9 @@ class SignUp extends Component {
                     <form id="userCredentials" className= "loginbox">
                         <h2>SIGN UP</h2>
                         <label for="username">Username</label>
-                        <input type="text" id="identifier" name="identifier" value={this.state.identifier} onChange={this.onChangeUsername}/>
+                        <input type="text" id="username" name="identifier" value={this.state.identifier} onChange={this.onChangeUsername}/>
                         <label for="username">E-Mail</label>
-                        <input type="text" id="identifier" name="identifier" value={this.state.identifier} onChange={this.onChangeEmail}/>
+                        <input type="text" id="email" name="identifier" value={this.state.identifier} onChange={this.onChangeEmail}/>
                         <label for="password" >Password</label>
                         <input type="password" id="password" name="password" value={this.state.password} onChange={this.onChangePassword}/>
                         <label for="playerOrInstructor" >Are you an instructor or student? </label>
