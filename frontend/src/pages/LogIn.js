@@ -57,7 +57,6 @@ export default class SignIn extends Component {
             })
             .catch((err) => console.log(err));
         }
-        //window.location = 'http://localhost:3000/instructor'
     };
 
 

@@ -7,19 +7,24 @@ import InstructorMainPage from './pages/InstructorMain';
 import UserMainPage from './pages/UserMain';
 import history from './components/utilities/History';
 
+import Role from './pages/Role';
+
 
 
 class App extends Component{
   render(){
     return (
-      <Router history={history}>
+      <div>
+        <Router history={history}>
         <Switch>
-            <Route exact path="/login" component={LogIn} />
+            <Route exact path="/" component={LogIn} />
             <Route exact path="/signup" component={SignUp} />
             <Route path="/instructor" component={InstructorMainPage} />
-            <Route path="/student" component={UserMainPage} />
+            <Route exact path="/student"  component={UserMainPage} />
+            <Route exact path="/student/role" component={Role} />
         </Switch>
       </Router>
+      </div>
     );
   }
 }

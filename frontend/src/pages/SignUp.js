@@ -46,7 +46,7 @@ class SignUp extends Component {
       })
       .then((res) => {
           alert(res.data.msg);
-          if(res.data.status===201) window.location='/login';
+          if(res.data.status===201) window.location='/';
         // if(!res.data){
         //   alert("Successfully registered. Now sign in!");
         //   window.location = '/login';
@@ -83,7 +83,7 @@ class SignUp extends Component {
                             <button id='userSubmit' onClick={this.sendForm}>Sign Up</button>
                         </div>
                         <small className="form-text">
-                            Already Sign Up? Go to <Link to="login">Log In</Link>.
+                            Already Sign Up? Go to <Link to="/">Log In</Link>.
                         </small>
                     </form>
                 </div>

@@ -66,7 +66,11 @@ class UserController {
     if (!user) return { status: 401, success: false, msg: 'User not registered! Do you want to register?' };
 
     const token = await issueToken(user, userToLogin);
-    return { token: token, status: 200, success: true, msg: 'Successfully logged in!', user: user };
+    if(token.token){
+      return { token: token.token, status: 200, success: true, msg: 'Successfully logged in!', user: user };
+    }else{
+      return{status: 401, success: false, msg: token.message}
+    }
   }
 
 }

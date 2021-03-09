@@ -10,7 +10,7 @@ Our group has proposed some changes to the specification. It can be found in bon
 * [Contributions](#constribution)
 
 ## General info
-For this sprint we have contributed on both the frontend and backend part of the software, focusing more on the latter (each part can be found on the respective folder). Regarding the backend, we have constructed the database, created all the models as defined in bonus.txt file and implemented the controllers and the API only for the user model, properly implementing the authorization and authentication(token-based authentication) of the user in case of login/signup or when accessing the main page of the website. Regarding the frontend, the login and signup pages are created, together with the landing page of the website once the student/instructor is successfully logged in. Overall, the login and signup part of the project is completed: the frontend and the backend are connected with each other; the most important backend functionality is implemented, making the other phases easier.
+For this sprint we have contributed on both the frontend and backend part of the software(each part can be found on the respective folder). Regarding the backend, we have constructed the database, created all the models as defined in bonus.txt file and implemented the controllers and the API only for the user model, properly implementing the authorization and authentication(token-based authentication) of the user in case of login/signup or when accessing the main page of the website. Regarding the frontend, the login and signup pages are created, together with the landing page of the website once the student/instructor is successfully logged in, and the page showing game info. Overall, the login and signup part of the project is completed: the frontend and the backend are connected with each other; the most important backend functionality is implemented, making the other phases easier.
 	
 ## Technologies
 ### Backend
@@ -37,7 +37,6 @@ $ cd ../frontend
 $ npm install
 $ npm start
 ```
-* After both of them are running just navigate to http://localhost:3000/login
 ## Contributions
 Sprint Number 1: Date 09/03/2021
 
