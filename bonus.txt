@@ -55,7 +55,7 @@ Overall 4 UML classes:         Other two tables are just entities displaying the
 
 Our group suggests the above shown database entities (which differs from the UML class diagram fround in the SE requirement sheet of the
  winning group). The reason being:
-1. Professor Chankov in the last email said that students can take part in one than 1 game at the same time. Due to this reason, another
+1. Professor Chankov in the last email said that students can take part in more than 1 game at the same time. Due to this reason, another
 class should be created called Roles which will take the specific role a player has in a specific game. This is a many-to-many 
 relation so two other entities (database entities in this case, which can be omitted in the UML class diagram) storing the relation between
 role-user and role-game correspondingly should be created(these two entities can be merged with one another if needed).
