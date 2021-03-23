@@ -1,10 +1,12 @@
 # se-02-team-32
-SE Sprint 02, Team 32
+SE Sprint 02, Team 32 date: 23.03.2021
 
 # Overview of Changes from last Sprint:
+* Added comments to the code to make it easier for fellow students to understand
 * Added entire documentation for backend directory
 * Added a new technology: JSDoc and installation procedure
 * Fixed a bug in the .env.example document which prevented us from running the code properly
+* Edited the read me file to include the new changes
 
 # se-01-team-32
 SE Sprint 01, Team 32
@@ -35,13 +37,14 @@ $ npm install
 $ npx sequelize-cli db:migrate
 ```
 Create a .env file as shown in the .env.example (inside the backend folder) where you will store the token used for authentication.
-After the database is created, just start the server:
+(Make sure there is no spaces in the .env document)
+After the database is created, you can start the server:
 ```
 $ npm start
 ```
 * **Client Side**
 ```
-$ cd ../frontend
+$ cd frontend
 $ npm install
 $ npm start
 ```
