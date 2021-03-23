@@ -1,3 +1,9 @@
+# se-02-team-32
+SE Sprint 02, Team 32
+
+# Overview of Changes from last Sprint:
+* Added entire documentation for backend directory
+
 # se-01-team-32
 SE Sprint 01, Team 32
 # Note
