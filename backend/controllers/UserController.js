@@ -1,3 +1,6 @@
+/**
+ * Import the required modules for UserController.js
+ */
 const db = require("../models");
 const User = db.user;
 const Op = db.Sequelize.Op;
@@ -11,11 +14,23 @@ const {
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-// Write controller
+/**
+ * Class to create a user, with methods to autheticate login and registration.
+ * Relevant methods for register() and login(): registerInputValidation(), userExistCheck(), loginInputValidation(),
+ * findUser(), issueToken().
+ * @property {any} username
+ * @property {any} email
+ * @property {any} password
+ * @property {any} isInstructor
+ */
 class UserController {
+  /**
+   * @description Function to register a user
+   * @param {UserController} userToRegister This method is used for user registration
+   * @returns {number| boolean| string}
+   */
   async register(userToRegister) {
     const { username, email, password, isInstructor } = userToRegister;
-
     const { error } = registerInputValidation(userToRegister);
     if (error)
       return {
@@ -77,6 +92,11 @@ class UserController {
   //       });
   //     }
   // }
+  /**
+   * @description Function to login a user
+   * @param {UserController} userToLogin This method is used
+   * @returns {number| boolean| string}
+   */
   async login(userToLogin) {
     // identifier can be username or email
 
