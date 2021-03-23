@@ -1,13 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const user_router = require('./routes/UserAPI');
+const user_router = require("./routes/UserAPI");
 
 require("dotenv").config();
 
-
 const app = express();
-
 
 app.use(cors());
 app.use(express.json());
@@ -20,9 +18,7 @@ app.use(express.json());
 
 // simple route
 
-
-
-app.use('', user_router);
+app.use("", user_router);
 
 const db = require("./models");
 db.sequelize.sync();

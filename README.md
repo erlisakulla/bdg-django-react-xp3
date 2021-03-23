@@ -5,9 +5,9 @@ Our group has proposed some changes to the specification. It can be found in bon
 
 ## Table of contents
 * [General info](#general-info)
-* [Technologies](#technologies)
+* [Technologies](echnologies)
 * [Setup](#setup)
-* [Contributions](#constribution)
+* [Contributions](#contributions)
 
 ## General info
 For this sprint we have contributed on both the frontend and backend part of the software(each part can be found on the respective folder). Regarding the backend, we have constructed the database, created all the models as defined in bonus.txt file and implemented the controllers and the API only for the user model, properly implementing the authorization and authentication(token-based authentication) of the user in case of login/signup or when accessing the main page of the website. Regarding the frontend, the login and signup pages are created, together with the landing page of the website once the student/instructor is successfully logged in, and the page showing game info. Overall, the login and signup part of the project is completed: the frontend and the backend are connected with each other; the most important backend functionality is implemented, making the other phases easier.
