@@ -3,6 +3,8 @@ SE Sprint 02, Team 32
 
 # Overview of Changes from last Sprint:
 * Added entire documentation for backend directory
+* Added a new technology: JSDoc and installation procedure
+* Fixed a bug in the .env.example document which prevented us from running the code properly
 
 # se-01-team-32
 SE Sprint 01, Team 32
