@@ -11,8 +11,9 @@ SE Sprint 02, Team 32 date: 23.03.2021
 - Edited the read me file to include the new changes
 - Wrote a shallow ROM testing at the Frontend
 - Added createGame API for instructor
+- Added step by step instructions for set up
 
-## Step by step instruction for set up
+## Step by step instructions for set up
 
 ```
 1. git clone https://github.com/lorenzorota/se-02-team-32.git
@@ -25,6 +26,12 @@ SE Sprint 02, Team 32 date: 23.03.2021
 8. change "development password" in config.json
 9. add .env file:  TOKEN_SECRET=secret (secret can be anything)
 10. npm start (frontend website)
+11. install JSdoc : npm install -g jsdoc
+12. for more information on how to use JSDoc visit : https://github.com/jsdoc/jsdoc
+13. to render the documentation:
+    13.1. cd backend
+    13.2. npm run doc (run this after every change to update)
+    13.3. open index.html file inside docs directory in browser.
 ```
 
 # se-01-team-32
@@ -56,6 +63,10 @@ In the backend, **Node Js** is used, together with its web framework **Express J
 
 - **React JS** is used together with **CSS**
 - **Axios** is used to make HTTP request to the server.
+
+### Documentation
+
+- **JSDoc** is used
 
 ## Setup
 
