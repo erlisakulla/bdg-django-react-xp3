@@ -12,6 +12,21 @@ SE Sprint 02, Team 32 date: 23.03.2021
 - Wrote a shallow ROM testing at the Frontend
 - Added createGame API for instructor
 
+## Step by step instruction for set up
+
+```
+1. git clone https://github.com/lorenzorota/se-02-team-32.git
+2. cd backend
+3. npm install
+4. npx sequelize-cli db:migrate
+5. npm start (for backend server)
+6. cd ../frontend
+7. npm install
+8. change "development password" in config.json
+9. add .env file:  TOKEN_SECRET=secret (secret can be anything)
+10. npm start (frontend website)
+```
+
 # se-01-team-32
 
 SE Sprint 01, Team 32
