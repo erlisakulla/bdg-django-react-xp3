@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: models/user.js</title>
+    <title>JSDoc: Source: helpers/GameControllerHelper.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: models/user.js</h1>
+    <h1 class="page-title">Source: helpers/GameControllerHelper.js</h1>
 
     
 
@@ -26,37 +26,37 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class user extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  };
-  user.init({
-    username: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    isInstructor: DataTypes.BOOLEAN
-  }, {
-    sequelize,
-    modelName: 'user',
+            <pre class="prettyprint source linenums"><code>/**
+ * Import the required modules for UserControllerHelper.js
+ */
+const db = require("../models");
+const Game = db.game;
+const Op = db.Sequelize.Op;
+const Joi = require("joi");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { valid } = require("joi");
+
+/**
+ * @description Function to check format of entered registration information
+ * @param {GameController} game A GameController object
+ * @returns {Joi.ObjectSchema&lt;any>} Returns an
+ * error if entered registration information is incorrect
+ */
+const gameCreationValidation = (game) => {
+  const schema = Joi.object({
+
+    username: Joi.string().min(2).required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().min(6).required(),
+    isInstructor: Joi.bool(),
+
   });
+  return schema.validate(game);
+};
 
-  user.associate = models => {
-    user.belongsToMany(models.role, { through: "roleUsers"});
-  };
 
-  return user;
-};</code></pre>
+module.exports.gameCreationValidation= gameCreationValidation; </code></pre>
         </article>
     </section>
 

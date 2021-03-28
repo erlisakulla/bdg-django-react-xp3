@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const user_router = require("./routes/UserAPI");
+const game_router = require("./routes/GameAPI");
 
 require("dotenv").config();
 
@@ -18,10 +19,14 @@ app.use(express.json());
 
 // simple route
 
-app.use("", user_router);
-
 const db = require("./models");
 db.sequelize.sync();
+
+
+app.use("/user", user_router);
+
+app.use("/game", game_router);
+
 
 // set port, listen for requests
 const PORT = 3001;

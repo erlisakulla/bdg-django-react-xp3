@@ -1,23 +1,23 @@
 {
   "development": {
     "username": "root",
-    "password": "ducenhan",
-    "database": "game",
+    "password": "11111111",
+    "database": "one",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
+    "password": "11111111",
+    "database": "one",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "password": "11111111",
+    "database": "one",
+    "host": "localhost",
     "dialect": "mysql"
   }
 }

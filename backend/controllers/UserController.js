@@ -120,10 +120,10 @@ class UserController {
         status: 200,
         success: true,
         msg: "Successfully logged in!",
-        user: user,
+        user: user.username,
       };
     } else {
-      return { status: 401, success: false, msg: "token.message" };
+      return { status: 401, success: false, msg: token.message };
     }
   }
 }

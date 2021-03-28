@@ -32,9 +32,15 @@
 const db = require("../models");
 const User = db.user;
 const Op = db.Sequelize.Op;
-const { registerInputValidation, userExistCheck, loginInputValidation, findUser, issueToken} = require('../helpers/UserControllerHelper');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const {
+  registerInputValidation,
+  userExistCheck,
+  loginInputValidation,
+  findUser,
+  issueToken,
+} = require("../helpers/UserControllerHelper");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 /**
  * Class to create a user, with methods to autheticate login and registration.
@@ -52,26 +58,68 @@ class UserController {
    * @returns {number| boolean| string}
    */
   async register(userToRegister) {
+    const { username, email, password, isInstructor } = userToRegister;
+    const { error } = registerInputValidation(userToRegister);
+    if (error)
+      return {
+        status: 406,
+        success: false,
+        msg: `ERROR: ${error.details[0].message}`,
+      };
 
-        const { username, email, password, isInstructor } = userToRegister;
-        const { error } = registerInputValidation(userToRegister);
-        if (error) return { status: 406, success: false, msg: `ERROR: ${error.details[0].message}` };
+    const userExist = await userExistCheck(username, email);
+    if (userExist.success)
+      return { status: 406, success: false, msg: `ERROR: ${userExist.msg}` };
 
-        const userExist = await userExistCheck(username, email);
-        if (userExist.success) return { status: 406, success: false, msg: `ERROR: ${userExist.msg}` };
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(password, salt);
 
-        const salt = await bcrypt.genSalt(10);
-        const hashPassword = await bcrypt.hash(password, salt);
-
-        const newUser = { username: username, email: email, password: hashPassword,isInstructor: isInstructor };
-        try{
-          const entity= await User.create(newUser);
-          return {status: 201, success: true, msg: 'Successfully registered! Redirecting to Login Page', entity: entity};
-        }catch(err){
-          return {status: 500, success: false, msg: `ERROR: ${err}`};
-        }
+    const newUser = {
+      username: username,
+      email: email,
+      password: hashPassword,
+      isInstructor: isInstructor,
+    };
+    try {
+      const entity = await User.create(newUser);
+      return {
+        status: 201,
+        success: true,
+        msg: "Successfully registered! Redirecting to Login Page",
+        entity: entity,
+      };
+    } catch (err) {
+      return { status: 500, success: false, msg: `ERROR: ${err}` };
+    }
   }
 
+  // async login(userToLogin) {
+  //     // identifier can be username or email
+
+  //     const {error} = loginInputValidation(userToLogin);
+  //     if (error) return {status: 401, success: false, msg: error.details[0].message};
+
+  //     const user = await findUser(userToLogin);
+  //     //user does not exist in the db
+  //     if (!user) return { status: 401, success: false, msg: 'Wrong username/password' };
+  //     else{
+  //       bcrypt.compare(userToLogin.password,user.password, (err, res)=>{
+  //         console.log("hab");
+  //         console.log(res);
+  //         if(res){
+  //           console.log("bii");
+  //           const id = user.id;
+  //           const token = jwt.sign({id},process.env.TOKEN_SECRET, {
+  //             expiresIn: 300,
+  //           });
+  //           console.log(token);
+  //           return {status: 200, success:true, token: token, user: user, msg: "Successfully signed in!"};
+  //         }else{
+  //           return {status: 401, success:false, msg: `${error}`};
+  //         }
+  //       });
+  //     }
+  // }
   /**
    * @description Function to login a user
    * @param {UserController} userToLogin This method is used
@@ -79,27 +127,37 @@ class UserController {
    */
   async login(userToLogin) {
     // identifier can be username or email
-    
+
     const validatedInput = loginInputValidation(userToLogin);
     const { error } = validatedInput.validatedInput;
-    if (error) return {status: 401, success: false, msg: error.details[0].message};
+    if (error)
+      return { status: 401, success: false, msg: error.details[0].message };
 
     const user = await findUser(userToLogin);
-    if (!user) return { status: 401, success: false, msg: 'User not registered! Do you want to register?' };
+    if (!user)
+      return {
+        status: 401,
+        success: false,
+        msg: "User not registered! Do you want to register?",
+      };
 
     const token = await issueToken(user, userToLogin);
-    if(token.token){
-      return { token: token.token, status: 200, success: true, msg: 'Successfully logged in!', user: user };
-    }else{
-      return{status: 401, success: false, msg: token.message}
+    if (token.token) {
+      return {
+        token: token.token,
+        status: 200,
+        success: true,
+        msg: "Successfully logged in!",
+        user: user.username,
+      };
+    } else {
+      return { status: 401, success: false, msg: token.message };
     }
   }
-
 }
 
 const userController = new UserController();
 module.exports = userController;
-
 </code></pre>
         </article>
     </section>
@@ -110,13 +168,13 @@ module.exports = userController;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="UserController.html">UserController</a></li></ul><h3>Global</h3><ul><li><a href="global.html#auth">auth</a></li><li><a href="global.html#authAdmin">authAdmin</a></li><li><a href="global.html#db">db</a></li><li><a href="global.html#findUser">findUser</a></li><li><a href="global.html#issueToken">issueToken</a></li><li><a href="global.html#jwt">jwt</a></li><li><a href="global.html#loginInputValidation">loginInputValidation</a></li><li><a href="global.html#registerInputValidation">registerInputValidation</a></li><li><a href="global.html#userExistCheck">userExistCheck</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="UserController.html">UserController</a></li></ul><h3>Global</h3><ul><li><a href="global.html#auth">auth</a></li><li><a href="global.html#authAdmin">authAdmin</a></li><li><a href="global.html#db">db</a></li><li><a href="global.html#findUser">findUser</a></li><li><a href="global.html#gameCreationValidation">gameCreationValidation</a></li><li><a href="global.html#issueToken">issueToken</a></li><li><a href="global.html#jwt">jwt</a></li><li><a href="global.html#loginInputValidation">loginInputValidation</a></li><li><a href="global.html#registerInputValidation">registerInputValidation</a></li><li><a href="global.html#userExistCheck">userExistCheck</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Mar 23 2021 16:26:24 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Mar 28 2021 16:03:11 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

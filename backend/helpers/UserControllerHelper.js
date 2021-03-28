@@ -113,7 +113,7 @@ const issueToken = async (user, userToLogin) => {
   console.log(validPass);
   if (!validPass) return { success: false, message: "Invalid Password" };
 
-  const token = await jwt.sign({ id: user.id }, process.env.TOKEN_SECRET);
+   const token = await jwt.sign({ id: user.id }, "SECRET11");
   return { success: true, token: token };
 };
 

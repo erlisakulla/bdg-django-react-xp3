@@ -18,12 +18,13 @@ const auth = async (req, res, next) => {
     if (!token) return res.status(401).send('Access Denied');
 
     try {
-        const verified = await jwt.verify(token, process.env.TOKEN_SECRET);
-        const user = await User.findByPk(verified._id);
+        const verified = await jwt.verify(token, "SECRET11");
+
+        const user = await User.findByPk(verified.id);
         req.user = user;
         next();
     } catch (err) {
-        res.status(400).send('Something went wrong try later again');
+        res.status(401).send({error:"Token Validation Failed",status:401});
     }
 };
 
@@ -36,19 +37,19 @@ const auth = async (req, res, next) => {
  */
 const authAdmin = async (req, res, next) => {
     const token = req.header('auth-token');
-    if (!token) return res.status(401).send('Access Denied');
+    if (!token) return res.status(401).send({error:"Token Not Found",status:401});
 
     try {
-        const verified = await jwt.verify(token, process.env.TOKEN_SECRET);
-        const user = await User.findByPk(verified._id);
+        const verified = await jwt.verify(token, "SECRET11");
+        const user = await User.findByPk(verified.id);
         if (user.isInstructor) {
             req.user = user;
             next();
         } else {
-            return res.status(401).send('Access Denied');
+            return res.status(401).send({"error":"Not Instructor Access Denied",status:401});
         }
     } catch (err) {
-        res.status(400).send('Something went wrong try later again');
+        res.status(401).send({error:"Token Validation Failed",status:401,errormsg:err});
     }
 };
 
