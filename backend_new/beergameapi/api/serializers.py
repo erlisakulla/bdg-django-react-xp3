@@ -1,7 +1,7 @@
 
 from rest_framework import serializers
 
-from .models import User,Game
+from .models import User,Game,Role,Week
 
 class UserSerializer(serializers.ModelSerializer):
     """
@@ -24,10 +24,19 @@ class UserSerializer(serializers.ModelSerializer):
 
 class GameSerializer(serializers.ModelSerializer):
     """
-    User Serializer for Registeration.
+    User Serializer for Game View.
     """
     class Meta:
         model=Game
         fields="__all__"
 
 
+class RoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Role
+        fields="__all__"
+
+class WeekSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Week
+        fields="__all__"

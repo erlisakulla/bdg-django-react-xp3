@@ -70,10 +70,10 @@ class Game(models.Model):
 
 class Role(models.Model):
     roleName=models.CharField(max_length=30)
-    associatedGame= models.ForeignKey(Game,on_delete=models.CASCADE)
+    associatedGame= models.ForeignKey(Game,on_delete=models.CASCADE,related_name='gameroles')
     downstreamPlayer=models.ForeignKey("self", null=True,blank=True, on_delete=models.CASCADE,related_name='%(class)s_downstreamPlayer')
     upstreamPlayer=models.ForeignKey("self", null=True, blank=True,on_delete=models.CASCADE,related_name='%(class)s_upstreamPlayer')
-    playedBy=models.ForeignKey(User,null=True,  blank=True,limit_choices_to={'is_instructor':False},on_delete=models.CASCADE)
+    playedBy=models.ForeignKey(User,null=True,  blank=True,limit_choices_to={'is_instructor':False},on_delete=models.CASCADE,related_name="playerrole")
     class Meta: #Can play as only one Role 
         unique_together=('playedBy','associatedGame',)
     def __str__(self):
@@ -88,7 +88,7 @@ class Week(models.Model):
     outgoing_shipment=models.IntegerField(default=0)
     order_placed=models.IntegerField(blank=True,null=True)
     cost=models.IntegerField()
-    associatedRole= models.ForeignKey(Role, on_delete=models.CASCADE)
+    associatedRole= models.ForeignKey(Role, on_delete=models.CASCADE,related_name="roleweeks")
 
 
 
@@ -151,3 +151,4 @@ def onRoleCreation(sender, instance,created,**kwargs):
         week=Week.objects.create(number=1,associatedRole=instance,
         inventory=instance.associatedGame.starting_inventory,
         cost=instance.associatedGame.starting_inventory*instance.associatedGame.holding_cost)
+        week.save()
