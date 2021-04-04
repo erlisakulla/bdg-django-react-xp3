@@ -1,5 +1,6 @@
 
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 
 from .models import User,Game,Role,Week
 
@@ -35,6 +36,23 @@ class RoleSerializer(serializers.ModelSerializer):
     class Meta:
         model=Role
         fields="__all__"
+        read_only_fields=('id','downstreamPlayer','upstreamPlayer','associatedGame','roleName')
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Role.objects.all(),
+                fields=['associatedGame', 'playedBy']
+            )
+        ]
+    # def update(self, instance, validated_data):
+    #     instance.playedBy = validated_data.get('playedBy', instance.playedBy)
+    #     return instance
+
+
+class RoleWeekSerializer(serializers.ModelSerializer):
+    roleweeks= serializers.PrimaryKeyRelatedField(many=True,read_only=True)
+    class Meta:
+        model=Role
+        fields=['id','playedBy', 'roleweeks']
 
 class WeekSerializer(serializers.ModelSerializer):
     class Meta:
