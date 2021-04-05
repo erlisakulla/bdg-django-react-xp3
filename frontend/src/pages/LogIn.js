@@ -1,99 +1,102 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "../css/SignIn.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Form, Card, Nav } from 'react-bootstrap';
 
-export default class SignIn extends Component {
-  //the indentifier is either the email or the username
-  //playerOrInstructor just stores the information whether the logged-in person
-  //is a player or an instructor (default: player)
-  constructor(props) {
-    super(props);
-    this.state = {
-      identifier: "",
-      password: "",
-    };
-    this.sendForm = this.sendForm.bind(this);
+class LogIn extends Component {
+  state = {
+    credentials: {
+      email: '',
+      password: ''
+    }
   }
 
-  onChangeIdentifier = (e) => {
-    this.setState({ identifier: e.target.value });
-  };
-  onChangePassword = (e) => {
-    this.setState({ password: e.target.value });
-  };
-
-  sendForm = (e) => {
-    e.preventDefault();
-    if (this.state.identifier.includes("@")) {
-      console.log("Email");
-      axios
-        .post("http://localhost:3001/login", {
-          email: this.state.identifier,
-          password: this.state.password,
-        })
-        .then((res) => {
-          alert(res.data.msg);
-          if (res.data.user.isInstructor) {
-            window.location = "/instructor";
-          } else {
-            window.location = "/student";
-          }
-        })
-        .catch((err) => console.log(err));
-    } else {
-      console.log("Username");
-      axios
-        .post("http://localhost:3001/login", {
-          username: this.state.identifier,
-          password: this.state.password,
-        })
-        .then((res) => {
-          alert(res.data.msg);
-          if (res.data.user.isInstructor) {
-            window.location = "/instructor";
-          } else {
-            window.location = "/student";
-          }
-        })
-        .catch((err) => console.log(err));
+  componentDidMount() {
+    if (this.state.logged_in) {
+      axios.post('http://localhost:8000/api/user/', {
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('token')}`
+        }
+      })
+      .then(data => data.json())
     }
-  };
+  }
+
+  login = (e) => {
+    e.preventDefault();
+    axios.post('http://localhost:8000/api/token/', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(this.state.credentials)
+    })
+    .then(data => data.json())
+    .then(json => {
+      localStorage.setItem('token', json.token);
+      this.setState({logged_in: true});
+    })
+    .catch(error => console.error(error))
+  }
+
+  onChangeInput = event => {
+    const cred = this.state.credentials;
+    cred[event.target.name] = event.target.value;
+    this.setState({credentials: cred});
+    // console.log(cred);
+  }
 
   render() {
     return (
       <div>
         <section className="content-wrapper">
           <div className="login">
-            <h1>Welcome to the Beer Game!</h1>
+            <h2 className="welcome-text">Welcome to the Beer Distribution Game!</h2>
             <div className="box">
-              <form id="userCredentials" className="loginbox">
-                <h2>LOGIN</h2>
-                <label for="username">Username/Email</label>
-                <input
-                  type="text"
-                  id="identifier"
-                  name="identifier"
-                  value={this.state.identifier}
-                  onChange={this.onChangeIdentifier}
-                />
-                <label for="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={this.state.password}
-                  onChange={this.onChangePassword}
-                />
-                <div className="buttonContainer">
-                  <button id="userSubmit" onClick={this.sendForm}>
-                    Log in
-                  </button>
-                </div>
-                <small className="form-text">
-                  Not <Link to="signup">Signed Up</Link> yet?
-                </small>
-              </form>
+              <Card id="forms">
+                <Card.Header>
+                  <Nav variant="tabs">
+                    <Nav.Item>
+                      <Nav.Link href="/" className="active">Login</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link href="/signup">Register</Nav.Link>
+                    </Nav.Item>
+                  </Nav>
+                </Card.Header>
+                <Card.Body>
+
+                <Form id="userCredentials">
+                  <Form.Group>
+                    <Form.Control 
+                      required
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={this.state.credentials.email}
+                      onChange={this.onChangeInput}
+                      placeholder="Email"/>
+                  </Form.Group>
+
+                  <Form.Group>
+                    <Form.Control 
+                      required
+                      type="password"
+                      id="password"
+                      name="password"
+                      value={this.state.credentials.password}
+                      onChange={this.onChangeInput}
+                      placeholder="Password"/>
+                  </Form.Group>
+
+                  <Button variant="primary" type="submit" id="userSubmit" onClick={this.login}>
+                    Log In
+                  </Button>
+                  <Form.Text className="text-muted">
+                    Don't have an account? <Link to="/signup">Register here.</Link>
+                  </Form.Text>
+                </Form>
+                </Card.Body>
+              </Card>
             </div>
           </div>
         </section>
@@ -101,3 +104,5 @@ export default class SignIn extends Component {
     );
   }
 }
+
+export default LogIn;
