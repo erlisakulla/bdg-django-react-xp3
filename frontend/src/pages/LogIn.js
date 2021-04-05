@@ -1,41 +1,22 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Form, Card, Nav } from 'react-bootstrap';
+import axiosInstance from '../axios'
 
 class LogIn extends Component {
-  state = {
-    credentials: {
-      email: '',
-      password: ''
-    }
-  }
+  constructor(props) {
+    super(props)
 
-  componentDidMount() {
-    if (this.state.logged_in) {
-      axios.post('http://localhost:8000/api/user/', {
-        headers: {
-          Authorization: `JWT ${localStorage.getItem('token')}`
-        }
-      })
-      .then(data => data.json())
-    }
-  }
+    this.onChangeInput = this.onChangeInput.bind(this);
+    this.login = this.login.bind(this);
 
-  login = (e) => {
-    e.preventDefault();
-    axios.post('http://localhost:8000/api/token/', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(this.state.credentials)
-    })
-    .then(data => data.json())
-    .then(json => {
-      localStorage.setItem('token', json.token);
-      this.setState({logged_in: true});
-    })
-    .catch(error => console.error(error))
+    this.state = {
+      credentials: {
+        email: '',
+        password: '',
+      }
+    }
   }
 
   onChangeInput = event => {
@@ -43,6 +24,27 @@ class LogIn extends Component {
     cred[event.target.name] = event.target.value;
     this.setState({credentials: cred});
     // console.log(cred);
+  }
+
+  login = (e) => {
+    e.preventDefault();
+    const loginUser = this.state.credentials;
+
+    axiosInstance.post('http://127.0.0.1:8000/api/token/', loginUser, {
+      crossDomain: true, 
+    })
+    .then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        localStorage.setItem('token_access', res.access);
+        alert("Successfully Logged In");
+        window.location = "/create";
+      } 
+      else {
+        console.log(res.data);
+      }
+    })
+    .catch(error => {if(error.response){ console.log(error.response.data)}})
   }
 
   render() {

@@ -26,45 +26,30 @@ class CreateGameForm extends React.Component {
         rounds_completed: '0',
         isDefaultGame: true,
         starting_inventory: '',
-        instructor: 'test', // current logged in instructor
+        instructor: '1', // this needs to be current logged in user
       },
+      
     // gameRoles: {
     //   // creating roles uing the roleregister api
     // }
     }
   }
 
-  createGame = () => {
-    axios.post('http://127.0.0.1:8000/api/game/', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(this.state.gameSettings)
-    })
-    .then(data => data.json())
-    .then(
-      data => {
-        console.log(data.token);
-      }
-    )
-    .catch(error => console.error(error))
-  }
-
-  inputChanged = event => {
+  inputChanged = (e) => {
     const game_settings = this.state.gameSettings;
-
     // Checking for distributor
-    if (event.target.name === "distributorPresent") {
-      if (event.target.checked) {
-        game_settings.distributorPresent = event.target.checked;
+    if (e.target.name === "distributorPresent") {
+      if (e.target.checked) {
+        game_settings.distributorPresent = e.target.checked;
       }
       else {
         game_settings.distributorPresent = false;
       }
     }
     // Checking for wholesaler
-    else if (event.target.name === "wholesalerPresent") {
-      if (event.target.checked) {
-        game_settings.wholesalerPresent = event.target.checked;
+    else if (e.target.name === "wholesalerPresent") {
+      if (e.target.checked) {
+        game_settings.wholesalerPresent = e.target.checked;
       }
       else {
         game_settings.wholesalerPresent = false;
@@ -72,11 +57,28 @@ class CreateGameForm extends React.Component {
     }
     // Other game settings
     else {
-      game_settings[event.target.name] = event.target.value;
+      game_settings[e.target.name] = e.target.value;
     }
 
     this.setState({gameSettings: game_settings});
     console.log(game_settings);
+  }
+
+  createGame = (e) => {
+    e.preventDefault();
+    const createdGame = this.state.gameSettings;
+    axios.post('http://127.0.0.1:8000/api/game/', createdGame, {crossDomain: true})
+    .then((res) => {
+      console.log(res);
+      if (res.status === 201) {
+        alert("Game Created Successfully");
+        window.location = "/create";
+      } 
+      else {
+        console.log(res.data);
+      }
+    })
+    .catch(error => {if(error.response){ console.log(error.response.data) }})
   }
 
   // Handle to switch modal state when clicked on a component

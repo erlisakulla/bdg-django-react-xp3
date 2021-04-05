@@ -1,12 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { withRouter } from 'react-router';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Form, Card, Nav, Col } from 'react-bootstrap';
+import axiosInstance from '../axios'
 
 class SignUp extends React.Component {
-    state = {
+  constructor(props) {
+    super(props)
+
+    this.inputChanged = this.inputChanged.bind(this);
+    this.register = this.register.bind(this);
+
+    this.state = {
       credentials: {
         email: '',
         name: '', 
@@ -14,47 +20,49 @@ class SignUp extends React.Component {
         is_instructor: false,
       }
     }
+  }
 
-    register = (e) => {
-      e.preventDefault();
-      axios.post('http://127.0.0.1:8000/api/register/', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(this.state.credentials)
-      })
-      .then(data => data.json())
-      .then(
-        data => {
-          console.log(data.token);
-        }
-      )
-      .catch(error => console.error(error))
+  inputChanged = event => {
+    const cred = this.state.credentials;
+
+    if (event.target.name === "name") {
+      cred.name = event.target.value;
     }
-
-    inputChanged = event => {
-      const cred = this.state.credentials;
-
-      if (event.target.name === "name") {
-        cred.name = event.target.value;
-      }
-      else if (event.target.name === "email") {
-        cred.email = event.target.value;
-      }
-      else if (event.target.name === "password") {
-        cred.password = event.target.value;
-      }
-      else if (event.target.name === "is_instructor") {
-        this.setState({selectedOption: event.target.value});
-        if (event.target.value === "true") {
-          cred.is_instructor = event.target.checked;
-        }
-        else if (event.target.value === "false") {
-          cred.is_instructor = false;
-        }
-      }
-      this.setState({credentials: cred});
-      // console.log(cred);
+    else if (event.target.name === "email") {
+      cred.email = event.target.value;
     }
+    else if (event.target.name === "password") {
+      cred.password = event.target.value;
+    }
+    else if (event.target.name === "is_instructor") {
+      this.setState({selectedOption: event.target.value});
+      if (event.target.value === "true") {
+        cred.is_instructor = event.target.checked;
+      }
+      else if (event.target.value === "false") {
+        cred.is_instructor = false;
+      }
+    }
+    this.setState({credentials: cred});
+    // console.log(cred);
+  }
+
+  register = (e) => {
+    e.preventDefault();
+    const registerUser = this.state.credentials;
+    axiosInstance.post('http://127.0.0.1:8000/api/register/', registerUser, {crossDomain: true})
+    .then((res) => {
+      console.log(res);
+      if (res.status === 201) {
+        alert("Successfully Registered");
+        window.location = "/";
+      } 
+      else {
+        console.log(res.data);
+      }
+    })
+    .catch(error => {if(error.response){ console.log(error.response.data) }})
+  }
 
   render() {
     // This is in case we want to implement instructor selection upon registration as well
@@ -93,7 +101,7 @@ class SignUp extends React.Component {
                 </Card.Header>
 
                 <Card.Body>
-                <Form id="userCredentials">
+                <Form id="userCredentials" onSubmit={this.register}>
                   <Form.Group>
                     <Form.Control 
                       type="text"
@@ -171,7 +179,7 @@ class SignUp extends React.Component {
 
                   {/* { content } */}
                     
-                  <Button variant="primary" type="submit" id="userSubmit"  onClick={this.register}>
+                  <Button variant="primary" type="submit" id="userSubmit">
                     Sign Up
                   </Button>
                   <Form.Text className="text-muted">

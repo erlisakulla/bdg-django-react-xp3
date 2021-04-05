@@ -9,13 +9,6 @@ import GameView from './pages/GameView';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      logged_in: localStorage.getItem('token') ? true : false,
-    };
-  }
-
   render() {
     return (
       <>

@@ -5,9 +5,20 @@ import SettingsIcon from '@material-ui/icons/Settings';
 
 // Main Navigation bar component
 class customNavbar extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      logged_in: localStorage.getItem('access_token') ? true : false,
+    }
+  }
+  
+  // Need to implement proper logout
   logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('access_token');
     this.setState({logged_in: false});
+    console.log(this.state.logged_in);
+    window.location = "/";
   };
 
   render() {

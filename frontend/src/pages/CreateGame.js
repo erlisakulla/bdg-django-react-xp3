@@ -13,6 +13,14 @@ import EditIcon from '@material-ui/icons/Edit';
 
 // Main Render
 class CreateGames extends Component {
+  constructor(){
+    super();
+    // Setting modal default state to hide
+    this.state = {
+      loggedUser: '',
+    }
+  }
+
   render() {
     const popover = (
       <Popover id="popover-basic">
