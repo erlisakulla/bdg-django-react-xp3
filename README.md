@@ -112,7 +112,7 @@ npm install -g jsdoc
 ```
 npm run doc
 ```
-3. Open the [`index.html`]([`docs`](frontend/docs/index.html)) file (locally is fine), found in the [`docs`](frontend/docs) directory, to see the generated documentation
+3. Open the [`index.html`]([`docs`](frontend/docs/index.html) file (locally is fine), found in the [`docs`](frontend/docs) directory, to see the generated documentation
 
 For more information check out the [JSDoc repository](https://github.com/jsdoc/jsdoc) or this [Style Guide](https://github.com/shri/JSDoc-Style-Guide#links).
 
