@@ -7,12 +7,11 @@ SE Sprint 03, Team 32, Date: 13.04.2021
 - [Project Overview](#project-overview)
   * [Backend](#backend)
   * [Frontend](#frontend)
-    + [Setup](#setup-1)
-    + [Dependencies](#dependencies-1)
-    + [File Structure](#file-structure-1)
+    + [Setup](#setup)
+    + [Dependencies](#dependencies)
+    + [File Structure](#file-structure)
     + [Documentation](#documentation)
     + [Tests](#tests)
-    + [Future Implementaion](#future-implementaion)
 - [Bonus](#bonus)
 
 # Overview of Changes From Last Sprint
