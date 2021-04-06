@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/Register.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/Register.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Form, Card, Nav, Col } from 'react-bootstrap';
+import axiosInstance from '../axios'
+
+/**
+ * Registration Form
+ *
+ * @component
+ */
+class SignUp extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.inputChanged = this.inputChanged.bind(this);
+    this.register = this.register.bind(this);
+
+    /**
+     * User data (/api/user)
+     */
+    this.state = {
+      credentials: {
+        email: '',
+        name: '', 
+        password: '',
+        is_instructor: false,
+      }
+    }
+  }
+
+  /**
+   * Function for detecting input changes in the form
+   *
+   * @method
+   * @param {Object} e event handler
+   */
+  inputChanged = event => {
+    const cred = this.state.credentials;
+
+    if (event.target.name === "name") {
+      cred.name = event.target.value;
+    }
+    else if (event.target.name === "email") {
+      cred.email = event.target.value;
+    }
+    else if (event.target.name === "password") {
+      cred.password = event.target.value;
+    }
+    else if (event.target.name === "is_instructor") {
+      this.setState({selectedOption: event.target.value});
+      if (event.target.value === "true") {
+        cred.is_instructor = event.target.checked;
+      }
+      else if (event.target.value === "false") {
+        cred.is_instructor = false;
+      }
+    }
+    this.setState({credentials: cred});
+    // console.log(cred);
+  }
+
+  /**
+   * Register function that handles posting the data
+   *
+   * @method
+   * @param {Object} e event handler
+   */
+  register = (e) => {
+    e.preventDefault();
+    const registerUser = this.state.credentials;
+    axiosInstance.post('http://127.0.0.1:8000/api/register/', registerUser, {crossDomain: true})
+    .then((res) => {
+      console.log(res);
+      if (res.status === 201) {
+        alert("Successfully Registered");
+        window.location = "/";
+      } 
+      else {
+        console.log(res.data);
+      }
+    })
+    .catch(error => {if(error.response){ console.log(error.response.data) }})
+  }
+
+  render() {
+    // This is in case we want to implement instructor selection upon registration as well
+
+    // const content = 
+    //   (this.state.selectedOption === "Student") ? 
+    //     &lt;div style={{paddingBottom: '30px'}}>
+    //       &lt;Form.Control 
+    //         as="select" 
+    //         name="instructorSelect" 
+    //         id="instructorSelect" 
+    //         onChange={this.onChangePlayerOrInstructor}
+    //         defaultValue="0">
+    //           &lt;option value="0" disabled>Select Instructor&lt;/option>
+    //           &lt;option value="1">instructor1&lt;/option>
+    //           &lt;option value="2">instructor2&lt;/option>
+    //       &lt;/Form.Control>
+    //     &lt;/div> : null;
+
+    return (
+      &lt;>
+        &lt;section className="content-wrapper">
+          &lt;div className="login">
+          &lt;h2 className="welcome-text">Welcome to the Beer Distribution Game!&lt;/h2>
+            &lt;div className="box">
+              &lt;Card id="forms">
+                &lt;Card.Header>
+                  &lt;Nav variant="tabs">
+                    &lt;Nav.Item>
+                      &lt;Nav.Link href="/">Login&lt;/Nav.Link>
+                    &lt;/Nav.Item>
+                    &lt;Nav.Item>
+                      &lt;Nav.Link className="active" href="/signup">Register&lt;/Nav.Link>
+                    &lt;/Nav.Item>
+                  &lt;/Nav>
+                &lt;/Card.Header>
+
+                &lt;Card.Body>
+                &lt;Form id="userCredentials" onSubmit={this.register}>
+                  {/* ------- Full Name ------- */}
+                  &lt;Form.Group>
+                    &lt;Form.Control 
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      onChange={this.inputChanged}
+                      value={this.state.credentials.name}
+                      placeholder="Full Name"/>
+                      &lt;Form.Control.Feedback type="invalid">
+                        Invalid name.
+                      &lt;/Form.Control.Feedback>
+                  &lt;/Form.Group>
+                  {/* ------- Email ------- */}
+                  &lt;Form.Group>
+                    &lt;Form.Control 
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      onChange={this.inputChanged}
+                      value={this.state.credentials.email}
+                      placeholder="Email"/>
+                      &lt;Form.Control.Feedback type="invalid">
+                        Invalid email.
+                      &lt;/Form.Control.Feedback>
+                  &lt;/Form.Group>
+                  {/* ------- Password ------- */}
+                  &lt;Form.Group>
+                    &lt;Form.Control 
+                      type="password"
+                      id="password"
+                      name="password"
+                      required
+                      onChange={this.inputChanged}
+                      value={this.state.credentials.password}
+                      placeholder="Password"/>
+                      &lt;Form.Control.Feedback type="invalid">
+                        Invalid password.
+                      &lt;/Form.Control.Feedback>
+                  &lt;/Form.Group>
+                  {/* ------- Instructor ------- */}
+                  &lt;Form.Group as={Col}>
+                    &lt;Form.Row>
+                      &lt;Form.Group as={Col}>
+                        &lt;div className="radio">
+                          &lt;Form.Check 
+                            required
+                            type="radio" 
+                            id="is_instructor" 
+                            label="Instructor" 
+                            custom
+                            value="true"
+                            name="is_instructor"
+                            checked={this.state.selectedOption === "true"}
+                            onChange={this.inputChanged}/>
+                        &lt;/div>
+                      &lt;/Form.Group>
+                      {/* ------- Student ------- */}
+                      &lt;Form.Group as={Col}>
+                        &lt;div className="radio">
+                          &lt;Form.Check 
+                            type="radio" 
+                            id="is_student" 
+                            label="Student" 
+                            custom
+                            value="false"
+                            name="is_instructor"
+                            checked={this.state.selectedOption === "false"}
+                            onChange={this.inputChanged}/>
+                        &lt;/div>
+                      &lt;/Form.Group>
+                    &lt;/Form.Row>
+                  &lt;/Form.Group>
+
+                  {/* { content } */}
+                    
+                  &lt;Button variant="primary" type="submit" id="userSubmit">
+                    Sign Up
+                  &lt;/Button>
+                  &lt;Form.Text className="text-muted">
+                    Already have an account? &lt;Link to="/">Login here.&lt;/Link>
+                  &lt;/Form.Text>
+                &lt;/Form>
+                &lt;/Card.Body>
+              &lt;/Card>
+            &lt;/div>
+          &lt;/div>
+        &lt;/section>
+      &lt;/>
+    );
+  }
+}
+
+export default withRouter(SignUp);</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CreateGames.html">CreateGames</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="GameInsights.html">GameInsights</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="GameView.html">GameView</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Option">Option</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Apr 06 2021 05:35:33 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

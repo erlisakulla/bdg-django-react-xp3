@@ -74,6 +74,17 @@ label {
   margin: 0 auto;
 }
 
+.main-container-settings {
+  width: 350px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+#setting_button1, #setting_button2 {
+  width: 100%;
+  margin: 0 auto;
+}
+
 /* GAME VIEW STYLES */
 
 #div1 { 

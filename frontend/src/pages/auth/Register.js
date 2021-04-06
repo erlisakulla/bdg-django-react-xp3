@@ -1,0 +1,206 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Form, Card, Nav, Col } from 'react-bootstrap';
+import axiosInstance from '../../axios'
+
+/**
+ * Registration Form
+ *
+ * @component
+ */
+class SignUp extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.inputChanged = this.inputChanged.bind(this);
+    this.register = this.register.bind(this);
+
+    /**
+     * User data (/api/user)
+     */
+    this.state = {
+      credentials: {
+        email: '',
+        name: '', 
+        password: '',
+        is_instructor: false,
+      }
+    }
+  }
+
+  /**
+   * Function for detecting input changes in the form
+   *
+   * @method
+   * @param {Object} e event handler
+   */
+  inputChanged = event => {
+    const cred = this.state.credentials;
+
+    if (event.target.name === "name") {
+      cred.name = event.target.value;
+    }
+    else if (event.target.name === "email") {
+      cred.email = event.target.value;
+    }
+    else if (event.target.name === "password") {
+      cred.password = event.target.value;
+    }
+    else if (event.target.name === "is_instructor") {
+      this.setState({selectedOption: event.target.value});
+      if (event.target.value === "true") {
+        cred.is_instructor = event.target.checked;
+      }
+      else if (event.target.value === "false") {
+        cred.is_instructor = false;
+      }
+    }
+    this.setState({credentials: cred});
+    // console.log(cred);
+  }
+
+  /**
+   * Register function that handles posting the data
+   *
+   * @method
+   * @param {Object} e event handler
+   */
+  register = (e) => {
+    e.preventDefault();
+    const registerUser = this.state.credentials;
+  
+    axiosInstance.post('http://127.0.0.1:8000/api/register/', registerUser, {crossDomain: true})
+    .then((res) => {
+      console.log(res);
+      if (res.status === 201) {
+        alert("Successfully Registered");
+        window.location = "/";
+      } 
+      else {
+        console.log(res.data);
+      }
+    })
+    .catch(error => {if(error.response){ console.log(error.response.data) }})
+  }
+
+  render() {
+    return (
+      <>
+        <section className="content-wrapper">
+          <div className="login">
+          <h2 className="welcome-text">Welcome to the Beer Distribution Game!</h2>
+            <div className="box">
+              <Card id="forms">
+                <Card.Header>
+                  <Nav variant="tabs">
+                    <Nav.Item>
+                      <Nav.Link href="/">Login</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link className="active" href="/signup">Register</Nav.Link>
+                    </Nav.Item>
+                  </Nav>
+                </Card.Header>
+
+                <Card.Body>
+                  {/* Browser default validation using 'required' tag */}
+                  <Form id="userCredentials" onSubmit={this.register}>
+                    {/* ------- Full Name ------- */}
+                    <Form.Group>
+                      <Form.Control 
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                        onChange={this.inputChanged}
+                        value={this.state.credentials.name}
+                        placeholder="Full Name"/>
+                        <Form.Control.Feedback type="invalid">
+                          Invalid name.
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                    {/* ------- Email ------- */}
+                    <Form.Group>
+                      <Form.Control 
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        onChange={this.inputChanged}
+                        value={this.state.credentials.email}
+                        placeholder="Email"/>
+                        <Form.Control.Feedback type="invalid">
+                          Invalid email.
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                    {/* ------- Password ------- */}
+                    <Form.Group>
+                      <Form.Control 
+                        type="password"
+                        id="password"
+                        name="password"
+                        required
+                        onChange={this.inputChanged}
+                        value={this.state.credentials.password}
+                        placeholder="Password"/>
+                        <Form.Control.Feedback type="invalid">
+                          Invalid password.
+                        </Form.Control.Feedback>
+                        
+                    </Form.Group>
+                    {/* ------- Instructor ------- */}
+                    <Form.Group as={Col}>
+                      <Form.Row>
+                        <Form.Group as={Col}>
+                          <div className="radio">
+                            <Form.Check 
+                              required
+                              type="radio" 
+                              id="is_instructor" 
+                              label="Instructor" 
+                              custom
+                              value="true"
+                              name="is_instructor"
+                              checked={this.state.selectedOption === "true"}
+                              onChange={this.inputChanged}/>
+                          </div>
+                        </Form.Group>
+                        {/* ------- Student ------- */}
+                        <Form.Group as={Col}>
+                          <div className="radio">
+                            <Form.Check 
+                              type="radio" 
+                              id="is_student" 
+                              label="Student" 
+                              custom
+                              value="false"
+                              name="is_instructor"
+                              checked={this.state.selectedOption === "false"}
+                              onChange={this.inputChanged}/>
+                          </div>
+                        </Form.Group>
+                      </Form.Row>
+                    </Form.Group>
+
+                    {/* { content } */}
+                      
+                    <Button variant="primary" type="submit" id="userSubmit">
+                      Sign Up
+                    </Button>
+                    <Form.Text className="text-muted">
+                      Already have an account? <Link to="/">Login here.</Link>
+                    </Form.Text>
+                  </Form>
+                </Card.Body>
+              </Card>
+            </div>
+          </div>
+        </section>
+      </>
+    );
+  }
+}
+
+export default withRouter(SignUp);

@@ -1,100 +1,123 @@
 # se-02-team-32
 
-SE Sprint 02, Team 32 date: 23.03.2021
+SE Sprint 03, Team 32, Date: 13.04.2021
 
-# Overview of Changes from last Sprint:
+# Table of Contents
+- [Overview of Changes From Last Sprint](#overview-of-changes-from-last-sprint)
+- [Project Overview](#project-overview)
+  * [Backend](#backend)
+  * [Frontend](#frontend)
+    + [Setup](#setup-1)
+    + [Dependencies](#dependencies-1)
+    + [File Structure](#file-structure-1)
+    + [Documentation](#documentation)
+    + [Tests](#tests)
+    + [Future Implementaion](#future-implementaion)
+- [Bonus](#bonus)
 
-- Added comments to the code to make it easier for fellow students to understand
-- Added entire documentation for backend directory
-- Added a new technology: JSDoc and installation procedure
-- Fixed a bug in the .env.example document which prevented us from running the code properly
-- Edited the read me file to include the new changes
-- Wrote a shallow ROM testing at the Frontend
-- Added createGame API for instructor
-- Added step by step instructions for set up
+# Overview of Changes From Last Sprint
+* Complete change of backend framework - from Node.js to Django
+* Implementation of Django REST framework
+* Significant changes in frontend design and structure (mainly using react-bootstrap components)
+* Created backend Django API
+    - ...
+* Connecting frontend and backend using `axios`
+    - User login and registration using axios and JWT token authentication
+    - Game instances creation
 
-## Step by step instructions for set up
+# Project Overview
+* **Backend**: Django
+* **Python**: React
 
+This project is divided into two main apps: [backend](backend) and [frontend](frontend). They must be run separately at the same time. But first clone the repository using:
 ```
-1. git clone https://github.com/lorenzorota/se-02-team-32.git
-2. cd backend
-3. npm install
-4. npx sequelize-cli db:migrate
-5. npm start (for backend server)
-6. cd ../frontend
-7. npm install
-8. change "development password" in config.json
-9. add .env file:  TOKEN_SECRET=secret (secret can be anything)
-10. npm start (frontend website)
-11. install JSdoc : npm install -g jsdoc
-12. for more information on how to use JSDoc visit : https://github.com/jsdoc/jsdoc
-13. to render the documentation:
-    13.1. cd backend
-    13.2. npm run doc (run this after every change to update)
-    13.3. open index.html file inside docs directory in browser.
+git clone https://github.com/lorenzorota/se-03-team-32.git
 ```
+## Backend
 
-# se-01-team-32
+## Frontend
+### Setup
+To run the frontend, follow these steps:
+1. Change to the frontend directory
+```
+cd frontend
+```
+2. Install all dependencies (check [`package.json`](frontend/package.json) for more details)
+```
+npm install
+```
+3. Run the app in development mode
+```
+npm start
+```
+4. Navigate to [http://localhost:3000](http://localhost:3000). The page will reload automatically if you make any changes.
 
-SE Sprint 01, Team 32
+### Dependencies
+Some main packages and libraries used in this project:
+* [Material UI](https://material-ui.com) (`@material-ui`) - this is a very useful library for using icons and frontend reusable components. Go to the Components sections to find the full documentation on how to implement them. In this project, this is mostly used for icons.
+* [React Bootstrap]() (`react-bootstrap`) - rebuilt Bootstrap library specifically for React without needing to implement jQuery. Go to the Components sections to find the full documentation on how to implement them. In this project, some components used from this library are Button, Form, Table, Modal etc.
+* [Axios](https://github.com/axios/axios) (`axios`) - library to make it easier to send asynchronous HTTP requests to REST endpoints and perform CRUD operations. We have used `axios` to connect our React app to the Django backend server and handle API requests. The [`axios.js`](frontend/src/App.js) file sets up the axios connection and the token handling.
+* [React Router](https://reactrouter.com/web/guides/quick-start) (`react-router-dom`) - DOM bindings for React Router (`react-router`). Useful for using Link components and setting up Routes in the [`App.js`](frontend/src/App.js) file.
 
-# Note
-
-Our group has proposed some changes to the specification. It can be found in bonus.txt in the root folder. We put a lot of effort in proposing these changes, because we think it is something all other groups will benefit from.
-
-## Table of contents
-
-- [General info](#general-info)
-- [Technologies](echnologies)
-- [Setup](#setup)
-- [Contributions](#contributions)
-
-## General info
-
-For this sprint we have contributed on both the frontend and backend part of the software(each part can be found on the respective folder). Regarding the backend, we have constructed the database, created all the models as defined in bonus.txt file and implemented the controllers and the API only for the user model, properly implementing the authorization and authentication(token-based authentication) of the user in case of login/signup or when accessing the main page of the website. Regarding the frontend, the login and signup pages are created, together with the landing page of the website once the student/instructor is successfully logged in, and the page showing game info. Overall, the login and signup part of the project is completed: the frontend and the backend are connected with each other; the most important backend functionality is implemented, making the other phases easier.
-
-## Technologies
-
-### Backend
-
-In the backend, **Node Js** is used, together with its web framework **Express JS**. The list of dependencies with their respective version can be found in the package.json inside the backend folder. The database system is **MySql**, and **Sequelize** is used in order to make the interaction with the database easier. Sequelize is a promise-based Node Js ORM (Object-Relational Mapper), which features transaction support, relations, eager and lazy loading, read replication and more. **Cors** is also installed as a node module, in order to provide a Connect/Express middleware that can be used to enable CORS (Cross-Origin Resource Sharing) with various options, making the communication between frontend and backend easier. **Joi** is used for data validation: in our case, validating the data that is send from the client side through the form in the login, signup page. **Bcrypt** is used for encrypting/decrypting the password. **JWT** (Json WEB Token) is used for authentication of the user that is logged in/signed up.
-
-### Frontend
-
-- **React JS** is used together with **CSS**
-- **Axios** is used to make HTTP request to the server.
+### File Structure
+```
+frontend   
+├── out                                  # containts autogenerated jsdoc index.html file   
+│   └── ...                              # with all the neccessary documentations
+├── public                               
+│   ├── index.html                       # every component of the app is loaded into <div id="root"></div>
+│   └── ...
+├── docs                               
+│   ├── index.html                       # every component of the app is loaded into <div id="root"></div>
+│   └── ...
+├── src
+│   ├── css
+|   |   ├── App.css                      # css file corresponding to App.js (no need to change)
+|   |   ├── index.css                    # css file corresponding to index.js (no need to change)
+|   |   └── Main.css                     # css file corresponding to the rest of the project
+│   ├── pages
+|   |   ├── auth     
+|   |   |   ├── AccountSettings.js       # designated page to change password or delete account 
+|   |   |   ├── LogIn.js                 # user log in page
+|   |   |   └── Register.js              # user registration page
+│   |   ├── components
+|   |   |   ├── GameCreationForm.js      # game creation form component (button and modal)
+|   |   |   ├── GameRegisterForm.js      # game registration form copmonent (button and modal)
+|   |   |   ├── Navbar.js                # navbar component
+|   |   |   └── Option.js                # component for using icons and tooltips
+|   |   └── games            
+|   |       ├── CreateGame.js            # displays all created games by the user
+|   |       ├── GameInsights.js          # displays game insights and plots after a game is finished
+|   |       ├── GameView.js              # main game view where the user can submit the order
+|   |       ├── JoinGame.js              # displays registered games
+|   |       └── MonitorGame.js           # displays list of games with current cost settings
+│   ├── tests
+|   |   ├── App.test.js
+|   |   └── setupTests.js
+│   ├── App.js                           # main app - contains routes to all pages
+│   ├── axios.js                         # handles api requests (using axios)
+|   ├── index.js                         # renders the app into index.html "root"
+│   └── reportWebVitals.js               # captures useful metrics to improve the user experience
+├── jsdoc.json 
+├── package-lock.json 
+└── package.json                         # list of node dependencies
+```
 
 ### Documentation
-
-- **JSDoc** is used
-
-## Setup
-
-- **Server side**\
-  MySql must be locally installed. You have to manually create a database named "game". Put the credentials in the config.json found in backend/config directory. Then in order to create the entities with the corresponding data:
-
+For the documentation of the frontend we have used JSDoc. The configuration file is [`jsdoc.json`](frontend/jsdoc.json) and the output directory is the [`docs`](frontend/docs) folder.
+1. Intsall JSDoc (globally) using:
 ```
-$ cd backend
-$ npm install
-$ npx sequelize-cli db:migrate
+npm install -g jsdoc
 ```
-
-Create a .env file as shown in the .env.example (inside the backend folder) where you will store the token used for authentication.
-(Make sure there is no spaces in the .env document)
-After the database is created, you can start the server:
-
+2. To compile all the changes made in the documentation run (inside frontend directory):
 ```
-$ npm start
+npm run doc
 ```
+3. Open the [`index.html`]([`docs`](frontend/docs/index.html)) file (locally is fine), found in the [`docs`](frontend/docs) directory, to see the generated documentation
 
-- **Client Side**
+For more information check out the [JSDoc repository](https://github.com/jsdoc/jsdoc) or this [Style Guide](https://github.com/shri/JSDoc-Style-Guide#links).
 
-```
-$ cd frontend
-$ npm install
-$ npm start
-```
+### Tests
 
-## Contributions
 
-Sprint Number 1: Date 09/03/2021
+# Bonus
