@@ -24,6 +24,7 @@ class JoinGames extends Component {
     this.state = {
       roles: null,
       message: 'No games to display',
+      is_instructor: '',
     }
   }
 
@@ -36,6 +37,14 @@ class JoinGames extends Component {
     axiosInstance.get('http://127.0.0.1:8000/api/role/').then((res) => {
       const allRoles = res.data;
       this.setState({roles: allRoles});
+      console.log(res.data);
+    })
+    .catch(error => {if(error.response){console.log(error.response.data);}});
+
+    axiosInstance.get('http://127.0.0.1:8000/api/user/')
+    .then((res) => {
+      const isInst = res.data.is_instructor;
+      this.setState({is_instructor: isInst});
       console.log(res.data);
     })
     .catch(error => {if(error.response){console.log(error.response.data);}});
@@ -60,9 +69,11 @@ class JoinGames extends Component {
                 <Nav.Item>
                   <Nav.Link href="/monitor">Monitor Games</Nav.Link>
                 </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link href="/join" className="active">Join Games</Nav.Link>
-                </Nav.Item>
+                { this.state.is_instructor === false ?
+                  <Nav.Item>
+                    <Nav.Link href="/join" className="active">Join Games</Nav.Link>
+                  </Nav.Item> : null
+                }
               </Nav>
             </Card.Header>
 

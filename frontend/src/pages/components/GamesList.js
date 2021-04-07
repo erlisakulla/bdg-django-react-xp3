@@ -7,6 +7,7 @@ import PlayersPopover from './PlayersPopover';
 import { Table } from 'react-bootstrap';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import axiosInstance from '../../axios'
 
 /**
  * Games List view 
@@ -23,6 +24,30 @@ function GamesList(props) {
 			<h5 style={{textAlign:'center', fontWeight:'400', color:'grey'}}>{message}</h5>
 		);
 	}
+
+  /**
+   * Method to delete game instance 
+   *
+   * @method
+   * @param {Object} e event handler
+   * @param {integer} id game id to be deleted
+   */
+	const deleteGame = (id, e) => {
+    if (window.confirm("Are you sure you want to delete game?")) {
+      axiosInstance.delete(`http://127.0.0.1:8000/api/game/${id}`)
+      .then(res => {
+        console.log(res.data);
+        // alert("Successfully deleted game")
+        window.location = "/create";
+      })
+      .catch(error => {
+        if(error.response){ 
+          alert("Couldn't delete game. Please try again.");
+          console.log(error.response.data);
+        }
+      });
+    }
+  }
 
 	/**
 	 * Renders Yes or No depending on prop value
@@ -82,8 +107,8 @@ function GamesList(props) {
 							<td><PlayersPopover game={game.id}/></td>
 							<td>
 								<Option name="Pause" icon={<PauseCircleOutlineIcon id="pauseIcon"/>}/>
-								<Option  name="Delete" icon={<DeleteOutlineIcon id="deleteIcon"/>}/>
-								<GameUpdateForm game={game.id}/>
+								<Option name="Delete" icon={<DeleteOutlineIcon id="deleteIcon" onClick={(e) => deleteGame(game.id, e)}/>} />
+								<GameUpdateForm gameid={`${game.id}`}/>
 							</td>
 						</tr>
 					);

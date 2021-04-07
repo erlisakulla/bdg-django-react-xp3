@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import '../../css/Main.css';
 import Navbar from '../components/Navbar';
-// import Option from '../components/Option';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table, Card, Nav } from 'react-bootstrap';
-// import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
-// import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-// import EditIcon from '@material-ui/icons/Edit';
+import axiosInstance from '../../axios'
 
 /**
  * Monitor Games page 
@@ -14,6 +11,31 @@ import { Table, Card, Nav } from 'react-bootstrap';
  * @component
  */
 class MonitorGames extends Component {
+  constructor(props) {
+    super(props)
+
+    this.componentDidMount = this.componentDidMount.bind(this);
+    
+    this.state = {
+      is_instructor: '',
+    }
+  }
+
+  /**
+   * Method to get user data
+   *
+   * @method
+   */
+  componentDidMount() {
+    axiosInstance.get('http://127.0.0.1:8000/api/user/')
+    .then((res) => {
+      const isInst = res.data.is_instructor;
+      this.setState({is_instructor: isInst});
+      console.log(res.data);
+    })
+    .catch(error => {if(error.response){console.log(error.response.data);}});
+  }
+
   render() {
     return (
       <> 
@@ -33,9 +55,11 @@ class MonitorGames extends Component {
                 <Nav.Item>
                   <Nav.Link href="/monitor" className="active">Monitor Games</Nav.Link>
                 </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link href="/join">Join Games</Nav.Link>
-                </Nav.Item>
+                { this.state.is_instructor === false ?
+                  <Nav.Item>
+                    <Nav.Link href="/join">Join Games</Nav.Link>
+                  </Nav.Item> : null
+                }
               </Nav>
             </Card.Header>
 

@@ -27,32 +27,45 @@ class App extends React.Component {
        */
       logged_in: localStorage.getItem('access_token') ? true : false,
       is_session_expired: false,
+      /**
+       * User data (/api/token)
+       */
+      credentials: {
+        email: '',
+        password: '',
+      }
     };
   }
+  
+// Must do some checking for token expiration
 
-  // try in each page with get methods to check for 401 unauthorized 
+//   componentDidMount() {
+//       axiosInstance.get('http://127.0.0.1:8000/api/user/')
+//       .then((res) => {
+//         const email = res.data.email;
+//         const password = res.data.password;
+//         this.setState({email: email});
+//         this.setState({password: password});
+//         console.log(res.data);
+//       })
+//       .catch(error => {if(error.response){console.log(error.response.data);}});
 
-  // componentDidMount() {
-  //   if (this.state.is_session_expired === false && this.state.logged_in === true) {
-  //     axiosInstance.post('http://127.0.0.1:8000/api/token/refresh/')
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch(error => {
-  //       if(error.response){
-  //         console.log(error.response.data);
-  //         localStorage.removeItem('access_token');
-  //         localStorage.removeItem('refresh_token');
-  //         axiosInstance.defaults.headers['Authorization'] = null;
-          
-  //         // const session = true;
-  //         // this.setState({logged_in: false});
-  //         this.setState({is_session_expired: true});
-  //         }
-  //       }
-  //     );
-  //   }
-  // }
+//     const loginUser = this.state.credentials;
+
+//     axiosInstance.post('http://127.0.0.1:8000/api/token/refresh/', loginUser, {crossDomain: true})
+//     .then((res) => {
+//       console.log(res);
+//     })
+//     .catch(error => {
+//       if(error.response) { 
+//         alert("Session expired!");
+//         localStorage.removeItem('access_token');
+//         localStorage.removeItem('refresh_token');
+//         axiosInstance.defaults.headers['Authorization'] = null;
+//         console.log(error.response.data)
+//       }
+//     });
+//   }
   
   render() {
     return (
@@ -70,10 +83,6 @@ class App extends React.Component {
       
             {/* <Route exact path="/gameview/game/:id" component={GameView}/> */}
             {/* <Route exact path="/insights/game/:id" component={GameInsights}/> */}
-            {/* <Route exact path="/eidt/game/:id" component={}/> */}
-            {/* <Route exact path="/delete/game/:id" component={}/> */} 
-            {/* <Route exact path="/delete/user/:id" component={}/> */}  
-            {/* <Route exact path="/edit/user/:id" component={}/> */}      
           </Switch>
         </Router>
       </>

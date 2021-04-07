@@ -22,20 +22,30 @@ class Dashboard extends React.Component {
      * Games display states
      */
     this.state = {
+      is_instructor: '',
       games: null,
       message: 'No games to display',
     }
   }
 
   /**
-   * Method to get all games
+   * Method to get all games and user data
    *
    * @method
    */
   componentDidMount() {
-    axiosInstance.get('http://127.0.0.1:8000/api/game/').then((res) => {
+    axiosInstance.get('http://127.0.0.1:8000/api/game/')
+    .then((res) => {
       const allGames = res.data;
       this.setState({games: allGames});
+      console.log(res.data);
+    })
+    .catch(error => {if(error.response){console.log(error.response.data);}});
+
+    axiosInstance.get('http://127.0.0.1:8000/api/user/')
+    .then((res) => {
+      const isInst = res.data.is_instructor;
+      this.setState({is_instructor: isInst});
       console.log(res.data);
     })
     .catch(error => {if(error.response){console.log(error.response.data);}});
@@ -60,9 +70,11 @@ class Dashboard extends React.Component {
                 <Nav.Item>
                   <Nav.Link href="/monitor">Monitor Games</Nav.Link>
                 </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link href="/join">Join Games</Nav.Link>
-                </Nav.Item>
+                { this.state.is_instructor === false ?
+                  <Nav.Item>
+                    <Nav.Link href="/join">Join Games</Nav.Link>
+                  </Nav.Item> : null
+                }
               </Nav>
             </Card.Header>
             

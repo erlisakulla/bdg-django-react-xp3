@@ -7,9 +7,10 @@ SE Sprint 03, Team 32, Date: 13.04.2021
 - [Project Overview](#project-overview)
   * [Backend](#backend)
   * [Frontend](#frontend)
-    + [Setup](#setup-1)
-    + [Dependencies](#dependencies-1)
-    + [File Structure](#file-structure-1)
+    + [Setup](#setup)
+    + [Dependencies](#dependencies)
+    + [Implementation](#implementation)
+    + [File Structure](#file-structure)
     + [Documentation](#documentation)
     + [Tests](#tests)
     + [Future Implementaion](#future-implementaion)
@@ -27,7 +28,7 @@ SE Sprint 03, Team 32, Date: 13.04.2021
 
 # Project Overview
 * **Backend**: Django
-* **Python**: React
+* **Frontend**: React
 
 This project is divided into two main apps: [backend](backend) and [frontend](frontend). They must be run separately at the same time. But first clone the repository using:
 ```
@@ -58,6 +59,14 @@ Some main packages and libraries used in this project:
 * [React Bootstrap]() (`react-bootstrap`) - rebuilt Bootstrap library specifically for React without needing to implement jQuery. Go to the Components sections to find the full documentation on how to implement them. In this project, some components used from this library are Button, Form, Table, Modal etc.
 * [Axios](https://github.com/axios/axios) (`axios`) - library to make it easier to send asynchronous HTTP requests to REST endpoints and perform CRUD operations. We have used `axios` to connect our React app to the Django backend server and handle API requests. The [`axios.js`](frontend/src/App.js) file sets up the axios connection and the token handling.
 * [React Router](https://reactrouter.com/web/guides/quick-start) (`react-router-dom`) - DOM bindings for React Router (`react-router`). Useful for using Link components and setting up Routes in the [`App.js`](frontend/src/App.js) file.
+
+### Implementation
+* We made significant changes in the frontend design and structure (mainly using react-bootstrap components) compared to the last sprint
+* Functionalities implemented:
+    + User Login, Register, Logout
+    + Game Create, Update, Delete
+    + Game / Role Register
+* Users logged in as Instructors can't access the Join tab (they can't register or play in games)
 
 ### File Structure
 ```

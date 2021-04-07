@@ -25,7 +25,6 @@ class LogIn extends Component {
       credentials: {
         email: '',
         password: '',
-        error_message: '',
       }
     }
   }
@@ -38,7 +37,7 @@ class LogIn extends Component {
    */
   onChangeInput(e) {
     const cred = this.state.credentials;
-    cred[e.target.name] = event.target.value;
+    cred[e.target.name] = e.target.value;
     this.setState({credentials: cred});
     // console.log(cred);
   }
@@ -72,7 +71,7 @@ class LogIn extends Component {
     .catch(error => {
       if(error.response) { 
         const errm = "Invalid password or username";
-        this.setState({error_message: errm});
+        this.setState({errors: errm});
         console.log(error.response.data)
       }
     });
@@ -123,7 +122,7 @@ class LogIn extends Component {
                         placeholder="Password"/>
                     </Form.Group>
 
-                    <div style={{color:'red', paddingBottom:'10px'}}>{this.state.error_message}</div>
+                    <div style={{color:'red', paddingBottom:'10px'}}>{this.state.errors}</div>
 
                     <Button variant="primary" type="submit" id="userSubmit">
                       Log In

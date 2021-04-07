@@ -16,7 +16,6 @@ class CreateGameForm extends React.Component {
     this.inputChanged = this.inputChanged.bind(this);
     this.createGame = this.createGame.bind(this);
     this.handleModalShowHide = this.handleModalShowHide.bind(this);
-
     
     this.state = {
       showHide : false, // modal default state is hide
@@ -26,17 +25,17 @@ class CreateGameForm extends React.Component {
        * Game data (/api/game)
        */
       gameSettings: {
-        session_length: '',
+        session_length: '24',
         distributorPresent: true, 
         wholesalerPresent: true,
         active: false,
         info_sharing: true,
-        info_delay: '',
-        holding_cost: '',
-        backlog_cost: '',
+        info_delay: '2',
+        holding_cost: '1.0',
+        backlog_cost: '1.0',
         rounds_completed: '0',
         isDefaultGame: true,
-        starting_inventory: '',
+        starting_inventory: '15',
         instructor: '1', // this needs to be current logged in user
       }
     }
@@ -172,6 +171,7 @@ class CreateGameForm extends React.Component {
                     id="demand" 
                     type="number" 
                     name="demand" 
+                    defaultValue="5"
                     // value={this.state.gameSettings.demand}
                     // onChange={this.inputChanged}
                     />
@@ -187,6 +187,7 @@ class CreateGameForm extends React.Component {
                     id="holding_cost" 
                     type="number" 
                     name="holding_cost" 
+                    step="0.5"
                     value={this.state.gameSettings.holding_cost}
                     onChange={this.inputChanged}/>
                 </Form.Group>
@@ -198,6 +199,7 @@ class CreateGameForm extends React.Component {
                     id="backlog_cost" 
                     type="number" 
                     name="backlog_cost" 
+                    step="0.5"
                     value={this.state.gameSettings.backlog_cost}
                     onChange={this.inputChanged}/>
                 </Form.Group>
@@ -208,7 +210,7 @@ class CreateGameForm extends React.Component {
                     required
                     id="starting_inventory" 
                     type="number" 
-                    name="starting_inventory" 
+                    name="starting_inventory"
                     value={this.state.gameSettings.starting_inventory}
                     onChange={this.inputChanged}/>
                 </Form.Group>
@@ -238,9 +240,10 @@ class CreateGameForm extends React.Component {
                     onChange={this.inputChanged}/>
                 </Form.Group>
               </Form.Row>
-              <div style={{color:'red'}}>{this.state.errors}</div>
-            </Modal.Body>
 
+              <div style={{color:'red', paddingBottom:'10px'}}>{this.state.errors}</div>
+            </Modal.Body>
+            
             <Modal.Footer>
               <Button variant="danger" onClick={() => this.handleModalShowHide()}>
                 Cancel

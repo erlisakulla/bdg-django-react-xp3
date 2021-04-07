@@ -41,6 +41,8 @@ class SignUp extends React.Component {
   inputChanged(e) {
     this.setState({errors: null});
 
+    const cred = this.state.credentials;
+
     if (e.target.name === "name") {
       cred.name = e.target.value;
     }
