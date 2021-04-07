@@ -1,27 +1,30 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Modal, Form, Col } from 'react-bootstrap'
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+// import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import axiosInstance from '../../axios'
+import Option from './Option';
+import EditIcon from '@material-ui/icons/Edit';
 
 /**
- * Form component for creating a game
+ * Form component for updating a game
  *
  * @component
  */
-class CreateGameForm extends React.Component {
+class GameUpdateForm extends React.Component {
   constructor(props){
     super(props);
 
     this.inputChanged = this.inputChanged.bind(this);
-    this.createGame = this.createGame.bind(this);
+    this.updateGame = this.updateGame.bind(this);
+    this.getGameSettings = this.getGameSettings.bind(this);
     this.handleModalShowHide = this.handleModalShowHide.bind(this);
-
     
     this.state = {
       showHide : false, // modal default state is hide
       errors: '',
-
+      game: '',
+      
       /**
        * Game data (/api/game)
        */
@@ -50,57 +53,43 @@ class CreateGameForm extends React.Component {
    */
   inputChanged(e) {
     this.setState({errors: null});
-
     const game_settings = this.state.gameSettings;
-    // Checking for distributor
-    if (e.target.name === "distributorPresent") {
-      if (e.target.checked) {
-        game_settings.distributorPresent = e.target.checked;
-      }
-      else {
-        game_settings.distributorPresent = false;
-      }
-    }
-    // Checking for wholesaler 
-    else if (e.target.name === "wholesalerPresent") {
-      if (e.target.checked) {
-        game_settings.wholesalerPresent = e.target.checked;
-      }
-      else {
-        game_settings.wholesalerPresent = false;
-      }
-    }
-    // Other game settings
-    else {
-      game_settings[e.target.name] = e.target.value;
-    }
-
+    game_settings[e.target.name] = e.target.value;
     this.setState({gameSettings: game_settings});
     // console.log(game_settings);
   }
 
   /**
-   * Function to post the data of the form to backend
+   * Function to get the data of the game from backend
+   *
+   * @method
+   */
+  getGameSettings() {
+    // Get game/id settings and fill the form with them
+  }
+
+  /**
+   * Function to update the data of the game
    *
    * @method
    * @param {Object} e event handler
    */
-  createGame(e) {
+  updateGame(e) {
     e.preventDefault();
     // error message
     let errorMessage = this.state.errors;
     /**
-     * gameSettings states instance
+     * createdGame instances
      */
     const createdGame = this.state.gameSettings;
     /**
      * Axios post request
      */
-    axiosInstance.post('http://127.0.0.1:8000/api/game/', createdGame, {crossDomain: true})
+    axiosInstance.post('http://127.0.0.1:8000/api/game/{id}', createdGame, {crossDomain: true})
     .then((res) => {
       console.log(res);
       if (res.status === 201) {
-        alert("Game Created Successfully");
+        alert("Game Updated Successfully");
         // redirecting upon successful registration
         window.location = "/create";
       } 
@@ -108,39 +97,36 @@ class CreateGameForm extends React.Component {
         console.log(res.data);
       }
     })
-    .catch(error => {
-      if(error.response){ 
-        errorMessage = "Couldn't create game. Please fill in all fields.";
-        this.setState({errors: errorMessage});
-        console.log(error.response.data);
-      }
-    });
+    // checking for specific response errors
+    .catch(error => {if(error.response){ 
+      errorMessage = "Couldn't update game settings. Please make sure all fields are valid.";
+      this.setState({errors: errorMessage});
+      console.log(error.response.data);
+    }});
   }
 
   /**
    * Handle to change modal state when clicked on a component
    */
   handleModalShowHide() {
-    this.setState({showHide: !this.state.showHide})
-    this.setState({errors: null});
+      this.setState({showHide: !this.state.showHide})
+      this.setState({errors: null});
   }
 
   render(){
     return(
       <>
-        <div id="createGame">
-          <Button variant="success" onClick={() => this.handleModalShowHide()}>
-            <AddCircleOutlineIcon/> Create Game
-          </Button>
-        </div>
+        <Option name="Edit" icon={<EditIcon id="editIcon" onClick={() => this.handleModalShowHide()}/>} />
         
-        <Form id="createGameForm">
+        <Form>
           <Modal show={this.state.showHide} onHide={() => this.handleModalShowHide()}>
             <Modal.Header closeButton>
-              <Modal.Title>Create Game</Modal.Title>
+              <Modal.Title>Update Game</Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
+              {/* If game is already active or has finished if displays
+              something else, e.g. Can't edit game settings. Game has already started/finished. */}
               <Form.Row>
                 {/* ------- Number of Weeks ------- */}
                 <Form.Group as={Col}>
@@ -213,31 +199,6 @@ class CreateGameForm extends React.Component {
                     onChange={this.inputChanged}/>
                 </Form.Group>
               </Form.Row>
-
-              <Form.Row>
-                {/* ------- Distributor Checkbox ------- */}
-                <Form.Group as={Col}>
-                  <Form.Check 
-                    type="checkbox" 
-                    id="is_wholesaler_present" 
-                    label="Has Wholesaler" 
-                    defaultChecked 
-                    custom
-                    name="wholesalerPresent"
-                    onChange={this.inputChanged}/>
-                </Form.Group>
-                {/* ------- Wholesaler Checkbox ------- */}
-                <Form.Group as={Col}>
-                  <Form.Check 
-                    type="checkbox" 
-                    id="is_distributor_present" 
-                    label="Has Distributor" 
-                    defaultChecked 
-                    custom
-                    name="distributorPresent"
-                    onChange={this.inputChanged}/>
-                </Form.Group>
-              </Form.Row>
               <div style={{color:'red'}}>{this.state.errors}</div>
             </Modal.Body>
 
@@ -245,7 +206,7 @@ class CreateGameForm extends React.Component {
               <Button variant="danger" onClick={() => this.handleModalShowHide()}>
                 Cancel
               </Button>
-              <Button variant="primary" type="submit" id="createGameBtn" onClick={this.createGame}>
+              <Button variant="primary" type="submit" id="createGameBtn" onClick={this.updateGame}>
                 Create
               </Button>
             </Modal.Footer>
@@ -256,4 +217,4 @@ class CreateGameForm extends React.Component {
   }
 }
 
-export default CreateGameForm;
+export default GameUpdateForm;

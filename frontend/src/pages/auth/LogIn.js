@@ -16,13 +16,16 @@ class LogIn extends Component {
     this.onChangeInput = this.onChangeInput.bind(this);
     this.login = this.login.bind(this);
 
-    /**
-     * User data (/api/token)
-     */
-    this.state = {
+     this.state = {
+      errors: '',
+      
+      /**
+       * User data (/api/token)
+       */
       credentials: {
         email: '',
         password: '',
+        error_message: '',
       }
     }
   }
@@ -33,9 +36,9 @@ class LogIn extends Component {
    * @method
    * @param {Object} e event handler
    */
-  onChangeInput = event => {
+  onChangeInput(e) {
     const cred = this.state.credentials;
-    cred[event.target.name] = event.target.value;
+    cred[e.target.name] = event.target.value;
     this.setState({credentials: cred});
     // console.log(cred);
   }
@@ -46,7 +49,7 @@ class LogIn extends Component {
    * @method
    * @param {Object} e event handler
    */
-  login = (e) => {
+  login(e) {
     e.preventDefault();
     const loginUser = this.state.credentials;
 
@@ -66,7 +69,13 @@ class LogIn extends Component {
         console.log(res.data);
       }
     })
-    .catch(error => {if(error.response){ console.log(error.response.data)}})
+    .catch(error => {
+      if(error.response) { 
+        const errm = "Invalid password or username";
+        this.setState({error_message: errm});
+        console.log(error.response.data)
+      }
+    });
   }
 
   render() {
@@ -113,6 +122,8 @@ class LogIn extends Component {
                         onChange={this.onChangeInput}
                         placeholder="Password"/>
                     </Form.Group>
+
+                    <div style={{color:'red', paddingBottom:'10px'}}>{this.state.error_message}</div>
 
                     <Button variant="primary" type="submit" id="userSubmit">
                       Log In

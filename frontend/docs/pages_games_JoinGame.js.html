@@ -30,8 +30,10 @@
 import '../../css/Main.css';
 import Navbar from '../components/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Table, Card, Nav } from 'react-bootstrap';
+import { Card, Nav } from 'react-bootstrap';
 import GameRegisterForm from '../components/GameRegisterForm';
+import RegisteredGamesList from '../components/RegisteredGamesList';
+import axiosInstance from '../../axios'
 
 /**
  * Join Games page 
@@ -39,6 +41,34 @@ import GameRegisterForm from '../components/GameRegisterForm';
  * @component
  */
 class JoinGames extends Component {
+  constructor(props) {
+    super(props)
+
+    this.componentDidMount = this.componentDidMount.bind(this);
+    
+    /**
+     * Games display states
+     */
+    this.state = {
+      roles: null,
+      message: 'No games to display',
+    }
+  }
+
+  /**
+   * Method to get all games
+   *
+   * @method
+   */
+   componentDidMount() {
+    axiosInstance.get('http://127.0.0.1:8000/api/role/').then((res) => {
+      const allRoles = res.data;
+      this.setState({roles: allRoles});
+      console.log(res.data);
+    })
+    .catch(error => {if(error.response){console.log(error.response.data);}});
+  }
+
   render() {
     return (
       &lt;> 
@@ -46,7 +76,7 @@ class JoinGames extends Component {
 
         &lt;div className="main-container">
           &lt;h2>Join Games&lt;/h2>
-          &lt;p>Here you can view and join all games you have registered for.&lt;/p>
+          &lt;p>Here you can register to games, view and join all games you have registered for.&lt;/p>
           &lt;hr/>
 
           &lt;Card>
@@ -68,33 +98,7 @@ class JoinGames extends Component {
               {/* Form for registering for a game */}
               &lt;GameRegisterForm/>
               {/* ------- Table with games to join ------- */}
-              &lt;Table responsive className="gamesList">
-                &lt;thead>
-                  &lt;tr>
-                    &lt;th>Game ID&lt;/th>
-                    &lt;th>Current Week&lt;/th>
-                    &lt;th>Role Name&lt;/th>
-                    &lt;th>Completed/Ongoing&lt;/th>
-                    &lt;th>Your Cost&lt;/th>
-                    &lt;th>Total Cost&lt;/th>
-                    &lt;th>&lt;/th>
-                    &lt;th>&lt;/th>
-                  &lt;/tr>
-                &lt;/thead>
-                {/* Dummy data, should display list of registered games and roles with links to join */}
-                &lt;tbody>
-                  &lt;tr>
-                    &lt;th>1&lt;/th>
-                    &lt;td>3/24&lt;/td>
-                    &lt;td>RETAILER&lt;/td>
-                    &lt;td>Ongoing&lt;/td>
-                    &lt;td>50&lt;/td>
-                    &lt;td>250&lt;/td>
-                    &lt;td>&lt;a href="/gameview">Enter Game&lt;/a>&lt;/td>
-                    &lt;td>&lt;a href="/join">View Insights&lt;/a>&lt;/td>
-                  &lt;/tr>
-                &lt;/tbody>
-              &lt;/Table>
+              &lt;RegisteredGamesList roles={this.state.roles} message={this.state.message}/>
             &lt;/Card.Body>
           &lt;/Card>
         &lt;/div>
@@ -113,13 +117,13 @@ export default JoinGames;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CreateGames.html">CreateGames</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="GameInsights.html">GameInsights</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="GameView.html">GameView</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Option">Option</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameInsights.html">GameInsights</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="GameUpdateForm.html">GameUpdateForm</a></li><li><a href="GameView.html">GameView</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="Players.html">Players</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Apr 06 2021 20:55:16 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 09:40:06 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -30,13 +30,13 @@
 import './css/App.css';
 import LogIn from './pages/auth/LogIn';
 import SignUp from './pages/auth/Register';
-import CreateGames from './pages/games/CreateGame';
+import Dashboard from './pages/games/Dashboard';
 import MonitorGames from './pages/games/MonitorGame';
 import JoinGames from './pages/games/JoinGame';
 import GameView from './pages/games/GameView';
 import AccountSettings from './pages/auth/AccountSettings';
 import GameInsights from './pages/games/GameInsights';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 /**
  * Sets up paths to pages
@@ -44,19 +44,57 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
  * @component
  */
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    // this.componentDidMount = this.componentDidMount.bind(this);
+
+    this.state = {
+      /**
+       * Defines if user is logged in or not
+       */
+      logged_in: localStorage.getItem('access_token') ? true : false,
+      is_session_expired: false,
+    };
+  }
+
+  // try in each page with get methods to check for 401 unauthorized 
+
+  // componentDidMount() {
+  //   if (this.state.is_session_expired === false &amp;&amp; this.state.logged_in === true) {
+  //     axiosInstance.post('http://127.0.0.1:8000/api/token/refresh/')
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch(error => {
+  //       if(error.response){
+  //         console.log(error.response.data);
+  //         localStorage.removeItem('access_token');
+  //         localStorage.removeItem('refresh_token');
+  //         axiosInstance.defaults.headers['Authorization'] = null;
+          
+  //         // const session = true;
+  //         // this.setState({logged_in: false});
+  //         this.setState({is_session_expired: true});
+  //         }
+  //       }
+  //     );
+  //   }
+  // }
+  
   render() {
     return (
       &lt;>
         &lt;Router>
           &lt;Switch>
-            &lt;Route exact path="/" component={LogIn}/>
-            &lt;Route exact path="/signup" component={SignUp}/>
-            &lt;Route path="/create" component={CreateGames}/>
-            &lt;Route path="/monitor" component={MonitorGames}/>
-            &lt;Route path="/join" component={JoinGames}/>
-            &lt;Route exact path="/gameview" component={GameView}/>
-            &lt;Route exact path="/settings" component={AccountSettings}/>
-            &lt;Route exact path="/insights" component={GameInsights}/>
+            &lt;LoggedInRoute exact logged_in={this.state.logged_in} path="/" component={LogIn}/>
+            &lt;LoggedInRoute exact logged_in={this.state.logged_in} path="/signup" component={SignUp}/>
+            &lt;PrivateRoute logged_in={this.state.logged_in} path="/create" component={Dashboard}/>
+            &lt;PrivateRoute logged_in={this.state.logged_in} path="/monitor" component={MonitorGames}/>
+            &lt;PrivateRoute logged_in={this.state.logged_in} path="/join" component={JoinGames}/>
+            &lt;PrivateRoute logged_in={this.state.logged_in} path="/gameview" component={GameView}/>
+            &lt;PrivateRoute logged_in={this.state.logged_in} path="/insights" component={GameInsights}/>
+            &lt;PrivateRoute logged_in={this.state.logged_in} path='/settings' component={AccountSettings} />
       
             {/* &lt;Route exact path="/gameview/game/:id" component={GameView}/> */}
             {/* &lt;Route exact path="/insights/game/:id" component={GameInsights}/> */}
@@ -71,7 +109,45 @@ class App extends React.Component {
   }
 }
 
-export default App;</code></pre>
+export default App;
+
+/**
+ * If user isn't logged in, gets redirected to login page
+ *
+ * @component
+ * @param {Component} component Route component to be made private
+ * @param {boolean} logged_in Boolean value whether user is logged in or not
+ */
+function PrivateRoute ({component: Component, logged_in, ...rest}) {
+  return (
+    &lt;Route
+      {...rest}
+      render = {(props) => logged_in === true
+        ? &lt;Component {...props}/>
+        : &lt;Redirect to={{pathname: '/', state: {from: props.location}}}/>
+      }
+    />
+  )
+}
+
+/**
+ * If user is logged in, gets redirected to /create
+ *
+ * @component
+ * @param {Component} component Route component to be redirected
+ * @param {boolean} logged_in Boolean value whether user is logged in or not
+ */
+function LoggedInRoute ({component: Component, logged_in, ...rest}) {
+  return (
+    &lt;Route
+      {...rest}
+      render = {(props) => logged_in === true
+        ? &lt;Redirect to={{pathname: '/create', state: {from: props.location}}}/>
+        : &lt;Component {...props}/>
+      }
+    />
+  )
+}</code></pre>
         </article>
     </section>
 
@@ -81,13 +157,13 @@ export default App;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CreateGames.html">CreateGames</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="GameInsights.html">GameInsights</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="GameView.html">GameView</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Option">Option</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameInsights.html">GameInsights</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="GameUpdateForm.html">GameUpdateForm</a></li><li><a href="GameView.html">GameView</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="Players.html">Players</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Apr 06 2021 20:55:16 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 09:40:06 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

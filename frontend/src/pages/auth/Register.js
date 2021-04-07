@@ -21,6 +21,8 @@ class SignUp extends React.Component {
      * User data (/api/user)
      */
     this.state = {
+      errors: '',
+
       credentials: {
         email: '',
         name: '', 
@@ -36,24 +38,24 @@ class SignUp extends React.Component {
    * @method
    * @param {Object} e event handler
    */
-  inputChanged = event => {
-    const cred = this.state.credentials;
+  inputChanged(e) {
+    this.setState({errors: null});
 
-    if (event.target.name === "name") {
-      cred.name = event.target.value;
+    if (e.target.name === "name") {
+      cred.name = e.target.value;
     }
-    else if (event.target.name === "email") {
-      cred.email = event.target.value;
+    else if (e.target.name === "email") {
+      cred.email = e.target.value;
     }
-    else if (event.target.name === "password") {
-      cred.password = event.target.value;
+    else if (e.target.name === "password") {
+      cred.password = e.target.value;
     }
-    else if (event.target.name === "is_instructor") {
-      this.setState({selectedOption: event.target.value});
-      if (event.target.value === "true") {
-        cred.is_instructor = event.target.checked;
+    else if (e.target.name === "is_instructor") {
+      this.setState({selectedOption: e.target.value});
+      if (e.target.value === "true") {
+        cred.is_instructor = e.target.checked;
       }
-      else if (event.target.value === "false") {
+      else if (e.target.value === "false") {
         cred.is_instructor = false;
       }
     }
@@ -67,7 +69,7 @@ class SignUp extends React.Component {
    * @method
    * @param {Object} e event handler
    */
-  register = (e) => {
+  register(e) {
     e.preventDefault();
     const registerUser = this.state.credentials;
   
@@ -82,7 +84,13 @@ class SignUp extends React.Component {
         console.log(res.data);
       }
     })
-    .catch(error => {if(error.response){ console.log(error.response.data) }})
+    .catch(error => {
+      if(error.response) { 
+        const errm = "User with that email already exists";
+        this.setState({errors: errm});
+        console.log(error.response.data)
+      }
+    });
   }
 
   render() {
@@ -184,7 +192,7 @@ class SignUp extends React.Component {
                       </Form.Row>
                     </Form.Group>
 
-                    {/* { content } */}
+                    <div style={{color:'red', paddingBottom:'10px'}}>{this.state.errors}</div>
                       
                     <Button variant="primary" type="submit" id="userSubmit">
                       Sign Up

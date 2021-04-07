@@ -2,13 +2,13 @@ import React from 'react';
 import './css/App.css';
 import LogIn from './pages/auth/LogIn';
 import SignUp from './pages/auth/Register';
-import CreateGames from './pages/games/CreateGame';
+import Dashboard from './pages/games/Dashboard';
 import MonitorGames from './pages/games/MonitorGame';
 import JoinGames from './pages/games/JoinGame';
 import GameView from './pages/games/GameView';
 import AccountSettings from './pages/auth/AccountSettings';
 import GameInsights from './pages/games/GameInsights';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 /**
  * Sets up paths to pages
@@ -16,19 +16,57 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
  * @component
  */
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    // this.componentDidMount = this.componentDidMount.bind(this);
+
+    this.state = {
+      /**
+       * Defines if user is logged in or not
+       */
+      logged_in: localStorage.getItem('access_token') ? true : false,
+      is_session_expired: false,
+    };
+  }
+
+  // try in each page with get methods to check for 401 unauthorized 
+
+  // componentDidMount() {
+  //   if (this.state.is_session_expired === false && this.state.logged_in === true) {
+  //     axiosInstance.post('http://127.0.0.1:8000/api/token/refresh/')
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch(error => {
+  //       if(error.response){
+  //         console.log(error.response.data);
+  //         localStorage.removeItem('access_token');
+  //         localStorage.removeItem('refresh_token');
+  //         axiosInstance.defaults.headers['Authorization'] = null;
+          
+  //         // const session = true;
+  //         // this.setState({logged_in: false});
+  //         this.setState({is_session_expired: true});
+  //         }
+  //       }
+  //     );
+  //   }
+  // }
+  
   render() {
     return (
       <>
         <Router>
           <Switch>
-            <Route exact path="/" component={LogIn}/>
-            <Route exact path="/signup" component={SignUp}/>
-            <Route path="/create" component={CreateGames}/>
-            <Route path="/monitor" component={MonitorGames}/>
-            <Route path="/join" component={JoinGames}/>
-            <Route exact path="/gameview" component={GameView}/>
-            <Route exact path="/settings" component={AccountSettings}/>
-            <Route exact path="/insights" component={GameInsights}/>
+            <LoggedInRoute exact logged_in={this.state.logged_in} path="/" component={LogIn}/>
+            <LoggedInRoute exact logged_in={this.state.logged_in} path="/signup" component={SignUp}/>
+            <PrivateRoute logged_in={this.state.logged_in} path="/create" component={Dashboard}/>
+            <PrivateRoute logged_in={this.state.logged_in} path="/monitor" component={MonitorGames}/>
+            <PrivateRoute logged_in={this.state.logged_in} path="/join" component={JoinGames}/>
+            <PrivateRoute logged_in={this.state.logged_in} path="/gameview" component={GameView}/>
+            <PrivateRoute logged_in={this.state.logged_in} path="/insights" component={GameInsights}/>
+            <PrivateRoute logged_in={this.state.logged_in} path='/settings' component={AccountSettings} />
       
             {/* <Route exact path="/gameview/game/:id" component={GameView}/> */}
             {/* <Route exact path="/insights/game/:id" component={GameInsights}/> */}
@@ -44,3 +82,41 @@ class App extends React.Component {
 }
 
 export default App;
+
+/**
+ * If user isn't logged in, gets redirected to login page
+ *
+ * @component
+ * @param {Component} component Route component to be made private
+ * @param {boolean} logged_in Boolean value whether user is logged in or not
+ */
+function PrivateRoute ({component: Component, logged_in, ...rest}) {
+  return (
+    <Route
+      {...rest}
+      render = {(props) => logged_in === true
+        ? <Component {...props}/>
+        : <Redirect to={{pathname: '/', state: {from: props.location}}}/>
+      }
+    />
+  )
+}
+
+/**
+ * If user is logged in, gets redirected to /create
+ *
+ * @component
+ * @param {Component} component Route component to be redirected
+ * @param {boolean} logged_in Boolean value whether user is logged in or not
+ */
+function LoggedInRoute ({component: Component, logged_in, ...rest}) {
+  return (
+    <Route
+      {...rest}
+      render = {(props) => logged_in === true
+        ? <Redirect to={{pathname: '/create', state: {from: props.location}}}/>
+        : <Component {...props}/>
+      }
+    />
+  )
+}

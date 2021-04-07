@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../../css/Main.css';
 import Navbar from '../components/Navbar';
+import CreateGameForm from '../components/GameCreationForm';
+import GamesList from '../components/GamesList';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Nav } from 'react-bootstrap';
-import GameRegisterForm from '../components/GameRegisterForm';
-import RegisteredGamesList from '../components/RegisteredGamesList';
 import axiosInstance from '../../axios'
 
 /**
- * Join Games page 
+ * Dashboard page 
  *
  * @component
  */
-class JoinGames extends Component {
+class Dashboard extends React.Component {
   constructor(props) {
     super(props)
 
@@ -22,7 +22,7 @@ class JoinGames extends Component {
      * Games display states
      */
     this.state = {
-      roles: null,
+      games: null,
       message: 'No games to display',
     }
   }
@@ -32,10 +32,10 @@ class JoinGames extends Component {
    *
    * @method
    */
-   componentDidMount() {
-    axiosInstance.get('http://127.0.0.1:8000/api/role/').then((res) => {
-      const allRoles = res.data;
-      this.setState({roles: allRoles});
+  componentDidMount() {
+    axiosInstance.get('http://127.0.0.1:8000/api/game/').then((res) => {
+      const allGames = res.data;
+      this.setState({games: allGames});
       console.log(res.data);
     })
     .catch(error => {if(error.response){console.log(error.response.data);}});
@@ -45,32 +45,32 @@ class JoinGames extends Component {
     return (
       <> 
         <Navbar/>
-
+        
         <div className="main-container">
-          <h2>Join Games</h2>
-          <p>Here you can register to games, view and join all games you have registered for.</p>
+          <h2>Created Games</h2>
+          <p>Here you can view, edit and delete all the games you have created.</p>
           <hr/>
 
           <Card>
             <Card.Header>
               <Nav variant="tabs">
                 <Nav.Item>
-                  <Nav.Link href="/create">Setup Games</Nav.Link>
+                  <Nav.Link href="/create" className="active">Setup Games</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                   <Nav.Link href="/monitor">Monitor Games</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link href="/join" className="active">Join Games</Nav.Link>
+                  <Nav.Link href="/join">Join Games</Nav.Link>
                 </Nav.Item>
               </Nav>
             </Card.Header>
-
+            
             <Card.Body>
-              {/* Form for registering for a game */}
-              <GameRegisterForm/>
-              {/* ------- Table with games to join ------- */}
-              <RegisteredGamesList roles={this.state.roles} message={this.state.message}/>
+              {/* Form for creating game */}
+              <CreateGameForm/>
+              {/* ------- Created Games Table ------- */}
+              <GamesList games={this.state.games} message={this.state.message}/>
             </Card.Body>
           </Card>
         </div>
@@ -79,4 +79,4 @@ class JoinGames extends Component {
   }
 }
 
-export default JoinGames;
+export default Dashboard;

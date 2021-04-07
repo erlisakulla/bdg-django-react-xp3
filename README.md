@@ -7,11 +7,12 @@ SE Sprint 03, Team 32, Date: 13.04.2021
 - [Project Overview](#project-overview)
   * [Backend](#backend)
   * [Frontend](#frontend)
-    + [Setup](#setup)
-    + [Dependencies](#dependencies)
-    + [File Structure](#file-structure)
+    + [Setup](#setup-1)
+    + [Dependencies](#dependencies-1)
+    + [File Structure](#file-structure-1)
     + [Documentation](#documentation)
     + [Tests](#tests)
+    + [Future Implementaion](#future-implementaion)
 - [Bonus](#bonus)
 
 # Overview of Changes From Last Sprint
@@ -75,17 +76,21 @@ frontend
 |   |   ├── index.css                    # css file corresponding to index.js (no need to change)
 |   |   └── Main.css                     # css file corresponding to the rest of the project
 │   ├── pages
-|   |   ├── auth     
+|   |   ├── auth                         # pages handling user data
 |   |   |   ├── AccountSettings.js       # designated page to change password or delete account 
 |   |   |   ├── LogIn.js                 # user log in page
 |   |   |   └── Register.js              # user registration page
-│   |   ├── components
+│   |   ├── components                   # reusable components
 |   |   |   ├── GameCreationForm.js      # game creation form component (button and modal)
-|   |   |   ├── GameRegisterForm.js      # game registration form copmonent (button and modal)
+|   |   |   ├── GameRegisterForm.js      # game registration form copmonent
+|   |   |   ├── GamesList.js             # component that maps games in table
+|   |   |   ├── GameUpdateForm.js        # game update form copmonent (icon and modal)
 |   |   |   ├── Navbar.js                # navbar component
-|   |   |   └── Option.js                # component for using icons and tooltips
-|   |   └── games            
-|   |       ├── CreateGame.js            # displays all created games by the user
+|   |   |   ├── Option.js                # component for using icons and tooltips
+|   |   |   ├── PlayersPopover.js        # component for displaying players of selected games
+|   |   |   └── RegisteredGamesList.js   # list of games user is registered for
+|   |   └── games                        # main rendered pages
+|   |       ├── Dashboard.js             # displays all created games by the user
 |   |       ├── GameInsights.js          # displays game insights and plots after a game is finished
 |   |       ├── GameView.js              # main game view where the user can submit the order
 |   |       ├── JoinGame.js              # displays registered games
@@ -112,7 +117,7 @@ npm install -g jsdoc
 ```
 npm run doc
 ```
-3. Open the [`index.html`](frontend/docs/index.html) file (locally is fine), found in the [`docs`](frontend/docs) directory, to see the generated documentation
+3. Open the [`index.html`]([`docs`](frontend/docs/index.html)) file (locally is fine), found in the [`docs`](frontend/docs) directory, to see the generated documentation
 
 For more information check out the [JSDoc repository](https://github.com/jsdoc/jsdoc) or this [Style Guide](https://github.com/shri/JSDoc-Style-Guide#links).
 

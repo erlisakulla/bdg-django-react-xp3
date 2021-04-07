@@ -48,6 +48,33 @@ body {
   padding: 30px;
 }
 
+.main-container-register {
+  width: 350px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+
+#deleteIcon {
+  color: #ff2b1c;
+  opacity: 70%;
+}
+
+#pauseIcon {
+  color: rgb(0, 89, 255);
+  opacity: 70%;
+}
+
+#editIcon {
+  color: rgb(44, 44, 44);
+  opacity: 70%;
+}
+
+#deleteIcon:hover, #pauseIcon:hover, #editIcon:hover {
+  opacity: 100%;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
 #createGame {
   padding-bottom: 20px;;
 }

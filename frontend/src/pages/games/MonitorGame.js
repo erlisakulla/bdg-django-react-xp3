@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import '../../css/Main.css';
 import Navbar from '../components/Navbar';
-import Option from '../components/Option';
+// import Option from '../components/Option';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Table, Card, Nav } from 'react-bootstrap';
-import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import EditIcon from '@material-ui/icons/Edit';
+import { Table, Card, Nav } from 'react-bootstrap';
+// import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
+// import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+// import EditIcon from '@material-ui/icons/Edit';
 
 /**
  * Monitor Games page 
@@ -60,7 +60,7 @@ class MonitorGames extends Component {
                 </thead>
                 {/* Dummy data */}
                 <tbody>
-                  <tr>
+                  {/* <tr>
                     <th>1</th>
                     <td>2 weeks</td>
                     <td>1</td>
@@ -77,7 +77,7 @@ class MonitorGames extends Component {
                       <Option name="Edit" icon={<EditIcon/>}/>
                       <Option name="Delete" icon={<DeleteOutlineIcon/>}/>
                     </td>
-                  </tr>
+                  </tr> */}
                 </tbody>
               </Table>
             </Card.Body>

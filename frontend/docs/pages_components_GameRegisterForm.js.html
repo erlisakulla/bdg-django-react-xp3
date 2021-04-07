@@ -30,7 +30,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Modal, Form } from 'react-bootstrap'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-// import axios from 'axios';
+import axiosInstance from '../../axios'
 
 /**
  * Form component for registering to a game
@@ -38,81 +38,202 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
  * @component
  */
 class GameRegisterForm extends React.Component {
-  constructor(){
-    super();
+  constructor(props) {
+    super(props)
+
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.onSelectGame = this.onSelectGame.bind(this);
+    this.onSelectRole = this.onSelectRole.bind(this);
+    this.registerToGame = this.registerToGame.bind(this);
+    
     /**
      * Role data (/api/role)
      */
     this.state = {
-      showHide : false, // modal default state is hide
-      
-      roleSettings: {
-        // states of roles according to django model
+      errors: '',
+      games: '',
+      selected_game: '',
+      roles: '',
+      selected_role: '',
+
+      role_register: {
+        playedBy: 2,
       }
     }
   }
 
   /**
-   * Handle to change modal state when clicked on a component
+   * Method to get all games
+   *
+   * @method
    */
-  handleModalShowHide() {
-      this.setState({showHide: !this.state.showHide})
+  componentDidMount() {
+    axiosInstance.get('http://127.0.0.1:8000/api/game/').then((res) => {
+      const allGames = res.data;
+      this.setState({games: allGames});
+      // console.log(res.data);
+    })
+    .catch(error => {if(error.response){console.log(error.response.data);}});
+  }
+
+  /**
+   * Method to get all roles of selected game
+   *
+   * @method
+   * @param {Object} e event handler
+   */
+  onSelectGame(e) {
+    this.setState({errors: null});
+
+    const sel = this.state;
+    sel.selected_game = e.target.value;
+    console.log(this.state.selected_game);
+    
+    const gameid = this.state.selected_game;
+    axiosInstance.get(`http://127.0.0.1:8000/api/game/${gameid}/getroles`).then((res) => {
+      const allGames = res.data;
+      this.setState({roles: allGames});
+      // console.log(res.data);
+    })
+    .catch(error => {if(error.response){console.log(error.response.data);}});
+  }
+
+   /**
+   * Method to get selected role
+   *
+   * @method
+   * @param {Object} e event handler
+   */
+    onSelectRole(e) {
+      this.setState({errors: null});
+  
+      const sel = this.state;
+      sel.selected_role = e.target.value;
+      console.log(this.state.selected_role);
+    }
+  
+  registerToGame(e) {
+    e.preventDefault();
+    
+    let errorMessage = this.state.errors;
+    /**
+     * createdGame instances
+     */
+    const registerToGame = this.state.role_register;
+    const roleid = this.state.selected_role;
+    /**
+     * Axios post request
+     */
+    axiosInstance.patch(`http://127.0.0.1:8000/api/role/${roleid}/register/`, registerToGame, {crossDomain: true})
+    .then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        alert("Registered successfully");
+        // redirecting upon successful registration
+        window.location = "/join";
+      } 
+      else {
+        console.log(res.data);
+      }
+    })
+    .catch(error => {if(error.response){ 
+      errorMessage = "Couldn't register to game. Please try again.";
+      this.setState({errors: errorMessage});
+      console.log(error.response.data);
+    }});
   }
 
   render(){
     return(
-      &lt;>
-        &lt;div id="createGame">
-          &lt;Button variant="primary" onClick={() => this.handleModalShowHide()}>
+      &lt;div className="main-container-register">
+        &lt;Form style={{textAlign:'center'}} onSubmit={this.registerToGame}>
+          {/* ------- Game Selector ------- */}
+          &lt;Form.Label>Game&lt;/Form.Label>
+          &lt;Form.Control 
+            as="select" 
+            id="role_selector" 
+            custom 
+            defaultValue="def" 
+            onChange={this.onSelectGame}>
+              &lt;option value="def" disabled>Choose game..&lt;/option>
+              &lt;GamesList games={this.state.games}/>
+          &lt;/Form.Control>
+          {/* ------- Role Selector ------- */}
+          &lt;Form.Group>
+            &lt;Form.Label>Role&lt;/Form.Label>
+            &lt;Form.Control 
+              as="select" 
+              id="role_selector" 
+              custom 
+              defaultValue="def" 
+              onChange={this.onSelectRole}>
+                &lt;option value="def" disabled>Choose role..&lt;/option>
+                &lt;RolesList roles={this.state.roles}/>
+            &lt;/Form.Control>
+          &lt;/Form.Group>
+
+          &lt;div style={{color:'red', paddingBottom:'10px'}}>{this.state.errors}&lt;/div>
+
+          &lt;Button variant="primary" type="submit">
             &lt;ExitToAppIcon/> Register to Game
           &lt;/Button>
-        &lt;/div>
-
-        &lt;Form id="createGameForm">
-          &lt;Modal show={this.state.showHide} onHide={() => this.handleModalShowHide()}>
-            &lt;Modal.Header closeButton>
-              &lt;Modal.Title>Register to Game&lt;/Modal.Title>
-            &lt;/Modal.Header>
-
-            &lt;Modal.Body>
-              &lt;Form>
-                {/* ------- Game Selector ------- */}
-                &lt;Form.Group>
-                  &lt;Form.Label>Game&lt;/Form.Label>
-                  &lt;Form.Control as="select" id="retailer" custom defaultValue="def">
-                    &lt;option value="def" disabled>Choose game..&lt;/option>
-                    &lt;option value="1">game1&lt;/option>
-                    &lt;option value="2">game2&lt;/option>
-                  &lt;/Form.Control>
-                &lt;/Form.Group>
-                {/* ------- Role Selector ------- */}
-                &lt;Form.Group>
-                  &lt;Form.Label>Role&lt;/Form.Label>
-                  &lt;Form.Control as="select" id="wholesaler" custom defaultValue="def">
-                    &lt;option value="def" disabled>Choose role..&lt;/option>
-                    &lt;option value="1">role1&lt;/option>
-                    &lt;option value="2">role2&lt;/option>
-                  &lt;/Form.Control>
-                &lt;/Form.Group>
-              &lt;/Form>
-            &lt;/Modal.Body>
-
-            &lt;Modal.Footer>
-              &lt;Button variant="danger" onClick={() => this.handleModalShowHide()}>
-                Cancel
-              &lt;/Button>
-              &lt;Button variant="primary" type="submit" id="createGameBtn" onClick={this.createGame}>
-                Create
-              &lt;/Button>
-            &lt;/Modal.Footer>
-          &lt;/Modal>
-        &lt;/Form>
-      &lt;/>
+        &lt;/Form> 
+      &lt;/div>
     );
   }
 }
 
-export default GameRegisterForm;</code></pre>
+export default GameRegisterForm;
+
+/**
+ * Component to display all games in select
+ *
+ * @component
+ */
+const GamesList = (props) => {
+	const { games } = props;
+
+	if (!games || games.length === 0) {
+		return ( 
+			&lt;option value="none" disabled>No games to display&lt;/option>
+		);
+	}
+
+	return (
+    &lt;>
+      {games.map((game) => {
+        return(
+          &lt;option key={game.id} value={game.id}>Game {game.id}&lt;/option>
+        );
+      })}
+    &lt;/>
+	)
+}
+
+/**
+ * Component to display all roles of selected game
+ *
+ * @component
+ */
+const RolesList = (props) => {
+	const { roles } = props;
+
+	if (!roles || roles.length === 0) {
+		return ( 
+			&lt;option value="none" disabled>No roles to display&lt;/option>
+		);
+	}
+  
+  return (
+    &lt;>
+      {roles.map((role) => {
+        return(
+          &lt;option key={role.id} value={role.id}>{role.roleName}&lt;/option>
+        );
+      })}
+    &lt;/>
+	)
+}</code></pre>
         </article>
     </section>
 
@@ -122,13 +243,13 @@ export default GameRegisterForm;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CreateGames.html">CreateGames</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="GameInsights.html">GameInsights</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="GameView.html">GameView</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Option">Option</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameInsights.html">GameInsights</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="GameUpdateForm.html">GameUpdateForm</a></li><li><a href="GameView.html">GameView</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="Players.html">Players</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Apr 06 2021 20:55:16 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 09:40:06 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

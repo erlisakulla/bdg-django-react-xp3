@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: pages/games/GameInsights.js</title>
+    <title>JSDoc: Source: pages/games/Dashboard.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: pages/games/GameInsights.js</h1>
+    <h1 class="page-title">Source: pages/games/Dashboard.js</h1>
 
     
 
@@ -26,26 +26,80 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react';
+            <pre class="prettyprint source linenums"><code>import React from 'react';
 import '../../css/Main.css';
 import Navbar from '../components/Navbar';
+import CreateGameForm from '../components/GameCreationForm';
+import GamesList from '../components/GamesList';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Card } from 'react-bootstrap';
+import { Card, Nav } from 'react-bootstrap';
+import axiosInstance from '../../axios'
 
 /**
- * Displays selected Game Insights 
+ * Dashboard page 
  *
  * @component
  */
-class GameInsights extends Component {
+class Dashboard extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.componentDidMount = this.componentDidMount.bind(this);
+    
+    /**
+     * Games display states
+     */
+    this.state = {
+      games: null,
+      message: 'No games to display',
+    }
+  }
+
+  /**
+   * Method to get all games
+   *
+   * @method
+   */
+  componentDidMount() {
+    axiosInstance.get('http://127.0.0.1:8000/api/game/').then((res) => {
+      const allGames = res.data;
+      this.setState({games: allGames});
+      console.log(res.data);
+    })
+    .catch(error => {if(error.response){console.log(error.response.data);}});
+  }
+
   render() {
     return (
       &lt;> 
         &lt;Navbar/>
         
         &lt;div className="main-container">
+          &lt;h2>Created Games&lt;/h2>
+          &lt;p>Here you can view, edit and delete all the games you have created.&lt;/p>
+          &lt;hr/>
+
           &lt;Card>
+            &lt;Card.Header>
+              &lt;Nav variant="tabs">
+                &lt;Nav.Item>
+                  &lt;Nav.Link href="/create" className="active">Setup Games&lt;/Nav.Link>
+                &lt;/Nav.Item>
+                &lt;Nav.Item>
+                  &lt;Nav.Link href="/monitor">Monitor Games&lt;/Nav.Link>
+                &lt;/Nav.Item>
+                &lt;Nav.Item>
+                  &lt;Nav.Link href="/join">Join Games&lt;/Nav.Link>
+                &lt;/Nav.Item>
+              &lt;/Nav>
+            &lt;/Card.Header>
             
+            &lt;Card.Body>
+              {/* Form for creating game */}
+              &lt;CreateGameForm/>
+              {/* ------- Created Games Table ------- */}
+              &lt;GamesList games={this.state.games} message={this.state.message}/>
+            &lt;/Card.Body>
           &lt;/Card>
         &lt;/div>
       &lt;/>
@@ -53,7 +107,7 @@ class GameInsights extends Component {
   }
 }
 
-export default GameInsights;</code></pre>
+export default Dashboard;</code></pre>
         </article>
     </section>
 
