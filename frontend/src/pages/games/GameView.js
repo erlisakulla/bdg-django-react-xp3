@@ -61,6 +61,7 @@ class GameView extends Component {
                 </div>
                 <input type="submit" className="btn btn-primary mb-2"/>
               </form>
+              {/* Display sth else if order is not submitted yet */}
             </div>
 
             {/* -------SCREEN 2 ------- */}

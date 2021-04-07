@@ -96,7 +96,7 @@ frontend
 |   |   |   ├── GameUpdateForm.js        # game update form copmonent (icon and modal)
 |   |   |   ├── Navbar.js                # navbar component
 |   |   |   ├── Option.js                # component for using icons and tooltips
-|   |   |   ├── PlayersPopover.js        # component for displaying players of selected games
+|   |   |   ├── PlayersList.js           # component for displaying players of selected games
 |   |   |   └── RegisteredGamesList.js   # list of games user is registered for
 |   |   └── games                        # main rendered pages
 |   |       ├── Dashboard.js             # displays all created games by the user

@@ -44,7 +44,6 @@ class CreateGameForm extends React.Component {
     this.inputChanged = this.inputChanged.bind(this);
     this.createGame = this.createGame.bind(this);
     this.handleModalShowHide = this.handleModalShowHide.bind(this);
-
     
     this.state = {
       showHide : false, // modal default state is hide
@@ -54,17 +53,17 @@ class CreateGameForm extends React.Component {
        * Game data (/api/game)
        */
       gameSettings: {
-        session_length: '',
+        session_length: '24',
         distributorPresent: true, 
         wholesalerPresent: true,
         active: false,
         info_sharing: true,
-        info_delay: '',
-        holding_cost: '',
-        backlog_cost: '',
+        info_delay: '2',
+        holding_cost: '1.0',
+        backlog_cost: '1.0',
         rounds_completed: '0',
         isDefaultGame: true,
-        starting_inventory: '',
+        starting_inventory: '15',
         instructor: '1', // this needs to be current logged in user
       }
     }
@@ -200,6 +199,7 @@ class CreateGameForm extends React.Component {
                     id="demand" 
                     type="number" 
                     name="demand" 
+                    defaultValue="5"
                     // value={this.state.gameSettings.demand}
                     // onChange={this.inputChanged}
                     />
@@ -215,6 +215,7 @@ class CreateGameForm extends React.Component {
                     id="holding_cost" 
                     type="number" 
                     name="holding_cost" 
+                    step="0.5"
                     value={this.state.gameSettings.holding_cost}
                     onChange={this.inputChanged}/>
                 &lt;/Form.Group>
@@ -226,6 +227,7 @@ class CreateGameForm extends React.Component {
                     id="backlog_cost" 
                     type="number" 
                     name="backlog_cost" 
+                    step="0.5"
                     value={this.state.gameSettings.backlog_cost}
                     onChange={this.inputChanged}/>
                 &lt;/Form.Group>
@@ -236,7 +238,7 @@ class CreateGameForm extends React.Component {
                     required
                     id="starting_inventory" 
                     type="number" 
-                    name="starting_inventory" 
+                    name="starting_inventory"
                     value={this.state.gameSettings.starting_inventory}
                     onChange={this.inputChanged}/>
                 &lt;/Form.Group>
@@ -266,9 +268,10 @@ class CreateGameForm extends React.Component {
                     onChange={this.inputChanged}/>
                 &lt;/Form.Group>
               &lt;/Form.Row>
-              &lt;div style={{color:'red'}}>{this.state.errors}&lt;/div>
-            &lt;/Modal.Body>
 
+              &lt;div style={{color:'red', paddingBottom:'10px'}}>{this.state.errors}&lt;/div>
+            &lt;/Modal.Body>
+            
             &lt;Modal.Footer>
               &lt;Button variant="danger" onClick={() => this.handleModalShowHide()}>
                 Cancel
@@ -294,13 +297,13 @@ export default CreateGameForm;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameInsights.html">GameInsights</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="GameUpdateForm.html">GameUpdateForm</a></li><li><a href="GameView.html">GameView</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="Players.html">Players</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameInsights.html">GameInsights</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="GameView.html">GameView</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="PlsyersList.html">PlsyersList</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#GameUpdateForm">GameUpdateForm</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 09:40:06 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Apr 08 2021 00:51:28 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

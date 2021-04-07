@@ -26,223 +26,204 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Modal, Form, Col } from 'react-bootstrap'
-// import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import axiosInstance from '../../axios'
 import Option from './Option';
 import EditIcon from '@material-ui/icons/Edit';
+import axiosInstance from '../../axios'
 
 /**
  * Form component for updating a game
  *
  * @component
  */
-class GameUpdateForm extends React.Component {
-  constructor(props){
-    super(props);
+function GameUpdateForm(props) {
+  const { gameid } = props;
 
-    this.inputChanged = this.inputChanged.bind(this);
-    this.updateGame = this.updateGame.bind(this);
-    this.getGameSettings = this.getGameSettings.bind(this);
-    this.handleModalShowHide = this.handleModalShowHide.bind(this);
-    
-    this.state = {
-      showHide : false, // modal default state is hide
-      errors: '',
-      game: '',
-      
-      /**
-       * Game data (/api/game)
-       */
-      gameSettings: {
-        session_length: '',
-        distributorPresent: true, 
-        wholesalerPresent: true,
-        active: false,
-        info_sharing: true,
-        info_delay: '',
-        holding_cost: '',
-        backlog_cost: '',
-        rounds_completed: '0',
-        isDefaultGame: true,
-        starting_inventory: '',
-        instructor: '1', // this needs to be current logged in user
-      }
-    }
+  const [show, setShow] = useState(false);
+  const [state, setGameSettings] = useState({
+    session_length: '',
+    info_delay: '',
+    holding_cost: '',
+    backlog_cost: '',
+    starting_inventory: '',
+  });
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  /**
+   * Getting game specific data
+   */
+  useEffect(() => {
+    axiosInstance.get(`http://127.0.0.1:8000/api/game/${gameid}`)
+    .then((res) => {
+      setGameSettings(s => ({
+        session_length: res.data.session_length,
+        info_delay: res.data.info_delay,
+        holding_cost: res.data.holding_cost,
+        backlog_cost: res.data.backlog_cost,
+        starting_inventory: res.data.starting_inventory,
+      }));
+      console.log(res.data);
+    });
+	}, [setGameSettings, gameid]);
+
+  /**
+   * Input change 
+   *
+   * @param {Object} e event handler
+   */
+  const inputChanged = (e) => {
+    setGameSettings({
+			...state,
+			[e.target.name]: e.target.value,
+		});
   }
 
   /**
-   * Function for detecting input changes in the form
+   * Method to update game instance 
    *
    * @method
    * @param {Object} e event handler
    */
-  inputChanged(e) {
-    this.setState({errors: null});
-    const game_settings = this.state.gameSettings;
-    game_settings[e.target.name] = e.target.value;
-    this.setState({gameSettings: game_settings});
-    // console.log(game_settings);
-  }
+  const updateGame = (e) => {
+		e.preventDefault();
+		console.log(state);
+    const updatedSettings = state;
 
-  /**
-   * Function to get the data of the game from backend
-   *
-   * @method
-   */
-  getGameSettings() {
-    // Get game/id settings and fill the form with them
-  }
-
-  /**
-   * Function to update the data of the game
-   *
-   * @method
-   * @param {Object} e event handler
-   */
-  updateGame(e) {
-    e.preventDefault();
-    // error message
-    let errorMessage = this.state.errors;
-    /**
-     * createdGame instances
-     */
-    const createdGame = this.state.gameSettings;
-    /**
-     * Axios post request
-     */
-    axiosInstance.post('http://127.0.0.1:8000/api/game/{id}', createdGame, {crossDomain: true})
+    axiosInstance.patch(`http://127.0.0.1:8000/api/game/${gameid}/`, updatedSettings)
     .then((res) => {
       console.log(res);
-      if (res.status === 201) {
-        alert("Game Updated Successfully");
-        // redirecting upon successful registration
+      if (res.status === 200) {
+        alert("Updated game successfully");
         window.location = "/create";
+        window.location.reload();
       } 
       else {
         console.log(res.data);
       }
     })
-    // checking for specific response errors
-    .catch(error => {if(error.response){ 
-      errorMessage = "Couldn't update game settings. Please make sure all fields are valid.";
-      this.setState({errors: errorMessage});
-      console.log(error.response.data);
-    }});
-  }
+    .catch(error => {
+      if(error.response){ 
+        alert("Couldn't update game. Please try again.");
+        console.log(error.response.data);
+      }
+    });;
+	}
 
-  /**
-   * Handle to change modal state when clicked on a component
-   */
-  handleModalShowHide() {
-      this.setState({showHide: !this.state.showHide})
-      this.setState({errors: null});
-  }
-
-  render(){
-    return(
-      &lt;>
-        &lt;Option name="Edit" icon={&lt;EditIcon id="editIcon" onClick={() => this.handleModalShowHide()}/>} />
+  return (
+    &lt;>
+      &lt;Option name="Edit" icon={&lt;EditIcon id="editIcon" onClick={handleShow}/>} />
         
-        &lt;Form>
-          &lt;Modal show={this.state.showHide} onHide={() => this.handleModalShowHide()}>
-            &lt;Modal.Header closeButton>
-              &lt;Modal.Title>Update Game&lt;/Modal.Title>
-            &lt;/Modal.Header>
+      &lt;Form>
+        &lt;Modal show={show} onHide={handleClose}>
+          &lt;Modal.Header closeButton>
+            &lt;Modal.Title>Update Game {gameid}&lt;/Modal.Title>
+          &lt;/Modal.Header>
 
-            &lt;Modal.Body>
-              {/* If game is already active or has finished if displays
-              something else, e.g. Can't edit game settings. Game has already started/finished. */}
-              &lt;Form.Row>
-                {/* ------- Number of Weeks ------- */}
-                &lt;Form.Group as={Col}>
-                  &lt;Form.Label>Number of Weeks&lt;/Form.Label>
-                  &lt;Form.Control 
-                    required
-                    id="session_length" 
-                    type="number" 
-                    name="session_length" 
-                    value={this.state.gameSettings.session_length}
-                    onChange={this.inputChanged}/>
-                &lt;/Form.Group>
-                {/* ------- Time Delay ------- */}
-                &lt;Form.Group as={Col}>
-                  &lt;Form.Label>Time Delay&lt;/Form.Label>
-                  &lt;Form.Control 
-                    required
-                    id="info_delay" 
-                    type="number" 
-                    name="info_delay" 
-                    value={this.state.gameSettings.info_delay}
-                    onChange={this.inputChanged}/>
-                &lt;/Form.Group>
-                {/* ------- Demand ------- */}
-                &lt;Form.Group as={Col}>
-                  &lt;Form.Label>Demand&lt;/Form.Label>
-                  &lt;Form.Control 
-                    required
-                    id="demand" 
-                    type="number" 
-                    name="demand" 
-                    // value={this.state.gameSettings.demand}
-                    // onChange={this.inputChanged}
-                    />
-                &lt;/Form.Group>
-              &lt;/Form.Row>
+          &lt;Modal.Body>
+            {/* If game is already active or has finished if displays
+            something else, e.g. Can't edit game settings. Game has already started/finished. */}
+            &lt;Form.Row>
+              {/* ------- Number of Weeks ------- */}
+              &lt;Form.Group as={Col}>
+                &lt;Form.Label>Number of Weeks&lt;/Form.Label>
+                &lt;Form.Control 
+                  required
+                  id="session_length" 
+                  type="number" 
+                  name="session_length" 
+                  // defaultValue={this.props.session_length}
+                  value={state.session_length}
+                  onChange={inputChanged}/>
+              &lt;/Form.Group>
+              {/* ------- Time Delay ------- */}
+              &lt;Form.Group as={Col}>
+                &lt;Form.Label>Time Delay&lt;/Form.Label>
+                &lt;Form.Control 
+                  required
+                  id="info_delay" 
+                  type="number" 
+                  name="info_delay" 
+                  // defaultValue={this.props.info_delay}
+                  value={state.info_delay}
+                  onChange={inputChanged}/>
+              &lt;/Form.Group>
+              {/* ------- Demand ------- */}
+              &lt;Form.Group as={Col}>
+                &lt;Form.Label>Demand&lt;/Form.Label>
+                &lt;Form.Control 
+                  required
+                  id="demand" 
+                  type="number" 
+                  name="demand"
+                  defaultValue="5"
+                  // defaultValue={this.props.info_delay} 
+                  value={state.demand}
+                  // onChange={this.inputChanged}
+                  />
+              &lt;/Form.Group>
+            &lt;/Form.Row>
 
-              &lt;Form.Row>
-                {/* ------- Holding Cost ------- */}
-                &lt;Form.Group as={Col}>
-                  &lt;Form.Label>Holding Cost&lt;/Form.Label>
-                  &lt;Form.Control 
-                    required
-                    id="holding_cost" 
-                    type="number" 
-                    name="holding_cost" 
-                    value={this.state.gameSettings.holding_cost}
-                    onChange={this.inputChanged}/>
-                &lt;/Form.Group>
-                {/* ------- Backlog Cost ------- */}
-                &lt;Form.Group as={Col}>
-                  &lt;Form.Label>Backlog Cost&lt;/Form.Label>
-                  &lt;Form.Control 
-                    required
-                    id="backlog_cost" 
-                    type="number" 
-                    name="backlog_cost" 
-                    value={this.state.gameSettings.backlog_cost}
-                    onChange={this.inputChanged}/>
-                &lt;/Form.Group>
-                {/* ------- Starting Inventory ------- */}
-                &lt;Form.Group as={Col}>
-                  &lt;Form.Label>Starting Inventory&lt;/Form.Label>
-                  &lt;Form.Control 
-                    required
-                    id="starting_inventory" 
-                    type="number" 
-                    name="starting_inventory" 
-                    value={this.state.gameSettings.starting_inventory}
-                    onChange={this.inputChanged}/>
-                &lt;/Form.Group>
-              &lt;/Form.Row>
-              &lt;div style={{color:'red'}}>{this.state.errors}&lt;/div>
-            &lt;/Modal.Body>
+            &lt;Form.Row>
+              {/* ------- Holding Cost ------- */}
+              &lt;Form.Group as={Col}>
+                &lt;Form.Label>Holding Cost&lt;/Form.Label>
+                &lt;Form.Control 
+                  required
+                  id="holding_cost" 
+                  type="number" 
+                  name="holding_cost" 
+                  step="0.5"
+                  // defaultValue={this.props.holding_cost}
+                  value={state.holding_cost}
+                  onChange={inputChanged}/>
+              &lt;/Form.Group>
+              {/* ------- Backlog Cost ------- */}
+              &lt;Form.Group as={Col}>
+                &lt;Form.Label>Backlog Cost&lt;/Form.Label>
+                &lt;Form.Control 
+                  required
+                  id="backlog_cost" 
+                  type="number" 
+                  name="backlog_cost"
+                  step="0.5" 
+                  // defaultValue={this.props.backlog_cost}
+                  value={state.backlog_cost}
+                  onChange={inputChanged}/>
+              &lt;/Form.Group>
+              {/* ------- Starting Inventory ------- */}
+              &lt;Form.Group as={Col}>
+                &lt;Form.Label>Starting Inventory&lt;/Form.Label>
+                &lt;Form.Control 
+                  required
+                  id="starting_inventory" 
+                  type="number" 
+                  name="starting_inventory" 
+                  // defaultValue={this.props.starting_inventory}
+                  value={state.starting_inventory}
+                  onChange={inputChanged}/>
+              &lt;/Form.Group>
+            &lt;/Form.Row>
+            
+            {/* &lt;div style={{color:'red', paddingBottom:'10px'}}>{this.state.errors}&lt;/div> */}
 
-            &lt;Modal.Footer>
-              &lt;Button variant="danger" onClick={() => this.handleModalShowHide()}>
-                Cancel
-              &lt;/Button>
-              &lt;Button variant="primary" type="submit" id="createGameBtn" onClick={this.updateGame}>
-                Create
-              &lt;/Button>
-            &lt;/Modal.Footer>
-          &lt;/Modal>
-        &lt;/Form>
-      &lt;/>
-    );
-  }
+          &lt;/Modal.Body>
+
+          &lt;Modal.Footer>
+            &lt;Button variant="danger" onClick={handleClose}>
+              Cancel
+            &lt;/Button>
+            &lt;Button variant="primary" type="submit" id="createGameBtn" onClick={updateGame}>
+              Update
+            &lt;/Button>
+          &lt;/Modal.Footer>
+        &lt;/Modal>
+      &lt;/Form>
+    &lt;/>
+  );
 }
 
 export default GameUpdateForm;</code></pre>
@@ -255,13 +236,13 @@ export default GameUpdateForm;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameInsights.html">GameInsights</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="GameUpdateForm.html">GameUpdateForm</a></li><li><a href="GameView.html">GameView</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="Players.html">Players</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameInsights.html">GameInsights</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="GameView.html">GameView</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="PlsyersList.html">PlsyersList</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#GameUpdateForm">GameUpdateForm</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 09:40:06 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Apr 08 2021 00:51:28 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

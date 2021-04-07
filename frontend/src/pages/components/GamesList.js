@@ -3,11 +3,11 @@ import '../../css/Main.css';
 import GameUpdateForm from '../components/GameUpdateForm';
 import Option from '../components/Option';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import PlayersPopover from './PlayersPopover';
 import { Table } from 'react-bootstrap';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import axiosInstance from '../../axios'
+import axiosInstance from '../../axios';
+import PlsyersList from './PlayersList';
 
 /**
  * Games List view 
@@ -33,7 +33,7 @@ function GamesList(props) {
    * @param {integer} id game id to be deleted
    */
 	const deleteGame = (id, e) => {
-    if (window.confirm("Are you sure you want to delete game?")) {
+    if (window.confirm("Are you sure you want to delete game " + id + "?")) {
       axiosInstance.delete(`http://127.0.0.1:8000/api/game/${id}`)
       .then(res => {
         console.log(res.data);
@@ -104,10 +104,17 @@ function GamesList(props) {
 							<td>{game.rounds_completed}</td>
 							<td>{game.session_length}</td>
 							<td><YesOrNo val={game.active}/></td>
-							<td><PlayersPopover game={game.id}/></td>
+							<td><PlsyersList gameid={`${game.id}`}/></td>
 							<td>
-								<Option name="Pause" icon={<PauseCircleOutlineIcon id="pauseIcon"/>}/>
-								<Option name="Delete" icon={<DeleteOutlineIcon id="deleteIcon" onClick={(e) => deleteGame(game.id, e)}/>} />
+								<Option 
+                  name="Pause"
+                  icon={<PauseCircleOutlineIcon 
+                  id="pauseIcon"/>}/>
+								<Option 
+                  name="Delete"
+                  icon={<DeleteOutlineIcon 
+                  id="deleteIcon" 
+                  onClick={(e) => deleteGame(game.id, e)}/>} />
 								<GameUpdateForm gameid={`${game.id}`}/>
 							</td>
 						</tr>

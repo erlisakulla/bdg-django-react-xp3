@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: pages/games/JoinGame.js</title>
+    <title>JSDoc: Source: pages/components/PlayersList.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: pages/games/JoinGame.js</h1>
+    <h1 class="page-title">Source: pages/components/PlayersList.js</h1>
 
     
 
@@ -26,21 +26,19 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react';
+            <pre class="prettyprint source linenums"><code>import React from 'react';
 import '../../css/Main.css';
-import Navbar from '../components/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Card, Nav } from 'react-bootstrap';
-import GameRegisterForm from '../components/GameRegisterForm';
-import RegisteredGamesList from '../components/RegisteredGamesList';
+import { Table, OverlayTrigger, Button, Popover } from 'react-bootstrap';
 import axiosInstance from '../../axios'
 
+
 /**
- * Join Games page 
+ * Players List 
  *
  * @component
  */
-class JoinGames extends Component {
+class PlsyersList extends React.Component {
   constructor(props) {
     super(props)
 
@@ -51,74 +49,64 @@ class JoinGames extends Component {
      */
     this.state = {
       roles: null,
-      message: 'No games to display',
-      is_instructor: '',
+      message: 'No roles to display',
     }
   }
 
+  // This actually gets the available roles for the selected game
+  // however with another api link it could be changed to get all players
   /**
-   * Method to get all games
+   * Method to get all player and role data for specific game
    *
    * @method
    */
-   componentDidMount() {
-    axiosInstance.get('http://127.0.0.1:8000/api/role/').then((res) => {
-      const allRoles = res.data;
-      this.setState({roles: allRoles});
-      console.log(res.data);
-    })
-    .catch(error => {if(error.response){console.log(error.response.data);}});
-
-    axiosInstance.get('http://127.0.0.1:8000/api/user/')
+  componentDidMount() {
+    axiosInstance.get(`http://127.0.0.1:8000/api/game/${this.props.gameid}/getroles`)
     .then((res) => {
-      const isInst = res.data.is_instructor;
-      this.setState({is_instructor: isInst});
+      this.setState({roles: res.data});
       console.log(res.data);
-    })
-    .catch(error => {if(error.response){console.log(error.response.data);}});
+      console.log(this.state.roles);
+    });
   }
 
   render() {
+    if (!this.state.roles || this.state.roles.length === 0) {
+      return ( 
+        &lt;p style={{textAlign:'center', color:'grey'}}>{this.state.message}&lt;/p>
+      );
+    }
+
+    const popover = (
+      &lt;Popover id="popover-basic">
+        &lt;Popover.Title as="h3">Players of Game {this.props.gameid}&lt;/Popover.Title>
+        &lt;Popover.Content>
+          &lt;Table>
+            &lt;tbody>
+              {this.state.roles.map((role) => {
+                return (
+                  &lt;tr key={role.id}>
+                    &lt;th>{role.roleName}&lt;/th>
+                    &lt;td>{role.id}&lt;/td>
+                  &lt;/tr>
+                );
+              })}
+            &lt;/tbody>
+          &lt;/Table>
+        &lt;/Popover.Content>
+      &lt;/Popover>
+    );
+
     return (
       &lt;> 
-        &lt;Navbar/>
-
-        &lt;div className="main-container">
-          &lt;h2>Join Games&lt;/h2>
-          &lt;p>Here you can register to games, view and join all games you have registered for.&lt;/p>
-          &lt;hr/>
-
-          &lt;Card>
-            &lt;Card.Header>
-              &lt;Nav variant="tabs">
-                &lt;Nav.Item>
-                  &lt;Nav.Link href="/create">Setup Games&lt;/Nav.Link>
-                &lt;/Nav.Item>
-                &lt;Nav.Item>
-                  &lt;Nav.Link href="/monitor">Monitor Games&lt;/Nav.Link>
-                &lt;/Nav.Item>
-                { this.state.is_instructor === false ?
-                  &lt;Nav.Item>
-                    &lt;Nav.Link href="/join" className="active">Join Games&lt;/Nav.Link>
-                  &lt;/Nav.Item> : null
-                }
-              &lt;/Nav>
-            &lt;/Card.Header>
-
-            &lt;Card.Body>
-              {/* Form for registering for a game */}
-              &lt;GameRegisterForm/>
-              {/* ------- Table with games to join ------- */}
-              &lt;RegisteredGamesList roles={this.state.roles} message={this.state.message}/>
-            &lt;/Card.Body>
-          &lt;/Card>
-        &lt;/div>
+        &lt;OverlayTrigger trigger="click" placement="left" overlay={popover}>
+          &lt;Button variant="primary">Players&lt;/Button>
+        &lt;/OverlayTrigger>
       &lt;/>
     );
   }
 }
 
-export default JoinGames;</code></pre>
+export default PlsyersList;</code></pre>
         </article>
     </section>
 

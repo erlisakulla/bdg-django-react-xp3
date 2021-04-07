@@ -51,7 +51,7 @@ class CustomNavbar extends React.Component {
       console.log(res.data);
     })
     .catch(error => {if(error.response){console.log(error.response.data);}});
-  }
+  } 
   
   render() {
     return (
