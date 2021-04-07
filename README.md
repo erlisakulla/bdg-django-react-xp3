@@ -77,7 +77,7 @@ frontend
 │   ├── index.html                       # every component of the app is loaded into <div id="root"></div>
 │   └── ...
 ├── docs                               
-│   ├── index.html                       # every component of the app is loaded into <div id="root"></div>
+│   ├── index.html                       # main directory for JSDoc documentation
 │   └── ...
 ├── src
 │   ├── css
