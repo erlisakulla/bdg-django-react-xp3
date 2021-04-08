@@ -67,6 +67,7 @@ Some main packages and libraries used in this project:
     + Game Create, Update, Delete
     + Game / Role Register
 * Users logged in as Instructors can't access the Join tab (they can't register or play in games)
+* Basic User Permissions on accessing pages and content: instructors can't join games, and users can't create games
 
 ### File Structure
 ```
@@ -94,6 +95,7 @@ frontend
 |   |   |   ├── GameRegisterForm.js      # game registration form copmonent
 |   |   |   ├── GamesList.js             # component that maps games in table
 |   |   |   ├── GameUpdateForm.js        # game update form copmonent (icon and modal)
+|   |   |   ├── MonitorGamesList.js      # container of games to monitor
 |   |   |   ├── Navbar.js                # navbar component
 |   |   |   ├── Option.js                # component for using icons and tooltips
 |   |   |   ├── PlayersList.js           # component for displaying players of selected games
@@ -126,7 +128,7 @@ npm install -g jsdoc
 ```
 npm run doc
 ```
-3. Open the [`index.html`]([`docs`](frontend/docs/index.html)) file (locally is fine), found in the [`docs`](frontend/docs) directory, to see the generated documentation
+3. Open the [`index.html`](frontend/docs/index.html) file (locally is fine), found in the [`docs`](frontend/docs) directory, to see the generated documentation
 
 For more information check out the [JSDoc repository](https://github.com/jsdoc/jsdoc) or this [Style Guide](https://github.com/shri/JSDoc-Style-Guide#links).
 

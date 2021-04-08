@@ -30,9 +30,9 @@
 import '../../css/Main.css';
 import Navbar from '../components/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Table, Card, Nav } from 'react-bootstrap';
+import { Card, Nav } from 'react-bootstrap';
 import axiosInstance from '../../axios'
-
+import MonitorGamesList from '../components/MonitorGamesList'
 /**
  * Monitor Games page 
  *
@@ -46,11 +46,14 @@ class MonitorGames extends Component {
     
     this.state = {
       is_instructor: '',
+      games: '',
+      roles: '',
+      message: 'No games to display',
     }
   }
 
   /**
-   * Method to get user data
+   * Method to get games to display
    *
    * @method
    */
@@ -60,6 +63,37 @@ class MonitorGames extends Component {
       const isInst = res.data.is_instructor;
       this.setState({is_instructor: isInst});
       console.log(res.data);
+
+      if (this.state.is_instructor === false) {
+        axiosInstance.get('http://127.0.0.1:8000/api/role/')
+        .then((res) => {
+          const allRoles = res.data;
+          this.setState({roles: allRoles});
+          console.log(res.data);
+
+          var i, gameid;
+          for (i = 0; i &lt; allRoles.length; i++) {
+            gameid = allRoles[i].associatedGame;
+            axiosInstance.get(`http://127.0.0.1:8000/api/game/${gameid}`)
+            .then((res) => {
+            const game = res.data;
+            this.setState(previousState => ({games: [...previousState.games, game]}));
+            console.log(res.data);
+          })
+          .catch(error => {if(error.response){console.log(error.response.data);}});
+          }
+        })
+        .catch(error => {if(error.response){console.log(error.response.data);}});
+      }
+      else if (this.state.is_instructor === true) {
+        axiosInstance.get('http://127.0.0.1:8000/api/game/')
+        .then((res) => {
+          const allGames = res.data;
+          this.setState({games: allGames});
+          console.log(res.data);
+        })
+        .catch(error => {if(error.response){console.log(error.response.data);}});
+      }
     })
     .catch(error => {if(error.response){console.log(error.response.data);}});
   }
@@ -77,61 +111,25 @@ class MonitorGames extends Component {
           &lt;Card>
             &lt;Card.Header>
               &lt;Nav variant="tabs">
-                &lt;Nav.Item>
-                  &lt;Nav.Link href="/create">Setup Games&lt;/Nav.Link>
-                &lt;/Nav.Item>
-                &lt;Nav.Item>
-                  &lt;Nav.Link href="/monitor" className="active">Monitor Games&lt;/Nav.Link>
-                &lt;/Nav.Item>
+                { this.state.is_instructor === true ?
+                  &lt;Nav.Item>
+                    &lt;Nav.Link href="/create">Setup Games&lt;/Nav.Link>
+                  &lt;/Nav.Item> : null
+                }
                 { this.state.is_instructor === false ?
                   &lt;Nav.Item>
                     &lt;Nav.Link href="/join">Join Games&lt;/Nav.Link>
                   &lt;/Nav.Item> : null
                 }
+                &lt;Nav.Item>
+                &lt;Nav.Link href="/monitor" className="active">Monitor Games&lt;/Nav.Link>
+                &lt;/Nav.Item>
               &lt;/Nav>
             &lt;/Card.Header>
 
             &lt;Card.Body>
               {/* ------- Table with created/joined games to monitor ------- */}
-              &lt;Table responsive className="gamesList">
-                &lt;thead>
-                  &lt;tr>
-                    &lt;th>Game ID&lt;/th>
-                    &lt;th>Time Delay&lt;/th>
-                    &lt;th>Holding Cost&lt;/th>
-                    &lt;th>Backorder Cost&lt;/th>
-                    &lt;th>Current Week&lt;/th>
-                    &lt;th>Factory Cost&lt;/th>
-                    &lt;th>Distributor Cost&lt;/th>
-                    &lt;th>Wholesaler Cost&lt;/th>
-                    &lt;th>Retailer Cost&lt;/th>
-                    &lt;th>Total Cost&lt;/th>
-                    &lt;th>Plots&lt;/th>
-                    &lt;th>Options&lt;/th>
-                  &lt;/tr>
-                &lt;/thead>
-                {/* Dummy data */}
-                &lt;tbody>
-                  {/* &lt;tr>
-                    &lt;th>1&lt;/th>
-                    &lt;td>2 weeks&lt;/td>
-                    &lt;td>1&lt;/td>
-                    &lt;td>1&lt;/td>
-                    &lt;td>3/24&lt;/td>
-                    &lt;td>50&lt;/td>
-                    &lt;td>50&lt;/td>
-                    &lt;td>50&lt;/td>
-                    &lt;td>50&lt;/td>
-                    &lt;td>200&lt;/td>
-                    &lt;td>&lt;Button variant="secondary">Plots&lt;/Button>&lt;/td>
-                    &lt;td>
-                      &lt;Option name="Pause" icon={&lt;PauseCircleOutlineIcon/>}/>
-                      &lt;Option name="Edit" icon={&lt;EditIcon/>}/>
-                      &lt;Option name="Delete" icon={&lt;DeleteOutlineIcon/>}/>
-                    &lt;/td>
-                  &lt;/tr> */}
-                &lt;/tbody>
-              &lt;/Table>
+              &lt;MonitorGamesList games={this.state.games} message={this.state.message}/>
             &lt;/Card.Body>
           &lt;/Card>
         &lt;/div>
@@ -150,13 +148,13 @@ export default MonitorGames;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameInsights.html">GameInsights</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="GameView.html">GameView</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="PlsyersList.html">PlsyersList</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#GameUpdateForm">GameUpdateForm</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameInsights.html">GameInsights</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="GameView.html">GameView</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="PlsyersList.html">PlsyersList</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#GameUpdateForm">GameUpdateForm</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#MonitorGamesList">MonitorGamesList</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Apr 08 2021 00:51:28 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Apr 08 2021 19:03:27 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

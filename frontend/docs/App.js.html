@@ -37,6 +37,7 @@ import GameView from './pages/games/GameView';
 import AccountSettings from './pages/auth/AccountSettings';
 import GameInsights from './pages/games/GameInsights';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+// import axiosInstance from './axios'
 
 /**
  * Sets up paths to pages
@@ -55,6 +56,7 @@ class App extends React.Component {
        */
       logged_in: localStorage.getItem('access_token') ? true : false,
       is_session_expired: false,
+      is_instructor: '',
       /**
        * User data (/api/token)
        */
@@ -64,36 +66,18 @@ class App extends React.Component {
       }
     };
   }
-  
-// Must do some checking for token expiration
 
-//   componentDidMount() {
-//       axiosInstance.get('http://127.0.0.1:8000/api/user/')
-//       .then((res) => {
-//         const email = res.data.email;
-//         const password = res.data.password;
-//         this.setState({email: email});
-//         this.setState({password: password});
-//         console.log(res.data);
-//       })
-//       .catch(error => {if(error.response){console.log(error.response.data);}});
-
-//     const loginUser = this.state.credentials;
-
-//     axiosInstance.post('http://127.0.0.1:8000/api/token/refresh/', loginUser, {crossDomain: true})
-//     .then((res) => {
-//       console.log(res);
-//     })
-//     .catch(error => {
-//       if(error.response) { 
-//         alert("Session expired!");
-//         localStorage.removeItem('access_token');
-//         localStorage.removeItem('refresh_token');
-//         axiosInstance.defaults.headers['Authorization'] = null;
-//         console.log(error.response.data)
-//       }
-//     });
-//   }
+  // componentDidMount() {
+  //   if (this.state.logged_in === true) {
+  //     axiosInstance.get('http://127.0.0.1:8000/api/user/')
+  //   .then((res) => {
+  //     const isInst = res.data.is_instructor;
+  //     this.setState({is_instructor: isInst});
+  //     console.log(res.data);
+  //   })
+  //   .catch(error => {if(error.response){console.log(error.response.data);}});
+  //   }
+  // }
   
   render() {
     return (
@@ -102,9 +86,9 @@ class App extends React.Component {
           &lt;Switch>
             &lt;LoggedInRoute exact logged_in={this.state.logged_in} path="/" component={LogIn}/>
             &lt;LoggedInRoute exact logged_in={this.state.logged_in} path="/signup" component={SignUp}/>
-            &lt;PrivateRoute logged_in={this.state.logged_in} path="/create" component={Dashboard}/>
+            &lt;PrivateRoute logged_in={this.state.logged_in} path="/create" permission={this.state.is_instructor} component={Dashboard}/>
             &lt;PrivateRoute logged_in={this.state.logged_in} path="/monitor" component={MonitorGames}/>
-            &lt;PrivateRoute logged_in={this.state.logged_in} path="/join" component={JoinGames}/>
+            &lt;PrivateRoute logged_in={this.state.logged_in} path="/join" permission={this.state.is_instructor} component={JoinGames}/>
             &lt;PrivateRoute logged_in={this.state.logged_in} path="/gameview" component={GameView}/>
             &lt;PrivateRoute logged_in={this.state.logged_in} path="/insights" component={GameInsights}/>
             &lt;PrivateRoute logged_in={this.state.logged_in} path='/settings' component={AccountSettings} />
@@ -150,8 +134,8 @@ function LoggedInRoute ({component: Component, logged_in, ...rest}) {
   return (
     &lt;Route
       {...rest}
-      render = {(props) => logged_in === true
-        ? &lt;Redirect to={{pathname: '/create', state: {from: props.location}}}/>
+      render = {(props) => (logged_in === true)
+        ? &lt;Redirect to={{pathname: '/monitor', state: {from: props.location}}}/>
         : &lt;Component {...props}/>
       }
     />
@@ -166,13 +150,13 @@ function LoggedInRoute ({component: Component, logged_in, ...rest}) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameInsights.html">GameInsights</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="GameView.html">GameView</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="PlsyersList.html">PlsyersList</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#GameUpdateForm">GameUpdateForm</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameInsights.html">GameInsights</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="GameView.html">GameView</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="PlsyersList.html">PlsyersList</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#GameUpdateForm">GameUpdateForm</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#MonitorGamesList">MonitorGamesList</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Apr 08 2021 00:51:28 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Apr 08 2021 19:03:27 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

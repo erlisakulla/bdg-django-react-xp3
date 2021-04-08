@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: pages/games/GameInsights.js</title>
+    <title>JSDoc: Source: pages/components/MonitorGamesList.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: pages/games/GameInsights.js</h1>
+    <h1 class="page-title">Source: pages/components/MonitorGamesList.js</h1>
 
     
 
@@ -26,34 +26,77 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react';
+            <pre class="prettyprint source linenums"><code>import React from 'react';
 import '../../css/Main.css';
-import Navbar from '../components/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Card } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 
 /**
- * Displays selected Game Insights 
+ * Monitor Games List view 
  *
  * @component
+ * @param {Object} games List of games to be displayed
+ * @param {string} message Message shown if there are no games
  */
-class GameInsights extends Component {
-  render() {
-    return (
-      &lt;> 
-        &lt;Navbar/>
-        
-        &lt;div className="main-container">
-          &lt;Card>
-            
-          &lt;/Card>
-        &lt;/div>
-      &lt;/>
-    );
-  }
+function MonitorGamesList(props) {
+	const { games, message } = props;
+
+	if (!games || games.length === 0) {
+		return ( 
+			&lt;h5 style={{textAlign:'center', fontWeight:'400', color:'grey'}}>{message}&lt;/h5>
+		);
+	}
+
+	/**
+	 * Counter variable for row number
+	 */
+	let counter = 0;
+
+	return (
+    &lt;Table responsive className="gamesList">
+      &lt;thead>
+        &lt;tr>
+          &lt;th>#&lt;/th>
+          &lt;th>Game ID&lt;/th>
+          &lt;th>Time Delay&lt;/th>
+          &lt;th>Holding Cost&lt;/th>
+          &lt;th>Backorder Cost&lt;/th>
+          &lt;th>Current Week&lt;/th>
+          &lt;th>Factory Cost&lt;/th>
+          &lt;th>Distributor Cost&lt;/th>
+          &lt;th>Wholesaler Cost&lt;/th>
+          &lt;th>Retailer Cost&lt;/th>
+          &lt;th>Total Cost&lt;/th>
+          &lt;th>Plots&lt;/th>
+        &lt;/tr>
+      &lt;/thead>
+      &lt;tbody>
+        {games.map((game) => {
+          counter++;
+          return (
+            &lt;tr key={game.id}>
+              &lt;td>{counter}&lt;/td>
+              &lt;th>{game.id}&lt;/th>
+              &lt;td>{game.info_delay} weeks&lt;/td>
+              &lt;td>{game.holding_cost}&lt;/td>
+              &lt;td>{game.backlog_cost}&lt;/td>
+              &lt;td>{game.rounds_completed}/{game.session_length}&lt;/td>
+              {/* Dummy data */}
+              &lt;td>50&lt;/td>
+              &lt;td>50&lt;/td>
+              &lt;td>50&lt;/td>
+              &lt;td>50&lt;/td>
+              &lt;td>200&lt;/td>
+              &lt;td>&lt;Button variant="secondary">Plots&lt;/Button>&lt;/td>
+            &lt;/tr>
+          );
+        })}
+      &lt;/tbody>
+    &lt;/Table>
+	)
 }
 
-export default GameInsights;</code></pre>
+export default MonitorGamesList;</code></pre>
         </article>
     </section>
 

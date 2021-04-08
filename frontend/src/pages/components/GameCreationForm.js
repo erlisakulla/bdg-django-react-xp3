@@ -98,20 +98,21 @@ class CreateGameForm extends React.Component {
     axiosInstance.post('http://127.0.0.1:8000/api/game/', createdGame, {crossDomain: true})
     .then((res) => {
       console.log(res);
-      if (res.status === 201) {
+      if (res.status === 200) {
         alert("Game Created Successfully");
-        // redirecting upon successful registration
+        // redirecting upon successful game creation
         window.location = "/create";
-      } 
+      }
       else {
         console.log(res.data);
       }
     })
     .catch(error => {
       if(error.response){ 
-        errorMessage = "Couldn't create game. Please fill in all fields.";
+        errorMessage = "Couldn't create game.";
         this.setState({errors: errorMessage});
         console.log(error.response.data);
+        alert(error.response.data.detail);
       }
     });
   }

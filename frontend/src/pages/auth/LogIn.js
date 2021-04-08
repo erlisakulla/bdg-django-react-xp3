@@ -18,6 +18,7 @@ class LogIn extends Component {
 
      this.state = {
       errors: '',
+      is_instructor: '',
       
       /**
        * User data (/api/token)
@@ -61,11 +62,8 @@ class LogIn extends Component {
 				axiosInstance.defaults.headers['Authorization'] =
 					'JWT ' + localStorage.getItem('access_token');
         
-        window.location = "/create";
         alert("Successfully Logged In"); 
-      } 
-      else {
-        console.log(res.data);
+        window.location = "/monitor";
       }
     })
     .catch(error => {

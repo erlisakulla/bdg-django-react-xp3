@@ -9,6 +9,7 @@ import GameView from './pages/games/GameView';
 import AccountSettings from './pages/auth/AccountSettings';
 import GameInsights from './pages/games/GameInsights';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+// import axiosInstance from './axios'
 
 /**
  * Sets up paths to pages
@@ -27,6 +28,7 @@ class App extends React.Component {
        */
       logged_in: localStorage.getItem('access_token') ? true : false,
       is_session_expired: false,
+      is_instructor: '',
       /**
        * User data (/api/token)
        */
@@ -36,36 +38,18 @@ class App extends React.Component {
       }
     };
   }
-  
-// Must do some checking for token expiration
 
-//   componentDidMount() {
-//       axiosInstance.get('http://127.0.0.1:8000/api/user/')
-//       .then((res) => {
-//         const email = res.data.email;
-//         const password = res.data.password;
-//         this.setState({email: email});
-//         this.setState({password: password});
-//         console.log(res.data);
-//       })
-//       .catch(error => {if(error.response){console.log(error.response.data);}});
-
-//     const loginUser = this.state.credentials;
-
-//     axiosInstance.post('http://127.0.0.1:8000/api/token/refresh/', loginUser, {crossDomain: true})
-//     .then((res) => {
-//       console.log(res);
-//     })
-//     .catch(error => {
-//       if(error.response) { 
-//         alert("Session expired!");
-//         localStorage.removeItem('access_token');
-//         localStorage.removeItem('refresh_token');
-//         axiosInstance.defaults.headers['Authorization'] = null;
-//         console.log(error.response.data)
-//       }
-//     });
-//   }
+  // componentDidMount() {
+  //   if (this.state.logged_in === true) {
+  //     axiosInstance.get('http://127.0.0.1:8000/api/user/')
+  //   .then((res) => {
+  //     const isInst = res.data.is_instructor;
+  //     this.setState({is_instructor: isInst});
+  //     console.log(res.data);
+  //   })
+  //   .catch(error => {if(error.response){console.log(error.response.data);}});
+  //   }
+  // }
   
   render() {
     return (
@@ -74,9 +58,9 @@ class App extends React.Component {
           <Switch>
             <LoggedInRoute exact logged_in={this.state.logged_in} path="/" component={LogIn}/>
             <LoggedInRoute exact logged_in={this.state.logged_in} path="/signup" component={SignUp}/>
-            <PrivateRoute logged_in={this.state.logged_in} path="/create" component={Dashboard}/>
+            <PrivateRoute logged_in={this.state.logged_in} path="/create" permission={this.state.is_instructor} component={Dashboard}/>
             <PrivateRoute logged_in={this.state.logged_in} path="/monitor" component={MonitorGames}/>
-            <PrivateRoute logged_in={this.state.logged_in} path="/join" component={JoinGames}/>
+            <PrivateRoute logged_in={this.state.logged_in} path="/join" permission={this.state.is_instructor} component={JoinGames}/>
             <PrivateRoute logged_in={this.state.logged_in} path="/gameview" component={GameView}/>
             <PrivateRoute logged_in={this.state.logged_in} path="/insights" component={GameInsights}/>
             <PrivateRoute logged_in={this.state.logged_in} path='/settings' component={AccountSettings} />
@@ -122,8 +106,8 @@ function LoggedInRoute ({component: Component, logged_in, ...rest}) {
   return (
     <Route
       {...rest}
-      render = {(props) => logged_in === true
-        ? <Redirect to={{pathname: '/create', state: {from: props.location}}}/>
+      render = {(props) => (logged_in === true)
+        ? <Redirect to={{pathname: '/monitor', state: {from: props.location}}}/>
         : <Component {...props}/>
       }
     />

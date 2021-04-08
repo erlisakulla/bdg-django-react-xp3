@@ -63,25 +63,32 @@ class JoinGames extends Component {
           <Card>
             <Card.Header>
               <Nav variant="tabs">
-                <Nav.Item>
-                  <Nav.Link href="/create">Setup Games</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link href="/monitor">Monitor Games</Nav.Link>
-                </Nav.Item>
+                { this.state.is_instructor === true ?
+                  <Nav.Item>
+                    <Nav.Link href="/create">Setup Games</Nav.Link>
+                  </Nav.Item> : null
+                }
                 { this.state.is_instructor === false ?
                   <Nav.Item>
                     <Nav.Link href="/join" className="active">Join Games</Nav.Link>
                   </Nav.Item> : null
                 }
+                <Nav.Item>
+                  <Nav.Link href="/monitor">Monitor Games</Nav.Link>
+                </Nav.Item>
               </Nav>
             </Card.Header>
 
             <Card.Body>
-              {/* Form for registering for a game */}
-              <GameRegisterForm/>
-              {/* ------- Table with games to join ------- */}
-              <RegisteredGamesList roles={this.state.roles} message={this.state.message}/>
+              { this.state.is_instructor === false ?
+                <>
+                  {/* Form for registering for a game */}
+                  <GameRegisterForm/>
+                  {/* ------- Table with games to join ------- */}
+                  <RegisteredGamesList roles={this.state.roles} message={this.state.message}/>
+                </> : 
+                <h5 style={{textAlign:'center', fontWeight:'400', color:'grey'}}>Only students can join games</h5>
+              }
             </Card.Body>
           </Card>
         </div>

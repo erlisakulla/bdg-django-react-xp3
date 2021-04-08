@@ -1,6 +1,6 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Modal, Form } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import axiosInstance from '../../axios'
 
@@ -40,12 +40,16 @@ class GameRegisterForm extends React.Component {
    * @method
    */
   componentDidMount() {
-    axiosInstance.get('http://127.0.0.1:8000/api/game/').then((res) => {
+    axiosInstance.get('http://127.0.0.1:8000/api/game/all').then((res) => {
       const allGames = res.data;
       this.setState({games: allGames});
       // console.log(res.data);
     })
-    .catch(error => {if(error.response){console.log(error.response.data);}});
+    .catch(error => {
+      if(error.response){
+        console.log(error.response.data);
+      }
+    });
   }
 
   /**
@@ -63,11 +67,15 @@ class GameRegisterForm extends React.Component {
     
     const gameid = this.state.selected_game;
     axiosInstance.get(`http://127.0.0.1:8000/api/game/${gameid}/getroles`).then((res) => {
-      const allGames = res.data;
-      this.setState({roles: allGames});
+      const allRoles = res.data;
+      this.setState({roles: allRoles});
       // console.log(res.data);
     })
-    .catch(error => {if(error.response){console.log(error.response.data);}});
+    .catch(error => {
+      if(error.response) {
+        console.log(error.response.data);
+      }
+    });
   }
 
    /**

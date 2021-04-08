@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import '../../css/Main.css';
 import Navbar from '../components/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Table, Card, Nav } from 'react-bootstrap';
+import { Card, Nav } from 'react-bootstrap';
 import axiosInstance from '../../axios'
-
+import MonitorGamesList from '../components/MonitorGamesList'
 /**
  * Monitor Games page 
  *
@@ -18,11 +18,14 @@ class MonitorGames extends Component {
     
     this.state = {
       is_instructor: '',
+      games: '',
+      roles: '',
+      message: 'No games to display',
     }
   }
 
   /**
-   * Method to get user data
+   * Method to get games to display
    *
    * @method
    */
@@ -32,6 +35,37 @@ class MonitorGames extends Component {
       const isInst = res.data.is_instructor;
       this.setState({is_instructor: isInst});
       console.log(res.data);
+
+      if (this.state.is_instructor === false) {
+        axiosInstance.get('http://127.0.0.1:8000/api/role/')
+        .then((res) => {
+          const allRoles = res.data;
+          this.setState({roles: allRoles});
+          console.log(res.data);
+
+          var i, gameid;
+          for (i = 0; i < allRoles.length; i++) {
+            gameid = allRoles[i].associatedGame;
+            axiosInstance.get(`http://127.0.0.1:8000/api/game/${gameid}`)
+            .then((res) => {
+            const game = res.data;
+            this.setState(previousState => ({games: [...previousState.games, game]}));
+            console.log(res.data);
+          })
+          .catch(error => {if(error.response){console.log(error.response.data);}});
+          }
+        })
+        .catch(error => {if(error.response){console.log(error.response.data);}});
+      }
+      else if (this.state.is_instructor === true) {
+        axiosInstance.get('http://127.0.0.1:8000/api/game/')
+        .then((res) => {
+          const allGames = res.data;
+          this.setState({games: allGames});
+          console.log(res.data);
+        })
+        .catch(error => {if(error.response){console.log(error.response.data);}});
+      }
     })
     .catch(error => {if(error.response){console.log(error.response.data);}});
   }
@@ -49,61 +83,25 @@ class MonitorGames extends Component {
           <Card>
             <Card.Header>
               <Nav variant="tabs">
-                <Nav.Item>
-                  <Nav.Link href="/create">Setup Games</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link href="/monitor" className="active">Monitor Games</Nav.Link>
-                </Nav.Item>
+                { this.state.is_instructor === true ?
+                  <Nav.Item>
+                    <Nav.Link href="/create">Setup Games</Nav.Link>
+                  </Nav.Item> : null
+                }
                 { this.state.is_instructor === false ?
                   <Nav.Item>
                     <Nav.Link href="/join">Join Games</Nav.Link>
                   </Nav.Item> : null
                 }
+                <Nav.Item>
+                <Nav.Link href="/monitor" className="active">Monitor Games</Nav.Link>
+                </Nav.Item>
               </Nav>
             </Card.Header>
 
             <Card.Body>
               {/* ------- Table with created/joined games to monitor ------- */}
-              <Table responsive className="gamesList">
-                <thead>
-                  <tr>
-                    <th>Game ID</th>
-                    <th>Time Delay</th>
-                    <th>Holding Cost</th>
-                    <th>Backorder Cost</th>
-                    <th>Current Week</th>
-                    <th>Factory Cost</th>
-                    <th>Distributor Cost</th>
-                    <th>Wholesaler Cost</th>
-                    <th>Retailer Cost</th>
-                    <th>Total Cost</th>
-                    <th>Plots</th>
-                    <th>Options</th>
-                  </tr>
-                </thead>
-                {/* Dummy data */}
-                <tbody>
-                  {/* <tr>
-                    <th>1</th>
-                    <td>2 weeks</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>3/24</td>
-                    <td>50</td>
-                    <td>50</td>
-                    <td>50</td>
-                    <td>50</td>
-                    <td>200</td>
-                    <td><Button variant="secondary">Plots</Button></td>
-                    <td>
-                      <Option name="Pause" icon={<PauseCircleOutlineIcon/>}/>
-                      <Option name="Edit" icon={<EditIcon/>}/>
-                      <Option name="Delete" icon={<DeleteOutlineIcon/>}/>
-                    </td>
-                  </tr> */}
-                </tbody>
-              </Table>
+              <MonitorGamesList games={this.state.games} message={this.state.message}/>
             </Card.Body>
           </Card>
         </div>
