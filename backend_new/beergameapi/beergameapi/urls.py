@@ -37,10 +37,10 @@ schema_view = get_schema_view(
    permission_classes=(permissions.AllowAny,),
 )
 
-from api.views import gameview,userview,registerview,roleregister,roleview
+from api.views import gameview,userview,registerview,roleview
 
 router = routers.DefaultRouter()
-router.register('game', gameview)
+router.register('game', gameview,'Game')
 router.register('role', roleview)
 
 urlpatterns = [
@@ -48,7 +48,7 @@ urlpatterns = [
     path("api/user/",userview.as_view()),
     path("api/register/",registerview.as_view()),
     #path("api/viewroles/",rolesview.as_view()),
-    path("api/roleregister/<int:pk>",roleregister.as_view()),
+    # path("api/roleregister/<int:pk>",roleregister.as_view()),
 
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
    re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

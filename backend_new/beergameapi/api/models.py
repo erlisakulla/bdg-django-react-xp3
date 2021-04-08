@@ -99,9 +99,8 @@ class Week(models.Model):
 def onGameCreation(sender, instance,created,**kwargs):
     if created:
         # dosomething
-        print("doing something")
         retailer=Role.objects.create(roleName="Retailer", associatedGame=instance)
-        factory=Role.objects.create(roleName="Factory", associatedGame=instance)
+        manufacturer=Role.objects.create(roleName="Manufacturer", associatedGame=instance)
 
         if(instance.wholesalerPresent and instance.distributorPresent):
             wholesaler=Role.objects.create(roleName="Wholesaler", associatedGame=instance)
@@ -113,9 +112,9 @@ def onGameCreation(sender, instance,created,**kwargs):
             wholesaler.upstreamPlayer=distributor
 
             distributor.downstreamPlayer=wholesaler
-            distributor.upstreamPlayer=factory
+            distributor.upstreamPlayer=manufacturer
 
-            factory.downstreamPlayer=distributor
+            manufacturer.downstreamPlayer=distributor
             wholesaler.save()
             distributor.save()
         elif instance.wholesalerPresent:
@@ -123,24 +122,24 @@ def onGameCreation(sender, instance,created,**kwargs):
             retailer.upstreamPlayer=wholesaler
             
             wholesaler.downstreamPlayer=retailer
-            wholesaler.upstreamPlayer=factory
+            wholesaler.upstreamPlayer=manufacturer
 
-            factory.downstreamPlayer=wholesaler
+            manufacturer.downstreamPlayer=wholesaler
             wholesaler.save()
         elif instance.distributorPresent:
             distributor=Role.objects.create(roleName="Distributor", associatedGame=instance)
             retailer.upstreamPlayer=distributor
             
             distributor.downstreamPlayer=retailer
-            distributor.upstreamPlayer=factory
+            distributor.upstreamPlayer=manufacturer
             
-            factory.downstreamPlayer=distributor
+            manufacturer.downstreamPlayer=distributor
             distributor.save()
         else:
-            retailer.upstreamPlayer=factory
-            factory.downstreamPlayer=retailer
+            retailer.upstreamPlayer=manufacturer
+            manufacturer.downstreamPlayer=retailer
         retailer.save()
-        factory.save()
+        manufacturer.save()
 
 
 

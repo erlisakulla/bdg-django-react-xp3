@@ -30,19 +30,28 @@ class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model=Game
         fields="__all__"
+        extra_kwargs = {'instructor': {'read_only': True}}
 
+
+#isplayer - not instructor validator for RoleSerializer
+# this will allow only players to play the game.
 
 class RoleSerializer(serializers.ModelSerializer):
     class Meta:
         model=Role
         fields="__all__"
         read_only_fields=('id','downstreamPlayer','upstreamPlayer','associatedGame','roleName')
+    
         validators = [
             UniqueTogetherValidator(
                 queryset=Role.objects.all(),
-                fields=['associatedGame', 'playedBy']
-            )
+                fields=['associatedGame', 'playedBy'],
+                message=" Player can only register for 1 Role in Each Game"
+            ),
         ]
+    
+    
+    
     # def update(self, instance, validated_data):
     #     instance.playedBy = validated_data.get('playedBy', instance.playedBy)
     #     return instance

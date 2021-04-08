@@ -7,10 +7,31 @@ from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.renderers import JSONRenderer
 from rest_framework import viewsets, mixins
-
+from rest_framework.permissions import IsAdminUser,IsAuthenticated, SAFE_METHODS, DjangoModelPermissions, BasePermission
 from .models import Game, User, Role, Week
 from .serializers import GameSerializer, UserSerializer, RoleSerializer, WeekSerializer
 # Create your views here.
+
+
+#permission to edit the game : only by instructor
+class GameUserWritePermission(BasePermission):
+    message="editing only by the instructor "
+
+    def has_object_permission(self,request,view,obj):
+        if request.method in SAFE_METHODS:
+            return True
+        return obj.instructor==request.user
+
+
+#creation possible by only instructor
+class GameCreatePermission(BasePermission):
+    message="creating only by the instructor "
+
+    def has_permission(self,request,view):
+        if request.method in SAFE_METHODS:
+            return True
+        return request.user.is_instructor
+
 
 # For all routes api/game/
 #  /game/{gameid}
@@ -19,8 +40,55 @@ from .serializers import GameSerializer, UserSerializer, RoleSerializer, WeekSer
 
 
 class gameview(viewsets.ModelViewSet):
-    queryset = Game.objects.all()
+
+    permission_classes=[IsAuthenticated,GameCreatePermission,GameUserWritePermission]
     serializer_class = GameSerializer
+    queryset = Game.objects.all()
+    # def get_queryset(self):
+    #        # user = request.user
+    #        # queryset = Game.objects.filter(instructor=user)
+    #        # serializer = GameSerializer(queryset, many=True)
+    #        # return Response(serializer.data)
+    #        return Game.objects.filter(instructor=self.request.user)
+
+
+
+
+    def list(self,request):
+        queryset = Game.objects.all().filter(instructor=request.user)
+        #return queryset
+        serializer = GameSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def create(self, request):
+        user = request.user
+        serializer=GameSerializer(data=request.data)
+        if(serializer.is_valid()):
+            serializer.save(instructor=user)
+            return Response(serializer.data)
+        return Response(serializer.error)
+
+    # def list(self,request):
+    #     queryset=Game.objects.filter(instructor=request.user)
+    #     serializer=GameSerializer(queryset,many=True)
+    #     return Response(serializer.deta)
+
+
+    def retrieve(self, request, pk=None):
+
+        queryset = Game.objects.all()
+        game = get_object_or_404(queryset, pk=pk)
+        serializer = GameSerializer(game)
+        return Response(serializer.data)
+
+
+
+    @action(detail=False)
+    def all(self,request):
+        allgame=Game.objects.all()
+
+        serialized=GameSerializer(allgame,many=True)
+        return Response(serialized.data)
 
     @action(detail=True, methods=['get'])
     # get availiable roles #free roles
@@ -46,10 +114,12 @@ class gameview(viewsets.ModelViewSet):
             return Response({"detail": "Not Registered for this Game"}, status=status.HTTP_403_FORBIDDEN)
 
 
+
+
 # For Route /api/user
 # Returns user details name ,email,role
 class userview(APIView):
-
+    permission_classes=[IsAuthenticated]
     def get(self, request, format="json"):
         serialized = UserSerializer(request.user)
         return Response(serialized.data, status=status.HTTP_200_OK)
@@ -63,12 +133,12 @@ class registerview(generics.CreateAPIView):
 
 
 
+# class roleregister(generics.RetrieveUpdateAPIView):
 
-class roleregister(generics.RetrieveUpdateAPIView):
-    queryset= Role.objects.all()
-    serializer_class= RoleSerializer
-    lookup_field='pk'
-    lookup_field_kwarg='pk'
+#     queryset= Role.objects.all()
+#     serializer_class= RoleSerializer
+#     lookup_field='pk'
+#     lookup_field_kwarg='pk'
 
 #viewsets hadnling multiple routes
 # starting from /api/role
@@ -76,6 +146,7 @@ class roleregister(generics.RetrieveUpdateAPIView):
 # /api/role/{roleid}/register -patch 
 
 class roleview(mixins.RetrieveModelMixin,viewsets.GenericViewSet):
+    permission_classes=[IsAuthenticated]
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
 
@@ -90,19 +161,19 @@ class roleview(mixins.RetrieveModelMixin,viewsets.GenericViewSet):
     #for route /api/role/{roleid}/register
     # only patch update playedby field.
 
-    # def partial_update(request, *args, **kwargs):
-
-    # def perform_update(self,serializer):
-    #     pass
-
     @action(detail=True, methods=['patch'])
     def register(self, request, pk=None):
+        user=request.user
         role = self.get_object()
+        if user.is_instructor:
+            return Response({"detail":"Only a Player can Join a Game"},status=status.HTTP_406_NOT_ACCEPTABLE)
+
         if(role.playedBy):
             return Response({"detail":"Role already assigned to a Player"},status=status.HTTP_406_NOT_ACCEPTABLE)
-        serialized=RoleSerializer(role,data={"playedBy":request.user.id},partial=True)
+        serialized=RoleSerializer(role,data={"playedBy":user.id},partial=True)
+        print(serialized)
         if(serialized.is_valid()):
             serialized.save()
             return Response(serialized.data)
-
-        return Response({"detail": "Only one Role per Game Allowed"},status=status.HTTP_406_NOT_ACCEPTABLE)
+        else:
+            return Response(serialized.errors,status=status.HTTP_406_NOT_ACCEPTABLE)
