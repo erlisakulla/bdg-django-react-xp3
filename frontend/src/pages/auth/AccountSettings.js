@@ -3,6 +3,7 @@ import '../../css/Main.css';
 import Navbar from '../components/Navbar.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Card, Form, Nav } from 'react-bootstrap';
+import axiosInstance from '../../axios'
 
 /**
  * Account Settings page
@@ -10,6 +11,34 @@ import { Button, Card, Form, Nav } from 'react-bootstrap';
  * @component
  */
 class AccountSettings extends Component {
+  constructor(props) {
+    super(props)
+
+    this.componentDidMount = this.componentDidMount.bind(this);
+    
+    /**
+     * Games display states
+     */
+    this.state = {
+      is_instructor: '',
+    }
+  }
+
+  /**
+   * Method to get all games and user data
+   *
+   * @method
+   */
+   componentDidMount() { 
+    axiosInstance.get('http://127.0.0.1:8000/api/user/')
+    .then((res) => {
+      const isInst = res.data.is_instructor;
+      this.setState({is_instructor: isInst});
+      console.log(res.data);
+    })
+    .catch(error => {if(error.response){console.log(error.response.data);}});
+  }
+
   render() {
     return (
       <> 
@@ -23,14 +52,18 @@ class AccountSettings extends Component {
           <Card>
             <Card.Header>
               <Nav variant="tabs">
-                <Nav.Item>
-                  <Nav.Link href="/create">Setup Games</Nav.Link>
-                </Nav.Item>
+              { this.state.is_instructor === true ?
+                  <Nav.Item>
+                    <Nav.Link href="/create">Setup Games</Nav.Link>
+                  </Nav.Item> : null
+                }
+                { this.state.is_instructor === false ?
+                  <Nav.Item>
+                    <Nav.Link href="/join">Join Games</Nav.Link>
+                  </Nav.Item> : null
+                }
                 <Nav.Item>
                   <Nav.Link href="/monitor">Monitor Games</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link href="/join">Join Games</Nav.Link>
                 </Nav.Item>
               </Nav>
             </Card.Header>
