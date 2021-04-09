@@ -30,7 +30,7 @@ class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model=Game
         fields="__all__"
-        extra_kwargs = {'instructor': {'read_only': True}}
+        extra_kwargs = {'instructor': {'read_only': True},'rounds_completed' :{'read_only': True}}
 
 
 #isplayer - not instructor validator for RoleSerializer
@@ -39,7 +39,7 @@ class GameSerializer(serializers.ModelSerializer):
 class RoleSerializer(serializers.ModelSerializer):
     class Meta:
         model=Role
-        fields="__all__"
+        fields=['id','downstreamPlayer','upstreamPlayer','associatedGame','roleName','playedBy']
         read_only_fields=('id','downstreamPlayer','upstreamPlayer','associatedGame','roleName')
     
         validators = [
@@ -49,12 +49,12 @@ class RoleSerializer(serializers.ModelSerializer):
                 message=" Player can only register for 1 Role in Each Game"
             ),
         ]
-    
-    
-    
-    # def update(self, instance, validated_data):
-    #     instance.playedBy = validated_data.get('playedBy', instance.playedBy)
-    #     return instance
+
+
+class OrderSerializer(serializers.Serializer):
+    quantity=serializers.IntegerField(min_value=1)
+    class Meta:
+        fields=['quantity']
 
 
 class RoleWeekSerializer(serializers.ModelSerializer):
@@ -67,3 +67,7 @@ class WeekSerializer(serializers.ModelSerializer):
     class Meta:
         model=Week
         fields="__all__"
+
+#for post methods without any body
+class NullSerializer(serializers.Serializer):
+    pass

@@ -71,6 +71,8 @@ class Game(models.Model):
 class Role(models.Model):
     roleName=models.CharField(max_length=30)
     associatedGame= models.ForeignKey(Game,on_delete=models.CASCADE,related_name='gameroles')
+    gonext=models.BooleanField(default=False)
+    ordered=models.BooleanField(default=False)
     downstreamPlayer=models.ForeignKey("self", null=True,blank=True, on_delete=models.CASCADE,related_name='%(class)s_downstreamPlayer')
     upstreamPlayer=models.ForeignKey("self", null=True, blank=True,on_delete=models.CASCADE,related_name='%(class)s_upstreamPlayer')
     playedBy=models.ForeignKey(User,null=True,  blank=True,limit_choices_to={'is_instructor':False},on_delete=models.CASCADE,related_name="playerrole")
@@ -100,7 +102,7 @@ def onGameCreation(sender, instance,created,**kwargs):
     if created:
         # dosomething
         retailer=Role.objects.create(roleName="Retailer", associatedGame=instance)
-        manufacturer=Role.objects.create(roleName="Manufacturer", associatedGame=instance)
+        Factory=Role.objects.create(roleName="Factory", associatedGame=instance)
 
         if(instance.wholesalerPresent and instance.distributorPresent):
             wholesaler=Role.objects.create(roleName="Wholesaler", associatedGame=instance)
@@ -112,9 +114,9 @@ def onGameCreation(sender, instance,created,**kwargs):
             wholesaler.upstreamPlayer=distributor
 
             distributor.downstreamPlayer=wholesaler
-            distributor.upstreamPlayer=manufacturer
+            distributor.upstreamPlayer=Factory
 
-            manufacturer.downstreamPlayer=distributor
+            Factory.downstreamPlayer=distributor
             wholesaler.save()
             distributor.save()
         elif instance.wholesalerPresent:
@@ -122,24 +124,24 @@ def onGameCreation(sender, instance,created,**kwargs):
             retailer.upstreamPlayer=wholesaler
             
             wholesaler.downstreamPlayer=retailer
-            wholesaler.upstreamPlayer=manufacturer
+            wholesaler.upstreamPlayer=Factory
 
-            manufacturer.downstreamPlayer=wholesaler
+            Factory.downstreamPlayer=wholesaler
             wholesaler.save()
         elif instance.distributorPresent:
             distributor=Role.objects.create(roleName="Distributor", associatedGame=instance)
             retailer.upstreamPlayer=distributor
             
             distributor.downstreamPlayer=retailer
-            distributor.upstreamPlayer=manufacturer
+            distributor.upstreamPlayer=Factory
             
-            manufacturer.downstreamPlayer=distributor
+            Factory.downstreamPlayer=distributor
             distributor.save()
         else:
-            retailer.upstreamPlayer=manufacturer
-            manufacturer.downstreamPlayer=retailer
+            retailer.upstreamPlayer=Factory
+            Factory.downstreamPlayer=retailer
         retailer.save()
-        manufacturer.save()
+        Factory.save()
 
 
 
