@@ -20,8 +20,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    // this.componentDidMount = this.componentDidMount.bind(this);
-
     this.state = {
       /**
        * Defines if user is logged in or not
@@ -40,17 +38,7 @@ class App extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   if (this.state.logged_in === true) {
-  //     axiosInstance.get('http://127.0.0.1:8000/api/user/')
-  //   .then((res) => {
-  //     const isInst = res.data.is_instructor;
-  //     this.setState({is_instructor: isInst});
-  //     console.log(res.data);
-  //   })
-  //   .catch(error => {if(error.response){console.log(error.response.data);}});
-  //   }
-  // }
+  componentDidCatch() {}
   
   render() {
     return (
@@ -65,9 +53,6 @@ class App extends React.Component {
             <PrivateRoute logged_in={this.state.logged_in} path="/gameview/:gameid" component={GameView}/>
             <PrivateRoute logged_in={this.state.logged_in} path="/insights/:gameid" component={GameInsights}/>
             <PrivateRoute logged_in={this.state.logged_in} path='/settings' component={AccountSettings} />
-      
-            {/* <Route exact path="/gameview/game/:id" component={GameView}/> */}
-            {/* <Route exact path="/insights/game/:id" component={GameInsights}/> */}
           </Switch>
         </Router>
       </>
