@@ -40,9 +40,35 @@ class GameRegisterForm extends React.Component {
    * @method
    */
   componentDidMount() {
-    axiosInstance.get('http://127.0.0.1:8000/api/game/all').then((res) => {
-      const allGames = res.data;
-      this.setState({games: allGames});
+    axiosInstance.get('http://127.0.0.1:8000/api/game/all')
+    .then((res) => {
+      // const allGames = res.data;
+      // this.setState({games: allGames});
+      var i;
+      for (i = 0; i < res.data.length; i++) {
+        const gid = res.data[i].id;
+
+        axiosInstance.get(`http://127.0.0.1:8000/api/game/${gid}/getroles`)
+        .then((res) => {          
+          if (res.data.length > 0) {
+            // displaying only games that have possible roles to chose from 
+            axiosInstance.get(`http://127.0.0.1:8000/api/game/${gid}/`)
+            .then((res) => {
+              const game = res.data;
+              this.setState(previousState => ({games: [...previousState.games, game]}));
+            }) 
+          }
+          // console.log(res.data);
+        })
+        .catch(error => {
+          if(error.response) {
+            console.log(error.response.data);
+          }
+        });
+      }
+
+      
+      // this.setState(previousState => ({games: [...previousState.games, game]}));
       // console.log(res.data);
     })
     .catch(error => {
@@ -66,7 +92,8 @@ class GameRegisterForm extends React.Component {
     console.log(this.state.selected_game);
     
     const gameid = this.state.selected_game;
-    axiosInstance.get(`http://127.0.0.1:8000/api/game/${gameid}/getroles`).then((res) => {
+    axiosInstance.get(`http://127.0.0.1:8000/api/game/${gameid}/getroles`)
+    .then((res) => {
       const allRoles = res.data;
       this.setState({roles: allRoles});
       // console.log(res.data);
