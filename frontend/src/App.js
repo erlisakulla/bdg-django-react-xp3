@@ -29,6 +29,7 @@ class App extends React.Component {
       logged_in: localStorage.getItem('access_token') ? true : false,
       is_session_expired: false,
       is_instructor: '',
+      
       /**
        * User data (/api/token)
        */
@@ -58,11 +59,11 @@ class App extends React.Component {
           <Switch>
             <LoggedInRoute exact logged_in={this.state.logged_in} path="/" component={LogIn}/>
             <LoggedInRoute exact logged_in={this.state.logged_in} path="/signup" component={SignUp}/>
-            <PrivateRoute logged_in={this.state.logged_in} path="/create" permission={this.state.is_instructor} component={Dashboard}/>
+            <PrivateRoute logged_in={this.state.logged_in} path="/create" component={Dashboard}/>
             <PrivateRoute logged_in={this.state.logged_in} path="/monitor" component={MonitorGames}/>
-            <PrivateRoute logged_in={this.state.logged_in} path="/join" permission={this.state.is_instructor} component={JoinGames}/>
-            <PrivateRoute logged_in={this.state.logged_in} path="/gameview" component={GameView}/>
-            <PrivateRoute logged_in={this.state.logged_in} path="/insights" component={GameInsights}/>
+            <PrivateRoute logged_in={this.state.logged_in} path="/join" component={JoinGames}/>
+            <PrivateRoute logged_in={this.state.logged_in} path="/gameview/:gameid" component={GameView}/>
+            <PrivateRoute logged_in={this.state.logged_in} path="/insights/:gameid" component={GameInsights}/>
             <PrivateRoute logged_in={this.state.logged_in} path='/settings' component={AccountSettings} />
       
             {/* <Route exact path="/gameview/game/:id" component={GameView}/> */}
@@ -87,7 +88,7 @@ function PrivateRoute ({component: Component, logged_in, ...rest}) {
   return (
     <Route
       {...rest}
-      render = {(props) => logged_in === true
+      render = {(props) => (logged_in === true)
         ? <Component {...props}/>
         : <Redirect to={{pathname: '/', state: {from: props.location}}}/>
       }
@@ -96,7 +97,7 @@ function PrivateRoute ({component: Component, logged_in, ...rest}) {
 }
 
 /**
- * If user is logged in, gets redirected to /create
+ * If user is logged in, gets redirected to /monitor
  *
  * @component
  * @param {Component} component Route component to be redirected

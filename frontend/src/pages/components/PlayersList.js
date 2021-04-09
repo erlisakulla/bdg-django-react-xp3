@@ -58,7 +58,7 @@ class PlsyersList extends React.Component {
                 return (
                   <tr key={role.id}>
                     <th>{role.roleName}</th>
-                    <td>{role.id}</td>
+                    <td>{role.playedBy}</td>
                   </tr>
                 );
               })}

@@ -36,6 +36,7 @@ class MonitorGames extends Component {
       this.setState({is_instructor: isInst});
       console.log(res.data);
 
+      // If user is student, get games that they have joined
       if (this.state.is_instructor === false) {
         axiosInstance.get('http://127.0.0.1:8000/api/role/')
         .then((res) => {
@@ -43,20 +44,21 @@ class MonitorGames extends Component {
           this.setState({roles: allRoles});
           console.log(res.data);
 
+          // getting games based on roles
           var i, gameid;
           for (i = 0; i < allRoles.length; i++) {
             gameid = allRoles[i].associatedGame;
             axiosInstance.get(`http://127.0.0.1:8000/api/game/${gameid}`)
             .then((res) => {
-            const game = res.data;
-            this.setState(previousState => ({games: [...previousState.games, game]}));
-            console.log(res.data);
-          })
-          .catch(error => {if(error.response){console.log(error.response.data);}});
+              const game = res.data;
+              this.setState(previousState => ({games: [...previousState.games, game]}));
+              console.log(res.data);
+            })
+            .catch(error => {if(error.response){console.log(error.response.data);}});
           }
-        })
-        .catch(error => {if(error.response){console.log(error.response.data);}});
+        }).catch(error => {if(error.response){console.log(error.response.data);}});
       }
+      // if user is instructor, get games they have created
       else if (this.state.is_instructor === true) {
         axiosInstance.get('http://127.0.0.1:8000/api/game/')
         .then((res) => {

@@ -117,7 +117,7 @@ class GameRegisterForm extends React.Component {
       }
     })
     .catch(error => {if(error.response){ 
-      errorMessage = "Couldn't register to game. Please try again.";
+      errorMessage = "Couldn't register to game. Don't register for the same game. Please try again.";
       this.setState({errors: errorMessage});
       console.log(error.response.data);
     }});

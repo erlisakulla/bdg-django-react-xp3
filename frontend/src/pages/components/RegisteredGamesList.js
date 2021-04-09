@@ -42,14 +42,16 @@ function RegisteredGamesList(props) {
       <tbody>
         {roles.map((role) => {
           counter++;
+          // this should actually be current active week of game
           return(
             <tr key={role.id}>
               <td>{counter}</td>
               <th>{role.associatedGame}</th>
               <td>{role.roleName}</td>
-              <td><a href="/gameview/{currentWeekId}">Enter Game</a></td>
+              {/* <td><a href={`/gameview/${role.associatedGame}/${weekid}`}>Enter Game</a></td> */}
+              <td><a href={"/gameview/" + role.associatedGame}>Enter Game</a></td>
               {/* Activate insights only if game is over */}
-              <td><a href="/insights/{gameid}">View Insights</a></td>
+              <td><a href={"/insights/" + role.associatedGame}>View Insights</a></td>
             </tr>
           );
         })}

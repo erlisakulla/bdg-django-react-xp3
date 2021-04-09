@@ -54,6 +54,7 @@ function MonitorGamesList(props) {
               <td>{game.backlog_cost}</td>
               <td>{game.rounds_completed}/{game.session_length}</td>
               {/* Dummy data */}
+              {/* Get data from weeks/roles and add it up */}
               <td>50</td>
               <td>50</td>
               <td>50</td>
