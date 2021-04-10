@@ -12,6 +12,7 @@ from .models import Game, User, Role, Week
 from .serializers import GameSerializer, UserSerializer, RoleSerializer, WeekSerializer, OrderSerializer,NullSerializer
 # Create your views here.
 
+import random
 
 # =======================GAME RELATED CUSTOM PERMISSIONS ==========================
 
@@ -110,7 +111,7 @@ class gameview(viewsets.ModelViewSet):
                 playedby=None
                 if role.playedBy:
                     playedby=role.playedBy.name
-                alldetail.append({"Role":role.roleName, "OrderPlaced":role.ordered,'PlayedBy':playedby,'nextround':role.gonext})
+                alldetail.append({"Role":role.roleName, "OrderPlaced":role.ordered,'PlayedBy':playedby})
             #serialize = RoleSerializer(roles, many=True)
 
             return Response(alldetail)
@@ -169,7 +170,7 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     def get_serializer_class(self):
         if self.action == 'orderbeer': #post body with quantity
             return OrderSerializer
-        if self.action =='gonext': #no post body required for validation
+        if self.action =='nextroundready': #no post body required for validation
             return NullSerializer
         if self.action =='register': #no patch body required for validation
             return NullSerializer
@@ -215,17 +216,15 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
 
     @action(detail=True, methods=['post'])
-    def gonext(self, request,pk=None):
+    def nextroundready(self, request,pk=None):
         user = request.user
         role = self.get_object()
         if role.playedBy == user:  # if not registered for game, no access
-            game=role.associatedGame;
+            game=role.associatedGame
             roles = game.gameroles.all()
             for roleiter in roles:
                 if not roleiter.ordered: #all players should order
-                    return Response({"detail":"all player not ready"},status=status.HTTP_403_FORBIDDEN)
-
-        
+                    return Response({"detail":"Missing order from Some Players."},status=status.HTTP_403_FORBIDDEN)
             #if all players have ordered
             role.gonext=True
             return Response({"detail":"success"})
@@ -249,6 +248,22 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
             return Response(alldetail)
         return Response({"detail": "info sharing disabled"}, status=status.HTTP_403_FORBIDDEN)
+
+    @action(detail=True, methods=['get'])
+    def nextroundstatus(self, request,pk=None):
+        user = request.user
+        role = self.get_object()
+        if role.playedBy == user:  # if not registered for game, no access
+            game=role.associatedGame
+            roles = game.gameroles.all()
+            for roleiter in roles:
+                if not roleiter.ordered: #all players should order
+                    return Response({"detail": "Not ready Yet"}, status=status.HTTP_401_UNAUTHORIZED)
+            #New Week Creation Logic
+            
+            return Response({"detail":"Week Ready. Reload "})
+        else:
+                return Response({"detail": "Not Registered for this Role"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
     # for /api/role/{roleid}/getweek

@@ -52,7 +52,7 @@ class RoleSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.Serializer):
-    quantity=serializers.IntegerField(min_value=1)
+    quantity=serializers.IntegerField(min_value=0)
     class Meta:
         fields=['quantity']
 

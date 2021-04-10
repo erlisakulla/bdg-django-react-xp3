@@ -47,6 +47,7 @@ urlpatterns = [
     path("api/",include(router.urls)),
     path("api/user/",userview.as_view()),
     path("api/register/",registerview.as_view()),
+    
     #path("api/viewroles/",rolesview.as_view()),
     # path("api/roleregister/<int:pk>",roleregister.as_view()),
 
@@ -56,4 +57,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenObtainPairView.as_view(), name='token_refresh'),
+]
+
+
+
+urlpatterns += [
+    path('api-auth/', include('rest_framework.urls')),
 ]
