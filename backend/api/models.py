@@ -69,7 +69,7 @@ class Game(models.Model):
     instructor = models.ForeignKey(User, limit_choices_to={
                                    'is_instructor': True}, on_delete=models.CASCADE)
     rounds_completed = models.IntegerField(default=0)
-    isDefaultGame = models.BooleanField()
+    isDefaultGame = models.BooleanField(default=True)
     starting_inventory = models.IntegerField(default=0)
 
 

@@ -37,7 +37,12 @@ schema_view = get_schema_view(
    permission_classes=(permissions.AllowAny,),
 )
 
-from api.views import gameview,userview,registerview,roleview,ChangePasswordView
+
+
+from api.views.game import gameview
+from api.views.user import userview,registerview,ChangePasswordView
+from api.views.role import roleview
+
 
 router = routers.DefaultRouter()
 router.register('game', gameview,'Game')
