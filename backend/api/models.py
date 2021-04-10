@@ -53,6 +53,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.name
 
 
+
+
+
 # Game Model
 class Game(models.Model):
     session_length = models.IntegerField()

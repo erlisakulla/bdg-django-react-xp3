@@ -9,7 +9,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework import viewsets, mixins
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, SAFE_METHODS, DjangoModelPermissions, BasePermission
 from .models import Game, User, Role, Week
-from .serializers import GameSerializer, UserSerializer, RoleSerializer, WeekSerializer, OrderSerializer,NullSerializer
+from .serializers import GameSerializer, UserSerializer, RoleSerializer, WeekSerializer, OrderSerializer,NullSerializer,ChangePasswordSerializer
 # Create your views here.
 
 import random
@@ -50,8 +50,12 @@ class gameview(viewsets.ModelViewSet):
 
     permission_classes = [IsAuthenticated,
                           GameCreatePermission, GameUserWritePermission]
-    serializer_class = GameSerializer
-    queryset = Game.objects.all()
+    def get_serializer_class(self):
+        if self.action == 'toggleactive': #post body with quantity
+            return NullSerializer
+        return GameSerializer #    queryset = Game.objects.all()
+
+    queryset=Game.objects.all()
 
     # list all game filtered to logged in user
     def list(self, request):
@@ -83,6 +87,18 @@ class gameview(viewsets.ModelViewSet):
         serialized = GameSerializer(allgame, many=True)
         return Response(serialized.data)
 
+    @action(detail=True, methods=['post'])
+
+    # api/game/{gameid}/toggleactive #FOR FREEZING GAME
+    def toggleactive(self, request, pk=None):
+        game = self.get_object()
+        game.active= not game.active
+        game.save()
+        if game.active:
+            return Response({"detail":"game activated","active": game.active})
+
+        return Response({"detail":"game deactivated","active": game.active})
+
     @action(detail=True, methods=['get'])
     # get availiable roles #free roles
     # api/game/{gameid}/getroles
@@ -96,7 +112,6 @@ class gameview(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def getsharedinfo(self, request, pk=None):
 
-        
         game = self.get_object()
 
         try:  # reverse lookup
@@ -165,13 +180,47 @@ class userview(APIView):
         return Response(serialized.data, status=status.HTTP_200_OK)
 
 
+
+# For Route /api/user/changepassword/ < post 
+class ChangePasswordView(generics.UpdateAPIView):
+        """
+        An endpoint for changing password.
+        """
+        serializer_class = ChangePasswordSerializer
+        model = User
+        permission_classes = (IsAuthenticated,)
+
+        def get_object(self, queryset=None):
+            obj = self.request.user
+            return obj
+
+        def update(self, request, *args, **kwargs):
+            self.object = self.get_object()
+            serializer = self.get_serializer(data=request.data)
+
+            if serializer.is_valid():
+                # Check old password
+                if not self.object.check_password(serializer.data.get("old_password")):
+                    return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
+                # set_password also hashes the password that the user will get
+                self.object.set_password(serializer.data.get("new_password"))
+                self.object.save()
+                response = {
+                    'status': 'success',
+                    'code': status.HTTP_200_OK,
+                    'message': 'Password updated successfully',
+                    'data': []
+                }
+
+                return Response(response)
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 # for route /api/create
 # only post method allowed for register
 
 class registerview(generics.CreateAPIView):
     serializer_class = UserSerializer
-
-
 
 
 
@@ -212,7 +261,7 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     def orderbeer(self, request, pk=None):
         user = request.user
         role = self.get_object()
-        if not role.associatedGame.isActive:
+        if not role.associatedGame.active:
             return Response({'detail': 'Game Frozen/Not Active'}, status=status.HTTP_423_LOCKED)
 
         if role.playedBy == user:  # if not registered for game no access
