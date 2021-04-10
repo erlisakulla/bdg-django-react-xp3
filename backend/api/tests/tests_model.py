@@ -57,4 +57,5 @@ class gameTest(TestCase):
         for role in roles:
             week1= role.roleweeks.all().first()
             self.assertEqual(week1.inventory, gameok.starting_inventory)
-            
+
+
