@@ -59,6 +59,7 @@ Some main packages and libraries used in this project:
 * [React Bootstrap]() (`react-bootstrap`) - rebuilt Bootstrap library specifically for React without needing to implement jQuery. Go to the Components sections to find the full documentation on how to implement them. In this project, some components used from this library are Button, Form, Table, Modal etc.
 * [Axios](https://github.com/axios/axios) (`axios`) - library to make it easier to send asynchronous HTTP requests to REST endpoints and perform CRUD operations. We have used `axios` to connect our React app to the Django backend server and handle API requests. The [`axios.js`](frontend/src/App.js) file sets up the axios connection and the token handling.
 * [React Router](https://reactrouter.com/web/guides/quick-start) (`react-router-dom`) - DOM bindings for React Router (`react-router`). Useful for using Link components and setting up Routes in the [`App.js`](frontend/src/App.js) file.
+* [CanvasJS](https://canvasjs.com/react-charts/) - 
 
 ### Implementation
 * We made significant changes in the frontend design and structure (mainly using react-bootstrap components) compared to the last sprint
@@ -81,6 +82,13 @@ frontend
 │   ├── index.html                       # main directory for JSDoc documentation
 │   └── ...
 ├── src
+│   ├── __tests__                        # tests directory
+|   |   ├── __snapshots__                # snapshots created by tests are saved here
+|   |   |   └── ...                      
+|   |   ├── App.test.js                
+|   |   ├── Components.test.js                    
+|   |   ├── setupTests.js                    
+|   |   └── Tests.test.js                
 │   ├── css
 |   |   ├── App.css                      # css file corresponding to App.js (no need to change)
 |   |   ├── index.css                    # css file corresponding to index.js (no need to change)
@@ -91,6 +99,10 @@ frontend
 |   |   |   ├── LogIn.js                 # user log in page
 |   |   |   └── Register.js              # user registration page
 │   |   ├── components                   # reusable components
+|   |   |   ├── plots                    # plots utilities
+|   |   |   |   ├── canvas.min.js        # CanvasJS library import
+|   |   |   |   ├── canvas.react.js      # CanvasJS for React utility
+|   |   |   |   └── Plot.js              # line plot reusable component
 |   |   |   ├── GameCreationForm.js      # game creation form component (button and modal)
 |   |   |   ├── GameRegisterForm.js      # game registration form copmonent
 |   |   |   ├── GamesList.js             # component that maps games in table
@@ -133,6 +145,11 @@ npm run doc
 For more information check out the [JSDoc repository](https://github.com/jsdoc/jsdoc) or this [Style Guide](https://github.com/shri/JSDoc-Style-Guide#links).
 
 ### Tests
-
+Tests are set up using `@testing-library/jest-dom` and `@testing-library/react`. All tests are written in the [`__tests__`](frontend/src/__tests__) directory. All test files contain the `.test.js` extension. To run the tests, run the command 
+```
+npm test
+```
+After updating or changing any file press `u` inside the testing environment so the snapshots are updated and won't cause errors.
+All the tests that are setup are to make sure that the components render correctly.
 
 # Bonus

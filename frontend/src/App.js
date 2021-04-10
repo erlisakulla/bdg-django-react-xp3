@@ -38,8 +38,8 @@ class App extends React.Component {
     };
   }
 
-  componentDidCatch() {}
-  
+  componentDidCatch(error, errorinfo) {}
+
   render() {
     return (
       <>

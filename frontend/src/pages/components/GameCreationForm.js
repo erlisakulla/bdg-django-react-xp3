@@ -147,6 +147,7 @@ class CreateGameForm extends React.Component {
                   <Form.Label>Number of Weeks</Form.Label>
                   <Form.Control 
                     required
+                    data-testid="weeks-input"
                     id="session_length" 
                     type="number" 
                     name="session_length" 

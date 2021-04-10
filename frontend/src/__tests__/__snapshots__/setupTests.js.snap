@@ -1,0 +1,949 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<section
+  className="content-wrapper"
+  data-testid="log-in-page"
+>
+  <div
+    className="login"
+  >
+    <h2
+      className="welcome-text"
+    >
+      Welcome to the Beer Distribution Game!
+    </h2>
+    <div
+      className="box"
+    >
+      <div
+        className="card"
+        id="forms"
+      >
+        <div
+          className="card-header"
+        >
+          <div
+            className="nav card-header-tabs nav-tabs"
+            onKeyDown={[Function]}
+          >
+            <div
+              className="nav-item"
+            >
+              <a
+                className="active nav-link"
+                data-rb-event-key="/"
+                href="/"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+              >
+                Login
+              </a>
+            </div>
+            <div
+              className="nav-item"
+            >
+              <a
+                className="nav-link"
+                data-rb-event-key="/signup"
+                href="/signup"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+              >
+                Register
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          className="card-body"
+        >
+          <form
+            className=""
+            id="userCredentials"
+            onSubmit={[Function]}
+          >
+            <div
+              className="form-group"
+            >
+              <input
+                className="form-control"
+                id="email"
+                name="email"
+                onChange={[Function]}
+                placeholder="Email"
+                required={true}
+                type="email"
+                value=""
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <input
+                className="form-control"
+                id="password"
+                name="password"
+                onChange={[Function]}
+                placeholder="Password"
+                required={true}
+                type="password"
+                value=""
+              />
+            </div>
+            <div
+              style={
+                Object {
+                  "color": "red",
+                  "paddingBottom": "10px",
+                }
+              }
+            >
+              
+            </div>
+            <button
+              className="btn btn-primary"
+              disabled={false}
+              id="userSubmit"
+              type="submit"
+            >
+              Log In
+            </button>
+            <small
+              className="text-muted form-text"
+            >
+              Don't have an account? 
+              <a
+                href="/signup"
+              >
+                Register here.
+              </a>
+            </small>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`matches snapshot 2`] = `
+<section
+  className="content-wrapper"
+>
+  <div
+    className="login"
+  >
+    <h2
+      className="welcome-text"
+    >
+      Welcome to the Beer Distribution Game!
+    </h2>
+    <div
+      className="box"
+    >
+      <div
+        className="card"
+        id="forms"
+      >
+        <div
+          className="card-header"
+        >
+          <div
+            className="nav card-header-tabs nav-tabs"
+            onKeyDown={[Function]}
+          >
+            <div
+              className="nav-item"
+            >
+              <a
+                className="nav-link"
+                data-rb-event-key="/"
+                href="/"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+              >
+                Login
+              </a>
+            </div>
+            <div
+              className="nav-item"
+            >
+              <a
+                className="active nav-link"
+                data-rb-event-key="/signup"
+                href="/signup"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+              >
+                Register
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          className="card-body"
+        >
+          <form
+            className=""
+            id="userCredentials"
+            onSubmit={[Function]}
+          >
+            <div
+              className="form-group"
+            >
+              <input
+                className="form-control"
+                id="name"
+                name="name"
+                onChange={[Function]}
+                placeholder="Full Name"
+                required={true}
+                type="text"
+                value=""
+              />
+              <div
+                className="invalid-feedback"
+              >
+                Invalid name.
+              </div>
+            </div>
+            <div
+              className="form-group"
+            >
+              <input
+                className="form-control"
+                data-testid="email-input"
+                id="email"
+                name="email"
+                onChange={[Function]}
+                placeholder="Email"
+                required={true}
+                type="email"
+                value=""
+              />
+              <div
+                className="invalid-feedback"
+              >
+                Invalid email.
+              </div>
+            </div>
+            <div
+              className="form-group"
+            >
+              <input
+                className="form-control"
+                id="password"
+                name="password"
+                onChange={[Function]}
+                placeholder="Password"
+                required={true}
+                type="password"
+                value=""
+              />
+              <div
+                className="invalid-feedback"
+              >
+                Invalid password.
+              </div>
+            </div>
+            <div
+              className="form-group col"
+            >
+              <div
+                className="form-row"
+              >
+                <div
+                  className="form-group col"
+                >
+                  <div
+                    className="radio"
+                  >
+                    <div
+                      className="custom-control custom-radio"
+                    >
+                      <input
+                        checked={false}
+                        className="custom-control-input"
+                        disabled={false}
+                        id="is_instructor"
+                        name="is_instructor"
+                        onChange={[Function]}
+                        required={true}
+                        type="radio"
+                        value="true"
+                      />
+                      <label
+                        className="custom-control-label"
+                        htmlFor="is_instructor"
+                        title=""
+                      >
+                        Instructor
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="form-group col"
+                >
+                  <div
+                    className="radio"
+                  >
+                    <div
+                      className="custom-control custom-radio"
+                    >
+                      <input
+                        checked={false}
+                        className="custom-control-input"
+                        disabled={false}
+                        id="is_student"
+                        name="is_instructor"
+                        onChange={[Function]}
+                        type="radio"
+                        value="false"
+                      />
+                      <label
+                        className="custom-control-label"
+                        htmlFor="is_student"
+                        title=""
+                      >
+                        Student
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              style={
+                Object {
+                  "color": "red",
+                  "paddingBottom": "10px",
+                }
+              }
+            >
+              
+            </div>
+            <button
+              className="btn btn-primary"
+              disabled={false}
+              id="userSubmit"
+              type="submit"
+            >
+              Sign Up
+            </button>
+            <small
+              className="text-muted form-text"
+            >
+              Already have an account? 
+              <a
+                href="/"
+              >
+                Login here.
+              </a>
+            </small>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`matches snapshot 3`] = `
+Array [
+  <nav
+    className="navbar navbar-expand-lg navbar-dark bg-dark"
+    id="customNav"
+  >
+    <span
+      className="navbar-brand"
+      style={
+        Object {
+          "paddingRight": "10px",
+        }
+      }
+    >
+      Beer Distribution Game
+    </span>
+    <span
+      className="navbar-text"
+    >
+      Logged in as 
+      
+    </span>
+    <button
+      aria-controls="responsive-navbar-nav"
+      aria-label="Toggle navigation"
+      className="navbar-toggler collapsed"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        className="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      aria-expanded={null}
+      className="navbar-collapse collapse"
+      id="responsive-navbar-nav"
+    >
+      <div
+        className="mr-auto navbar-nav"
+        onKeyDown={[Function]}
+      />
+      <div
+        className="navbar-nav"
+        onKeyDown={[Function]}
+      >
+        <a
+          className="nav-link"
+          data-rb-event-key={null}
+          href="#"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          role="button"
+        >
+          Logout
+        </a>
+        <a
+          className="nav-link"
+          data-rb-event-key="/settings"
+          href="/settings"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+        >
+          <svg
+            aria-hidden={true}
+            className="MuiSvgIcon-root"
+            focusable="false"
+            onBlur={[Function]}
+            onFocus={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </nav>,
+  <div
+    className="main-container"
+  >
+    <h2>
+      Created Games
+    </h2>
+    <p>
+      Here you can view, edit and delete all the games you have created.
+    </p>
+    <hr />
+    <div
+      className="card"
+    >
+      <div
+        className="card-header"
+      >
+        <div
+          className="nav card-header-tabs nav-tabs"
+          onKeyDown={[Function]}
+        >
+          <div
+            className="nav-item"
+          >
+            <a
+              className="nav-link"
+              data-rb-event-key="/monitor"
+              href="/monitor"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+            >
+              Monitor Games
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        className="card-body"
+      >
+        <h5
+          style={
+            Object {
+              "color": "grey",
+              "fontWeight": "400",
+              "textAlign": "center",
+            }
+          }
+        >
+          Only instructors can create games
+        </h5>
+      </div>
+    </div>
+  </div>,
+]
+`;
+
+exports[`matches snapshot 4`] = `
+Array [
+  <nav
+    className="navbar navbar-expand-lg navbar-dark bg-dark"
+    id="customNav"
+  >
+    <span
+      className="navbar-brand"
+      style={
+        Object {
+          "paddingRight": "10px",
+        }
+      }
+    >
+      Beer Distribution Game
+    </span>
+    <span
+      className="navbar-text"
+    >
+      Logged in as 
+      
+    </span>
+    <button
+      aria-controls="responsive-navbar-nav"
+      aria-label="Toggle navigation"
+      className="navbar-toggler collapsed"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        className="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      aria-expanded={null}
+      className="navbar-collapse collapse"
+      id="responsive-navbar-nav"
+    >
+      <div
+        className="mr-auto navbar-nav"
+        onKeyDown={[Function]}
+      />
+      <div
+        className="navbar-nav"
+        onKeyDown={[Function]}
+      >
+        <a
+          className="nav-link"
+          data-rb-event-key={null}
+          href="#"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          role="button"
+        >
+          Logout
+        </a>
+        <a
+          className="nav-link"
+          data-rb-event-key="/settings"
+          href="/settings"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+        >
+          <svg
+            aria-hidden={true}
+            className="MuiSvgIcon-root"
+            focusable="false"
+            onBlur={[Function]}
+            onFocus={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </nav>,
+  <div
+    className="main-container"
+  >
+    <h2>
+      Monitor Games
+    </h2>
+    <p>
+      Here you can monitor all the games you have created.
+    </p>
+    <hr />
+    <div
+      className="card"
+    >
+      <div
+        className="card-header"
+      >
+        <div
+          className="nav card-header-tabs nav-tabs"
+          onKeyDown={[Function]}
+        >
+          <div
+            className="nav-item"
+          >
+            <a
+              className="active nav-link"
+              data-rb-event-key="/monitor"
+              href="/monitor"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+            >
+              Monitor Games
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        className="card-body"
+      >
+        <h5
+          style={
+            Object {
+              "color": "grey",
+              "fontWeight": "400",
+              "textAlign": "center",
+            }
+          }
+        >
+          No games to display
+        </h5>
+      </div>
+    </div>
+  </div>,
+]
+`;
+
+exports[`matches snapshot 5`] = `
+Array [
+  <nav
+    className="navbar navbar-expand-lg navbar-dark bg-dark"
+    id="customNav"
+  >
+    <span
+      className="navbar-brand"
+      style={
+        Object {
+          "paddingRight": "10px",
+        }
+      }
+    >
+      Beer Distribution Game
+    </span>
+    <span
+      className="navbar-text"
+    >
+      Logged in as 
+      
+    </span>
+    <button
+      aria-controls="responsive-navbar-nav"
+      aria-label="Toggle navigation"
+      className="navbar-toggler collapsed"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        className="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      aria-expanded={null}
+      className="navbar-collapse collapse"
+      id="responsive-navbar-nav"
+    >
+      <div
+        className="mr-auto navbar-nav"
+        onKeyDown={[Function]}
+      />
+      <div
+        className="navbar-nav"
+        onKeyDown={[Function]}
+      >
+        <a
+          className="nav-link"
+          data-rb-event-key={null}
+          href="#"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          role="button"
+        >
+          Logout
+        </a>
+        <a
+          className="nav-link"
+          data-rb-event-key="/settings"
+          href="/settings"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+        >
+          <svg
+            aria-hidden={true}
+            className="MuiSvgIcon-root"
+            focusable="false"
+            onBlur={[Function]}
+            onFocus={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </nav>,
+  <div
+    className="main-container"
+  >
+    <h2>
+      Join Games
+    </h2>
+    <p>
+      Here you can register to games, view and join all games you have registered for.
+    </p>
+    <hr />
+    <div
+      className="card"
+    >
+      <div
+        className="card-header"
+      >
+        <div
+          className="nav card-header-tabs nav-tabs"
+          onKeyDown={[Function]}
+        >
+          <div
+            className="nav-item"
+          >
+            <a
+              className="nav-link"
+              data-rb-event-key="/monitor"
+              href="/monitor"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+            >
+              Monitor Games
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        className="card-body"
+      >
+        <h5
+          style={
+            Object {
+              "color": "grey",
+              "fontWeight": "400",
+              "textAlign": "center",
+            }
+          }
+        >
+          Only students can join games
+        </h5>
+      </div>
+    </div>
+  </div>,
+]
+`;
+
+exports[`matches snapshot 6`] = `
+Array [
+  <nav
+    className="navbar navbar-expand-lg navbar-dark bg-dark"
+    id="customNav"
+  >
+    <span
+      className="navbar-brand"
+      style={
+        Object {
+          "paddingRight": "10px",
+        }
+      }
+    >
+      Beer Distribution Game
+    </span>
+    <span
+      className="navbar-text"
+    >
+      Logged in as 
+      
+    </span>
+    <button
+      aria-controls="responsive-navbar-nav"
+      aria-label="Toggle navigation"
+      className="navbar-toggler collapsed"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        className="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      aria-expanded={null}
+      className="navbar-collapse collapse"
+      id="responsive-navbar-nav"
+    >
+      <div
+        className="mr-auto navbar-nav"
+        onKeyDown={[Function]}
+      />
+      <div
+        className="navbar-nav"
+        onKeyDown={[Function]}
+      >
+        <a
+          className="nav-link"
+          data-rb-event-key={null}
+          href="#"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          role="button"
+        >
+          Logout
+        </a>
+        <a
+          className="nav-link"
+          data-rb-event-key="/settings"
+          href="/settings"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+        >
+          <svg
+            aria-hidden={true}
+            className="MuiSvgIcon-root"
+            focusable="false"
+            onBlur={[Function]}
+            onFocus={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </nav>,
+  <div
+    className="main-container"
+  >
+    <h2>
+      Account Settings
+    </h2>
+    <p>
+      Here you can change your password or delete your account.
+    </p>
+    <hr />
+    <div
+      className="card"
+    >
+      <div
+        className="card-header"
+      >
+        <div
+          className="nav card-header-tabs nav-tabs"
+          onKeyDown={[Function]}
+        >
+          <div
+            className="nav-item"
+          >
+            <a
+              className="nav-link"
+              data-rb-event-key="/monitor"
+              href="/monitor"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+            >
+              Monitor Games
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        className="card-body"
+      >
+        <div
+          className="main-container-settings"
+        >
+          <form
+            className=""
+            id="account_settings_form"
+          >
+            <div
+              className="form-group"
+            >
+              <input
+                className="form-control"
+                id="current_password"
+                name="current_password"
+                placeholder="Current Password"
+                required={true}
+                type="password"
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <input
+                className="form-control"
+                id="new_password"
+                name="new_password"
+                placeholder="New Password"
+                required={true}
+                type="password"
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <input
+                className="form-control"
+                id="repeat_password"
+                name="repeat_password"
+                placeholder="Repeat New Password"
+                required={true}
+                type="password"
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <button
+                className="btn btn-primary"
+                disabled={false}
+                id="setting_button1"
+                type="submit"
+              >
+                Change Password
+              </button>
+            </div>
+          </form>
+          <button
+            className="btn btn-danger"
+            disabled={false}
+            id="setting_button2"
+            type="submit"
+          >
+            Delete Account
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>,
+]
+`;

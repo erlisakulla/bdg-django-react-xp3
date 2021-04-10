@@ -26,31 +26,58 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react';
+            <pre class="prettyprint source linenums"><code>import React from "react";
 import '../../css/Main.css';
-import Navbar from '../components/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Card } from 'react-bootstrap';
+import { Card, Form } from 'react-bootstrap';
+import Plot from '../components/plots/Plot';
+import { useParams } from 'react-router-dom';
 
 /**
- * Displays selected Game Insights 
+ * Game insights page 
  *
  * @component
+ * @param {string} gameid id of game passed as parameter in dynamic link
  */
-class GameInsights extends Component {
-  render() {
-    return (
-      &lt;> 
-        &lt;Navbar/>
-        
-        &lt;div className="main-container">
-          &lt;Card>
-            
-          &lt;/Card>
-        &lt;/div>
-      &lt;/>
-    );
-  }
+function GameInsights(props) {
+  const { gameid } = useParams();
+  const { plotName } = props;
+
+  // const custom_style = {
+
+  // }
+  
+  return (
+    &lt;> 
+      &lt;div className="main-container" style={{textAlign:'center'}}>
+        &lt;h3>Game {gameid} Insights&lt;/h3>
+
+        &lt;Form.Control 
+          as="select" 
+          id="plot_selector" 
+          custom 
+          defaultValue="def"
+          style={{width:'200px'}}>
+          &lt;option value="def" disabled>Select Plot Type&lt;/option>
+          &lt;optgroup label="Players">
+            &lt;option class="selector" value="1">Retailer&lt;/option>
+            &lt;option class="selector" value="2">Wholesaler&lt;/option>
+            &lt;option class="selector" value="3">Distributor&lt;/option>
+            &lt;option class="selector" value="4">Factory&lt;/option>
+          &lt;/optgroup>
+          &lt;optgroup label="Supply Chain">
+            &lt;option class="selector" value="5">Inventory/Backlog&lt;/option>
+            &lt;option class="selector" value="6">Demand&lt;/option>
+            &lt;option class="selector" value="9">Order&lt;/option>
+          &lt;/optgroup>
+        &lt;/Form.Control>
+
+        &lt;Card style={{padding:'50px'}}>
+          &lt;Plot plot={plotName} gameid={gameid}/>
+        &lt;/Card>
+      &lt;/div>
+    &lt;/>
+  );
 }
 
 export default GameInsights;</code></pre>
@@ -63,13 +90,13 @@ export default GameInsights;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameInsights.html">GameInsights</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="GameView.html">GameView</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="PlsyersList.html">PlsyersList</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#GameUpdateForm">GameUpdateForm</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#MonitorGamesList">MonitorGamesList</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="PlsyersList.html">PlsyersList</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GameInsights">GameInsights</a></li><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#GameUpdateForm">GameUpdateForm</a></li><li><a href="global.html#GameView">GameView</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#MonitorGamesList">MonitorGamesList</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#Plot">Plot</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Apr 08 2021 19:03:27 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 10 2021 02:06:51 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

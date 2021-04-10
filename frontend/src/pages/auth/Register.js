@@ -1,6 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Form, Card, Nav, Col } from 'react-bootstrap';
 import axiosInstance from '../../axios'
@@ -135,6 +133,7 @@ class SignUp extends React.Component {
                     <Form.Group>
                       <Form.Control 
                         type="email"
+                        data-testid="email-input"
                         id="email"
                         name="email"
                         required
@@ -200,7 +199,7 @@ class SignUp extends React.Component {
                       Sign Up
                     </Button>
                     <Form.Text className="text-muted">
-                      Already have an account? <Link to="/">Login here.</Link>
+                      Already have an account? <a href="/">Login here.</a>
                     </Form.Text>
                   </Form>
                 </Card.Body>
@@ -213,4 +212,4 @@ class SignUp extends React.Component {
   }
 }
 
-export default withRouter(SignUp);
+export default SignUp;

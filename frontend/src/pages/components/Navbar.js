@@ -48,7 +48,7 @@ class CustomNavbar extends React.Component {
       const isInst = res.data.is_instructor;
       this.setState({logged_user_name: user});
       this.setState({is_instructor: isInst});
-      console.log(res.data);
+      // console.log(res.data);
     })
     .catch(error => {if(error.response){console.log(error.response.data);}});
   } 

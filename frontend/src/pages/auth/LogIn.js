@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Form, Card, Nav } from 'react-bootstrap';
 import axiosInstance from '../../axios'
@@ -78,7 +77,7 @@ class LogIn extends Component {
   render() {
     return (
       <>
-        <section className="content-wrapper">
+        <section data-testid="log-in-page" className="content-wrapper">
           <div className="login">
             <h2 className="welcome-text">Welcome to the Beer Distribution Game!</h2>
             <div className="box">
@@ -126,7 +125,7 @@ class LogIn extends Component {
                       Log In
                     </Button>
                     <Form.Text className="text-muted">
-                      Don't have an account? <Link to="/signup">Register here.</Link>
+                      Don't have an account? <a href="/signup">Register here.</a>
                     </Form.Text>
                   </Form>
                 </Card.Body>

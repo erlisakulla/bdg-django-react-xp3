@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: pages/components/Option.js</title>
+    <title>JSDoc: Source: pages/components/plots/Plot.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: pages/components/Option.js</h1>
+    <h1 class="page-title">Source: pages/components/plots/Plot.js</h1>
 
     
 
@@ -27,31 +27,95 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from "react";
+import CanvasJSReact from './canvasjs.react.js';
+import '../../../css/Main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+// import { useParams } from 'react-router-dom';
+
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 /**
- * Option (edit, delete, ..)
+ * Plot component 
  *
- * @param {string} props.name option name
- * @param {Icon} props.icon option material-ui icon
+ * @component
+ * @param {string} gameid id of game passed as parameter in dynamic link
  */
-function Option(props) {
-  return(
-    &lt;OverlayTrigger
-      key="bottom"
-      placement="bottom"
-      overlay={
-        &lt;Tooltip id="tooltip-bottom">
-          {props.name}
-        &lt;/Tooltip>
-      }>
-      {props.icon}
-    &lt;/OverlayTrigger>
+function Plot(props){
+  const { gameid } = props;
+  // sample data to be displayed
+  // pass it as param
+  const options = {
+    animationEnabled: true,	
+    theme: "light2",
+    title:{
+      text: "Inventory/Backorder of the Supply Chain for Game " + gameid,
+    },
+    axisY : {
+      title: "Inventory/Backorder"
+    },
+    axisX : {
+      title: "Week"
+    },
+    toolTip: {
+      shared: true
+    },
+    data: [{
+      type: "line",
+      name: "Factory",
+      showInLegend: true,
+      dataPoints: [
+        { y: 155, label: "1" },
+        { y: 150, label: "2" },
+        { y: 152, label: "3" },
+        { y: 148, label: "4" },
+        { y: 142, label: "5" },
+      ]
+    },
+    {
+      type: "line",
+      name: "Distributor",
+      showInLegend: true,
+      dataPoints: [
+        { y: 150, label: "1" },
+        { y: 150, label: "2" },
+        { y: 150, label: "3" },
+        { y: 150, label: "4" },
+        { y: 150, label: "5" },
+      ]
+    },
+    {
+      type: "line",
+      name: "Wholesaler",
+      showInLegend: true,
+      dataPoints: [
+        { y: 172, label: "1" },
+        { y: 172, label: "2" },
+        { y: 172, label: "3" },
+        { y: 172, label: "4" },
+        { y: 172, label: "5" },
+      ]
+    },
+    {
+      type: "line",
+      name: "Retailer",
+      showInLegend: true,
+      dataPoints: [
+        { y: 172, label: "1" },
+        { y: 173, label: "2" },
+        { y: 175, label: "3" },
+        { y: 172, label: "4" },
+        { y: 162, label: "5" },
+      ]
+    }]
+  }
+
+  return (
+    &lt;CanvasJSChart options={options}/>
   );
+
 }
 
-export default Option;</code></pre>
+export default Plot;</code></pre>
         </article>
     </section>
 

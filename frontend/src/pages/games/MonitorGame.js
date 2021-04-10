@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Nav } from 'react-bootstrap';
 import axiosInstance from '../../axios'
 import MonitorGamesList from '../components/MonitorGamesList'
+
 /**
  * Monitor Games page 
  *
@@ -42,7 +43,7 @@ class MonitorGames extends Component {
         .then((res) => {
           const allRoles = res.data;
           this.setState({roles: allRoles});
-          console.log(res.data);
+          // console.log(res.data);
 
           // getting games based on roles
           var i, gameid;
@@ -52,7 +53,7 @@ class MonitorGames extends Component {
             .then((res) => {
               const game = res.data;
               this.setState(previousState => ({games: [...previousState.games, game]}));
-              console.log(res.data);
+              // console.log(res.data);
             })
             .catch(error => {if(error.response){console.log(error.response.data);}});
           }

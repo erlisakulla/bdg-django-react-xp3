@@ -10,6 +10,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
  * Game display page 
  *
  * @component
+ * @param {string} gameid id of game passed as parameter in dynamic link
  */
 function GameView() {
   const { gameid } = useParams();
@@ -81,7 +82,7 @@ function GameView() {
       if(error.response) {
         console.log(error.response.data);
         alert('Game not found');
-        window.location = "/join";
+        window.location = "/monitor";
       }
     });
 
