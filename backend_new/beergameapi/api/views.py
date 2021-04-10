@@ -133,7 +133,26 @@ class gameview(viewsets.ModelViewSet):
         except:
             return Response({"detail": "Not Registered for this Game"}, status=status.HTTP_403_FORBIDDEN)
 
+    @action(detail=True, methods=['get'])
+    def monitor(self, request, pk=None):
+        game = self.get_object()
+        if game.instructor ==request.user:
+            tosend={}
+            tosend['info_delay']= game.info_delay
+            tosend['current_week']=game.rounds_completed+1
+            tosend['holding_cost']=game.holding_cost
+            tosend['backlog_cost']=game.backlog_cost
+            tosend['cost']={}
+            roles = game.gameroles.all()
+            totalcost=0
+            for role in roles:
+                getcurrentweek=role.roleweeks.get(number=game.rounds_completed+1)
+                tosend["cost"][role.roleName]=getcurrentweek.cost
+                totalcost+=getcurrentweek.cost
+            tosend["cost"]['total']=totalcost
 
+            return Response(tosend)
+        return Response({"detail": "Not a Game Creator"}, status=status.HTTP_403_FORBIDDEN)
 # =======================USER RELATED VIEWS ==========================
 
 # For Route /api/user
@@ -193,6 +212,9 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     def orderbeer(self, request, pk=None):
         user = request.user
         role = self.get_object()
+        if not role.associatedGame.isActive:
+            return Response({'detail': 'Game Frozen/Not Active'}, status=status.HTTP_423_LOCKED)
+
         if role.playedBy == user:  # if not registered for game no access
             serializd = OrderSerializer(data=request.data)
 
@@ -201,7 +223,7 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
                 currentweek = role.roleweeks.all().filter(
                     number=roundcompleted+1).first()  # reverse foreignkey lookup
                 if role.ordered:
-                    return Response({'detail': 'Order Already Placed'}, status=status.HTTP_406_NOT_ACCEPTABLE)
+                    return Response({'detail': 'Order Already Placed'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
                 currentweek.order_placed = serializd.data['quantity']
                 currentweek.save()
                 role.ordered=True
