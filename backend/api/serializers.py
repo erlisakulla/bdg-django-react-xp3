@@ -69,8 +69,8 @@ class GameSerializer(serializers.ModelSerializer):
 class RoleSerializer(serializers.ModelSerializer):
     class Meta:
         model=Role
-        fields=['id','downstreamPlayer','upstreamPlayer','associatedGame','roleName','playedBy']
-        read_only_fields=('id','downstreamPlayer','upstreamPlayer','associatedGame','roleName')
+        fields=['id','downstreamPlayer','upstreamPlayer','associatedGame','roleName','playedBy','ordered']
+        read_only_fields=('id','downstreamPlayer','upstreamPlayer','associatedGame','roleName','ordered')
     
         validators = [
             UniqueTogetherValidator(

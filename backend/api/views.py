@@ -297,7 +297,6 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
                 if not roleiter.ordered: #all players should order
                     return Response({"detail":"Missing order from Some Players."},status=status.HTTP_403_FORBIDDEN)
             #if all players have ordered
-            role.gonext=True
             return Response({"detail":"success"})
         else:
             return Response({"detail": "Not Authorized"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -315,10 +314,43 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
                 playedby=None
                 if role.playedBy:
                     playedby=role.playedBy.name
-                alldetail.append({"Role":role.roleName, "OrderPlaced":role.ordered,'PlayedBy':playedby,'nextround':role.gonext})
+                alldetail.append({"Role":role.roleName,"RoleID":role.pk, "OrderPlaced":role.ordered,'PlayedBy':playedby})
 
             return Response(alldetail)
         return Response({"detail": "info sharing disabled"}, status=status.HTTP_403_FORBIDDEN)
+
+    @action(detail=True, methods=['get'])
+    def currentweek(self, request, pk=None):
+        role = self.get_object()
+        if role.playedBy==request.user or True:
+
+            upstream=role.upstreamPlayer
+            downstream=role.downstreamPlayer
+            upstreamname="Brewery"
+            downstreamname="Consumer"
+            if upstream:
+                upstreamname=upstream.roleName
+            if downstream:
+                downstreamname=downstream.roleName
+
+            game=role.associatedGame
+            alldetail={}
+            thisweek=role.roleweeks.get(number=game.rounds_completed+1)
+            alldetail['weeknumber']=thisweek.number
+            alldetail['beginning_inventory']=thisweek.inventory+thisweek.outgoing_shipment
+            alldetail['incoming_shipment']=thisweek.incoming_shipment
+            alldetail['demand']=thisweek.demand
+            alldetail['backorder']=thisweek.outgoing_shipment - thisweek.demand + thisweek.backlog 
+            alldetail['outgoing_shipment']=thisweek.outgoing_shipment
+            alldetail['ending_inventory']=thisweek.inventory
+            alldetail['upstream']=upstreamname
+            alldetail['downstream']=downstreamname
+            alldetail['name']=role.roleName
+
+
+            return Response(alldetail)
+        return Response({"detail": "Not Authroized"}, status=status.HTTP_403_FORBIDDEN)
+
 
     @action(detail=True, methods=['get'])
     def nextroundstatus(self, request,pk=None):
