@@ -3,6 +3,8 @@ import '../../css/Main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Form } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+// import InventoryPlot from '../components/plots/insights/InventoryPlot';
 
 /**
  * Game insights page 
@@ -15,13 +17,15 @@ function GameInsights(props) {
   const [selectedPlot, setSelectedPlot] = useState('');
 
   const selectPlot = (e) => {
-    setSelectedPlot({selectedPlot: e.target.value})
+    setSelectedPlot(e.target.value)
     console.log(selectedPlot);
   }
 
   return (
     <> 
       <div className="main-container" style={{textAlign:'center'}}>
+        <div style={{textAlign: 'center'}}><a href="/join"><ArrowBackIcon/>Back to Joined Games</a><br/></div>
+
         <h3>Game {gameid} Insights</h3>
 
         <Form.Control 
@@ -58,8 +62,9 @@ function GameInsights(props) {
             // (selectedPlot === "Factory") ?
             //   <Plot plot={plotName} gameid={gameid}/> :
 
+            // For now plots display only current role data, but could be changed to display all roles
             // (selectedPlot === "Inventory") ?
-            //   <InventoryPlot gameid={gameid}/> 
+            //   <InventoryPlot gameid={gameid}/> :
             // (selectedPlot === "Demand") ?
             //   <Plot plot={plotName} gameid={gameid}/> :
             // (selectedPlot === "Order") ?

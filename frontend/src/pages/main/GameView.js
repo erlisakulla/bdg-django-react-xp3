@@ -271,7 +271,7 @@ function GameView() {
       return (
         <>
           <h5 style={{textAlign:'center', fontWeight:'400', color:'grey', padding:'50px'}}>You're not registered for this game</h5>
-          <div style={{textAlign: 'center'}}><a href="/monitor"><ArrowBackIcon/>Back to Games List</a><br/></div>
+          <div style={{textAlign: 'center'}}><a href="/join"><ArrowBackIcon/>Back to Games List</a><br/></div>
         </>
       );
     }

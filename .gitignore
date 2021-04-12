@@ -107,5 +107,4 @@ dist
 .tern-port
 
 #backend
-backend/
 backend_new/
