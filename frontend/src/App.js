@@ -2,12 +2,12 @@ import React from 'react';
 import './css/App.css';
 import LogIn from './pages/auth/LogIn';
 import SignUp from './pages/auth/Register';
-import Dashboard from './pages/games/Dashboard';
-import MonitorGames from './pages/games/MonitorGame';
-import JoinGames from './pages/games/JoinGame';
-import GameView from './pages/games/GameView';
+import Dashboard from './pages/main/Dashboard';
+import MonitorGames from './pages/main/MonitorGame';
+import JoinGames from './pages/main/JoinGame';
+import GameView from './pages/main/GameView';
 import AccountSettings from './pages/auth/AccountSettings';
-import GameInsights from './pages/games/GameInsights';
+import GameInsights from './pages/main/GameInsights';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 // import axiosInstance from './axios'
 
@@ -25,7 +25,6 @@ class App extends React.Component {
        * Defines if user is logged in or not
        */
       logged_in: localStorage.getItem('access_token') ? true : false,
-      is_session_expired: false,
       is_instructor: '',
       
       /**

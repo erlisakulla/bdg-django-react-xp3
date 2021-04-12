@@ -15,12 +15,20 @@ class AccountSettings extends Component {
     super(props)
 
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.onChangeInput = this.onChangeInput.bind(this);
+    this.changePass = this.changePass.bind(this);
     
     /**
      * Games display states
      */
     this.state = {
       is_instructor: '',
+
+      change_pass: {
+        old_password: '',
+        password: '',
+        password2: '',
+      }
     }
   }
 
@@ -29,7 +37,7 @@ class AccountSettings extends Component {
    *
    * @method
    */
-   componentDidMount() { 
+  componentDidMount() { 
     axiosInstance.get('http://127.0.0.1:8000/api/user/')
     .then((res) => {
       const isInst = res.data.is_instructor;
@@ -37,6 +45,45 @@ class AccountSettings extends Component {
       console.log(res.data);
     })
     .catch(error => {if(error.response){console.log(error.response.data);}});
+  }
+
+  /**
+   * Function for detecting input changes in the form
+   *
+   * @method
+   * @param {Object} e event handler
+   */
+  onChangeInput(e) {
+    const pass = this.state.change_pass;
+    pass[e.target.name] = e.target.value;
+    this.setState({change_pass: pass});
+  }
+
+ 
+  /**
+   * Chage Password function
+   *
+   * @method
+   * @param {Object} e event handler
+   */
+   changePass(e) {
+    e.preventDefault();
+    const newPass = this.state.change_pass;
+
+    axiosInstance.put('http://127.0.0.1:8000/api/user/changepassword/', newPass)
+    .then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        alert("Successfully Changed Password!"); 
+        window.location = "/settings";
+      }
+    })
+    .catch(error => {
+      if(error.response) {
+        alert("Couldn't Change Password!"); 
+        console.log(error.response.data)
+      }
+    });
   }
 
   render() {
@@ -70,14 +117,16 @@ class AccountSettings extends Component {
 
             <Card.Body>
               <div className="main-container-settings">
-                <Form id="account_settings_form">
+                <Form id="account_settings_form" onSubmit={this.changePass}>
                   {/* ------- Current Password ------- */}
                   <Form.Group>
                     <Form.Control 
                       required
                       type="password"
-                      id="current_password"
-                      name="current_password"
+                      id="old_password"
+                      name="old_password"
+                      value={this.state.change_pass.old_password}
+                      onChange={this.onChangeInput}
                       placeholder="Current Password"/>
                   </Form.Group>
                   {/* ------- New Password ------- */}
@@ -85,8 +134,10 @@ class AccountSettings extends Component {
                     <Form.Control 
                       required
                       type="password"
-                      id="new_password"
-                      name="new_password"
+                      id="password"
+                      name="password"
+                      value={this.state.change_pass.password}
+                      onChange={this.onChangeInput}
                       placeholder="New Password"/>
                   </Form.Group>
                   {/* ------- Repeat New Password ------- */}
@@ -94,10 +145,16 @@ class AccountSettings extends Component {
                     <Form.Control 
                       required
                       type="password"
-                      id="repeat_password"
-                      name="repeat_password"
+                      id="password2"
+                      name="password2"
+                      value={this.state.change_pass.password2}
+                      onChange={this.onChangeInput}
                       placeholder="Repeat New Password"/>
                   </Form.Group>
+
+                  <Form.Text className="text-muted" style={{textAlign:'center', paddingBottom:'15px'}}>
+                    Password must contain at least 8 characters.
+                  </Form.Text>
                   
                   <Form.Group>
                     <Button variant="primary" type="submit" id="setting_button1">
