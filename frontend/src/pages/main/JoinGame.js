@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Nav } from 'react-bootstrap';
 import GameRegisterForm from '../components/forms/GameRegisterForm';
 import RegisteredGamesList from '../components/lists/RegisteredGamesList';
-import axiosInstance from '../../axios'
+import axiosInstance from '../../axios';
 
 /**
  * Join Games page 

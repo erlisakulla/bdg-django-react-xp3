@@ -25,7 +25,6 @@ class App extends React.Component {
        * Defines if user is logged in or not
        */
       logged_in: localStorage.getItem('access_token') ? true : false,
-      is_instructor: '',
       
       /**
        * User data (/api/token)

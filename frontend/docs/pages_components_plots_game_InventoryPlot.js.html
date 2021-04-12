@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: pages/components/Navbar.js</title>
+    <title>JSDoc: Source: pages/components/plots/game/InventoryPlot.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: pages/components/Navbar.js</h1>
+    <h1 class="page-title">Source: pages/components/plots/game/InventoryPlot.js</h1>
 
     
 
@@ -27,102 +27,120 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from "react";
+import CanvasJSReact from '../canvasjs.react.js';
+import '../../../../css/Main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Nav, OverlayTrigger, Tooltip} from 'react-bootstrap';
-import SettingsIcon from '@material-ui/icons/Settings';
-import axiosInstance from '../../axios';
+import { Button, Modal } from 'react-bootstrap'
+import axiosInstance from '../../../../axios';
+
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 /**
- * Navbar component
+ * Plot component
  *
  * @component
  */
-class CustomNavbar extends React.Component {
-  constructor(props) {
-    super(props)
+class InventoryPlot extends React.Component {
+  constructor(props){
+    super(props);
 
-    this.logout = this.logout.bind(this);
+    this.handleModalShowHide = this.handleModalShowHide.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
-
-    /**
-     * User state
-     */
+    
     this.state = {
-      logged_in: localStorage.getItem('access_token') ? true : false,
-      logged_user_name: '',
-      is_instructor: '',
+      showHide : false, // modal default state is hide
+      options: '',
+      dataPoints: '',
     }
   }
-  
-  /**
-   * Logout method
-   *
-   * @method
-   */
-  logout() {
-    // axiosInstance.post('http://127.0.0.1:8000/api/token/refresh', {refresh_token: localStorage.getItem('refresh_token')});
-    // should post tokens to blacklist
-
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    axiosInstance.defaults.headers['Authorization'] = null;
-    window.location = "/";
-  };
 
   componentDidMount() {
-    axiosInstance.get('http://127.0.0.1:8000/api/user/')
+    axiosInstance.get(`http://127.0.0.1:8000/api/game/${this.props.gameid}/getweeks/`)
     .then((res) => {
-      const user = res.data.name;
-      const isInst = res.data.is_instructor;
-      this.setState({logged_user_name: user});
-      this.setState({is_instructor: isInst});
+      const allWeeks = res.data;
       // console.log(res.data);
+
+      for (var i = 0; i &lt; allWeeks.length; i++) {
+        const num = allWeeks[i].number;
+        var inv;
+        if (allWeeks[i].backlog &lt; 0) {
+          inv = allWeeks[i].backlog;
+        }
+        else {
+          inv = allWeeks[i].inventory;
+        }
+        
+        const data = {y: inv, label: `${num}`};
+        this.setState(previousState => ({dataPoints: [...previousState.dataPoints, data]}));
+      }
+
+      this.setState({ 
+        options: {
+          animationEnabled: true,	
+          theme: "light2",
+          width: 700,
+          title:{
+            text: "Inventory/Backorder",
+          },
+          axisY : {
+            title: "Inventory/Backorder"
+          },
+          axisX : {
+            title: "Week"
+          },
+          toolTip: {
+            shared: true
+          },
+          data: [{
+            type: "line",
+            name: "Inventory/Backorder",
+            color: "blue",
+            showInLegend: true,
+            dataPoints: this.state.dataPoints,
+          }]
+        }
+      });      
     })
     .catch(error => {if(error.response){console.log(error.response.data);}});
-  } 
-  
+  }
+
+  /**
+   * Handle to change modal state when clicked on a component
+   */
+  handleModalShowHide() {
+    this.setState({showHide: !this.state.showHide})
+    this.setState({errors: null});
+  }
+
   render() {
-    return (
-      &lt;Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" id="customNav">
-        &lt;Navbar.Brand style={{paddingRight:'10px'}}>Beer Distribution Game&lt;/Navbar.Brand>
-        &lt;Navbar.Text>Logged in as {this.state.logged_user_name}&lt;/Navbar.Text>
-        &lt;Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        &lt;Navbar.Collapse id="responsive-navbar-nav">
-          &lt;Nav className="mr-auto">&lt;/Nav>
-          &lt;Nav>
-            &lt;Nav.Link onClick={this.logout}>Logout&lt;/Nav.Link>
-            &lt;Nav.Link href="/settings">&lt;Settings/>&lt;/Nav.Link>
-          &lt;/Nav>
-        &lt;/Navbar.Collapse>
-      &lt;/Navbar>
+    return(
+      &lt;>
+        &lt;div>
+          &lt;Button variant="primary" onClick={() => this.handleModalShowHide()}  className="plot-btn">
+            Inventory
+          &lt;/Button>
+        &lt;/div>
+        
+        &lt;Modal size="xl" show={this.state.showHide} onHide={() => this.handleModalShowHide()} dialogClassName="modal-plot">
+          &lt;Modal.Header closeButton>
+          &lt;/Modal.Header>
+
+          &lt;Modal.Body>
+            &lt;CanvasJSChart options={this.state.options} className="plot"/>
+          &lt;/Modal.Body>
+          
+          &lt;Modal.Footer>
+            &lt;Button variant="danger" onClick={() => this.handleModalShowHide()}>
+              Cancel
+            &lt;/Button>
+          &lt;/Modal.Footer>
+        &lt;/Modal>
+      &lt;/>
     );
   }
 }
 
-export default CustomNavbar;
-
-/**
- * Account Settings component
- *
- * @memberof customNavbar
- * @component
- */
-class Settings extends React.Component {
-  render() {
-    return(
-      &lt;OverlayTrigger
-        key="bottom"
-        placement="bottom"
-        overlay={
-          &lt;Tooltip id="tooltip-bottom">
-            Account Settings
-          &lt;/Tooltip>
-        }>
-        &lt;SettingsIcon/>
-      &lt;/OverlayTrigger>
-    );
-  }
-}</code></pre>
+export default InventoryPlot;</code></pre>
         </article>
     </section>
 

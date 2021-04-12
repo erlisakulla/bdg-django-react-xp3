@@ -203,3 +203,13 @@ label {
 h5 {
   font-weight: 700;
 }
+
+.modal-plot {
+  min-width: 730px;
+  max-width: 730px;
+  text-align: center;
+}
+
+.plot-btn {
+  margin-left: 7px;;
+}

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: pages/components/Option.js</title>
+    <title>JSDoc: Source: pages/components/lists/RegisteredGamesList.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: pages/components/Option.js</h1>
+    <h1 class="page-title">Source: pages/components/lists/RegisteredGamesList.js</h1>
 
     
 
@@ -26,32 +26,71 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import '../../../css/Main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Table } from 'react-bootstrap';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import TimelineIcon from '@material-ui/icons/Timeline';
 
 /**
- * Option (edit, delete, ..)
+ * Registered Games List view 
  *
- * @param {string} props.name option name
- * @param {Icon} props.icon option material-ui icon
+ * @component
+ * @param {Object} roles List of games to be displayed
+ * @param {string} message Message shown if there are no games
  */
-function Option(props) {
-  return(
-    &lt;OverlayTrigger
-      key="bottom"
-      placement="bottom"
-      overlay={
-        &lt;Tooltip id="tooltip-bottom">
-          {props.name}
-        &lt;/Tooltip>
-      }>
-      {props.icon}
-    &lt;/OverlayTrigger>
-  );
+function RegisteredGamesList(props) {
+	const { roles, message } = props;
+
+	if (!roles || roles.length === 0) {
+		return ( 
+			&lt;h5 style={{textAlign:'center', fontWeight:'400', color:'grey'}}>{message}&lt;/h5>
+		);
+	}
+
+	/**
+	 * Counter variable for row number
+	 */
+	let counter = 0;
+
+	return (
+    &lt;Table responsive className="gamesList">
+      &lt;thead>
+        &lt;tr>
+          &lt;th>#&lt;/th>
+          &lt;th>Game ID&lt;/th>
+          &lt;th>Role Name&lt;/th>
+          {/* &lt;th>Current Week&lt;/th>
+          &lt;th>Completed/Ongoing&lt;/th>
+          &lt;th>Your Cost&lt;/th>
+          &lt;th>Total Cost&lt;/th> */}
+          &lt;th>&lt;/th>
+          &lt;th>&lt;/th>
+        &lt;/tr>
+      &lt;/thead>
+      &lt;tbody>
+        {roles.map((role) => {
+          counter++;
+          // this should actually be current active week of game
+          return(
+            &lt;tr key={role.id}>
+              &lt;td>{counter}&lt;/td>
+              &lt;th>{role.associatedGame}&lt;/th>
+              &lt;td>{role.roleName}&lt;/td>
+              {/* &lt;td>&lt;a href={`/gameview/${role.associatedGame}/${weekid}`}>Enter Game&lt;/a>&lt;/td> */}
+              &lt;td>&lt;a href={"/gameview/" + role.associatedGame}>Enter Game &lt;ExitToAppIcon/>&lt;/a>&lt;/td>
+              {/* Activate insights only if game is over */}
+              &lt;td>&lt;a href={"/insights/" + role.associatedGame}>View Insights &lt;TimelineIcon/>&lt;/a>&lt;/td>
+            &lt;/tr>
+          );
+        })}
+      &lt;/tbody>
+    &lt;/Table>
+	)
 }
 
-export default Option;</code></pre>
+export default RegisteredGamesList;</code></pre>
         </article>
     </section>
 

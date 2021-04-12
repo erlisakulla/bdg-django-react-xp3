@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: pages/components/Navbar.js</title>
+    <title>JSDoc: Source: pages/main/JoinGame.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: pages/components/Navbar.js</h1>
+    <h1 class="page-title">Source: pages/main/JoinGame.js</h1>
 
     
 
@@ -26,103 +26,106 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react';
+import '../../css/Main.css';
+import Navbar from '../components/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Nav, OverlayTrigger, Tooltip} from 'react-bootstrap';
-import SettingsIcon from '@material-ui/icons/Settings';
+import { Card, Nav } from 'react-bootstrap';
+import GameRegisterForm from '../components/forms/GameRegisterForm';
+import RegisteredGamesList from '../components/lists/RegisteredGamesList';
 import axiosInstance from '../../axios';
 
 /**
- * Navbar component
+ * Join Games page 
  *
  * @component
  */
-class CustomNavbar extends React.Component {
+class JoinGames extends Component {
   constructor(props) {
     super(props)
 
-    this.logout = this.logout.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
-
+    
     /**
-     * User state
+     * Games display states
      */
     this.state = {
-      logged_in: localStorage.getItem('access_token') ? true : false,
-      logged_user_name: '',
+      roles: null,
+      message: 'No games to display',
       is_instructor: '',
     }
   }
-  
+
   /**
-   * Logout method
+   * Method to get all games
    *
    * @method
    */
-  logout() {
-    // axiosInstance.post('http://127.0.0.1:8000/api/token/refresh', {refresh_token: localStorage.getItem('refresh_token')});
-    // should post tokens to blacklist
-
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    axiosInstance.defaults.headers['Authorization'] = null;
-    window.location = "/";
-  };
-
-  componentDidMount() {
-    axiosInstance.get('http://127.0.0.1:8000/api/user/')
-    .then((res) => {
-      const user = res.data.name;
-      const isInst = res.data.is_instructor;
-      this.setState({logged_user_name: user});
-      this.setState({is_instructor: isInst});
-      // console.log(res.data);
+   componentDidMount() {
+    axiosInstance.get('http://127.0.0.1:8000/api/role/').then((res) => {
+      const allRoles = res.data;
+      this.setState({roles: allRoles});
+      console.log(res.data);
     })
     .catch(error => {if(error.response){console.log(error.response.data);}});
-  } 
-  
+
+    axiosInstance.get('http://127.0.0.1:8000/api/user/')
+    .then((res) => {
+      const isInst = res.data.is_instructor;
+      this.setState({is_instructor: isInst});
+      console.log(res.data);
+    })
+    .catch(error => {if(error.response){console.log(error.response.data);}});
+  }
+
   render() {
     return (
-      &lt;Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" id="customNav">
-        &lt;Navbar.Brand style={{paddingRight:'10px'}}>Beer Distribution Game&lt;/Navbar.Brand>
-        &lt;Navbar.Text>Logged in as {this.state.logged_user_name}&lt;/Navbar.Text>
-        &lt;Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        &lt;Navbar.Collapse id="responsive-navbar-nav">
-          &lt;Nav className="mr-auto">&lt;/Nav>
-          &lt;Nav>
-            &lt;Nav.Link onClick={this.logout}>Logout&lt;/Nav.Link>
-            &lt;Nav.Link href="/settings">&lt;Settings/>&lt;/Nav.Link>
-          &lt;/Nav>
-        &lt;/Navbar.Collapse>
-      &lt;/Navbar>
+      &lt;> 
+        &lt;Navbar/>
+
+        &lt;div className="main-container">
+          &lt;h2>Join Games&lt;/h2>
+          &lt;p>Here you can register to games, view and join all games you have registered for.&lt;/p>
+          &lt;hr/>
+
+          &lt;Card>
+            &lt;Card.Header>
+              &lt;Nav variant="tabs">
+                { this.state.is_instructor === true ?
+                  &lt;Nav.Item>
+                    &lt;Nav.Link href="/create">Setup Games&lt;/Nav.Link>
+                  &lt;/Nav.Item> : null
+                }
+                { this.state.is_instructor === false ?
+                  &lt;Nav.Item>
+                    &lt;Nav.Link href="/join" className="active">Join Games&lt;/Nav.Link>
+                  &lt;/Nav.Item> : null
+                }
+                &lt;Nav.Item>
+                  &lt;Nav.Link href="/monitor">Monitor Games&lt;/Nav.Link>
+                &lt;/Nav.Item>
+              &lt;/Nav>
+            &lt;/Card.Header>
+
+            &lt;Card.Body>
+              { this.state.is_instructor === false ?
+                &lt;>
+                  {/* Form for registering for a game */}
+                  &lt;GameRegisterForm/>
+                  {/* ------- Table with games to join ------- */}
+                  &lt;RegisteredGamesList roles={this.state.roles} message={this.state.message}/>
+                &lt;/> : 
+                &lt;h5 style={{textAlign:'center', fontWeight:'400', color:'grey'}}>Only students can join games&lt;/h5>
+              }
+            &lt;/Card.Body>
+          &lt;/Card>
+        &lt;/div>
+      &lt;/>
     );
   }
 }
 
-export default CustomNavbar;
-
-/**
- * Account Settings component
- *
- * @memberof customNavbar
- * @component
- */
-class Settings extends React.Component {
-  render() {
-    return(
-      &lt;OverlayTrigger
-        key="bottom"
-        placement="bottom"
-        overlay={
-          &lt;Tooltip id="tooltip-bottom">
-            Account Settings
-          &lt;/Tooltip>
-        }>
-        &lt;SettingsIcon/>
-      &lt;/OverlayTrigger>
-    );
-  }
-}</code></pre>
+export default JoinGames;</code></pre>
         </article>
     </section>
 

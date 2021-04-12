@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import '../../css/Main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Form } from 'react-bootstrap';
-import Plot from '../components/plots/Plot';
 import { useParams } from 'react-router-dom';
 
 /**
@@ -13,12 +12,13 @@ import { useParams } from 'react-router-dom';
  */
 function GameInsights(props) {
   const { gameid } = useParams();
-  const { plotName } = props;
+  const [selectedPlot, setSelectedPlot] = useState('');
 
-  // const custom_style = {
+  const selectPlot = (e) => {
+    setSelectedPlot({selectedPlot: e.target.value})
+    console.log(selectedPlot);
+  }
 
-  // }
-  
   return (
     <> 
       <div className="main-container" style={{textAlign:'center'}}>
@@ -29,23 +29,43 @@ function GameInsights(props) {
           id="plot_selector" 
           custom 
           defaultValue="def"
+          onChange={selectPlot}
           style={{width:'200px'}}>
             <option value="def" disabled>Select Plot Type</option>
             <optgroup label="Players">
-              <option className="selector" value="1">Retailer</option>
-              <option className="selector" value="2">Wholesaler</option>
-              <option className="selector" value="3">Distributor</option>
-              <option className="selector" value="4">Factory</option>
+              {/* Plots with inventory, order, demand data for each role */}
+              <option className="selector" value="Retailer">Retailer</option>
+              <option className="selector" value="Wholesaler">Wholesaler</option>
+              <option className="selector" value="Distributor">Distributor</option>
+              <option className="selector" value="Factory">Factory</option>
             </optgroup>
             <optgroup label="Supply Chain">
-              <option className="selector" value="5">Inventory/Backlog</option>
-              <option className="selector" value="6">Demand</option>
-              <option className="selector" value="9">Order</option>
+              {/* Plots with specific data for all roles in one plot */}
+              <option className="selector" value="Inventory">Inventory/Backlog</option>
+              <option className="selector" value="Demand">Demand</option>
+              <option className="selector" value="Order">Order</option>
             </optgroup>
         </Form.Control>
 
         <Card style={{padding:'50px', margin:'15px'}}>
-          <Plot plot={plotName} gameid={gameid}/>
+          {
+            // (selectedPlot === "Retailer") ?
+            //   <Plot plot={plotName} gameid={gameid}/> :
+            // (selectedPlot === "Wholesaler") ?
+            //   <Plot plot={plotName} gameid={gameid}/> :
+            // (selectedPlot === "Distributor") ?
+            //   <Plot plot={plotName} gameid={gameid}/> :
+            // (selectedPlot === "Factory") ?
+            //   <Plot plot={plotName} gameid={gameid}/> :
+
+            // (selectedPlot === "Inventory") ?
+            //   <InventoryPlot gameid={gameid}/> 
+            // (selectedPlot === "Demand") ?
+            //   <Plot plot={plotName} gameid={gameid}/> :
+            // (selectedPlot === "Order") ?
+            //   <Plot plot={plotName} gameid={gameid}/> :
+            // null
+          }
         </Card>
       </div>
     </>

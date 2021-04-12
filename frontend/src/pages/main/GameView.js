@@ -8,6 +8,12 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import SharedInfo from '../components/lists/SharedInfo';
 import WeeksInfo from '../components/lists/WeeksInfo';
+import InventoryPlot from '../components/plots/game/InventoryPlot';
+import DemandPlot from '../components/plots/game/DemandPlot';
+import IncShipPlot from '../components/plots/game/IncShipPlot';
+import OutShipPlot from '../components/plots/game/OutShipPlot';
+import OrderPlot from '../components/plots/game/OrderPlot';
+import PlotAll from '../components/plots/game/PlotAll';
 
 /**
  * Game display page 
@@ -274,7 +280,7 @@ function GameView() {
         <div>
           {/* -------SCREEN 1 ------- */}
           <div id="div1" className="quadrant">
-          <div style={{width: '100%', textAlign: 'left'}}><a href="/join"><ArrowBackIcon/>Back to Assigned Games</a><br/></div>
+          <div style={{width: '100%', textAlign: 'left'}}><a href="/join"><ArrowBackIcon/>Back to Joined Games</a><br/></div>
 
             {/* Get week number from week instead */}
             <h5 style={{color:'#214da3'}}>{role.roleName} - GAME {gameid} - WEEK {week.number}</h5>
@@ -336,13 +342,16 @@ function GameView() {
           {/* -------SCREEN 4 ------- */}
           <div id="div4" className="quadrant">
             <h5>INVENTORY AND STATUS PLOTS - {role.roleName}</h5>
-            <div className="plot-buttons">
-              <button type="button" className="btn btn-primary" id="plot-btn">Inventory</button>
-              <button type="button" className="btn btn-primary" id="plot-btn">Demand</button>
-              <button type="button" className="btn btn-primary" id="plot-btn">Incoming Shipment</button>
-              <button type="button" className="btn btn-primary" id="plot-btn">Outgoing Shimpent</button>
-              <button type="button" className="btn btn-primary" id="plot-btn">Order</button>
-              <button type="button" className="btn btn-primary" id="plot-btn">Plot All</button>
+            <div className="plot-buttons" style={{textAlign:'center'}}>
+              <div style={{display:'flex', width:'fit-content'}}>
+                <InventoryPlot gameid={gameid}/>
+                <DemandPlot gameid={gameid}/>
+                <IncShipPlot gameid={gameid}/>
+                <OutShipPlot gameid={gameid}/>
+                <OrderPlot gameid={gameid}/>
+                <PlotAll gameid={gameid}/>
+              </div>
+              
             </div>
             
             <div className="supply-chain-settings">
