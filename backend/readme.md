@@ -148,6 +148,232 @@ Reference: (https://drf-yasg.readthedocs.io/en/stable/)
 ```
 
 
+## Project Structure
+####  Settings
+`Settings.py` contains all the config files related to the projects.
+New apps and modules can be added in this array inside `settings.py` file
+```python
+INSTALLED_APPS = [
+...
+...
+'api',
+'rest_framework',
+'corsheaders',
+'rest_framework_simplejwt',
+'rest_framework_simplejwt.token_blacklist',
+'drf_yasg',
+'django.contrib.admindocs',
+]
+```
+If you want to customize how the token is generated you can modify these lines of code.
+```python
+#BASIC JWT FUNCTION
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUTH_HEADER_TYPES': ('JWT',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+}
+
+```
+On this setup the token will expire in 5 days.
+
+Change Default Authentication to the API by modifying the code mentioned below.
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny'
+    ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+}
+```
+####  URLs
+`urls.py` inside beergameapi contains all the routers and url-patterns for basic handling of routes in the backend. 
+```python
+router = routers.DefaultRouter()
+router.register('game', gameview,'Game')
+router.register('role', roleview)
+
+urlpatterns = [
+    path("api/",include(router.urls)),
+    path("api/user/",userview.as_view()),
+    path("api/user/changepassword/",ChangePasswordView.as_view()),
+    path("api/register/",registerview.as_view()),
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+   re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+   re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
+    path('admin/', admin.site.urls),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenObtainPairView.as_view(), name='token_refresh'),
+]
+```
+Normally, If you have a simple view such as change password that does nothing other than changing password then you can add it as a single path in the url-patterns array. But, you can also register a router as shown above for gameview and roleview, which are  viewsets from djangorestframework and allows us to handle multiple routes coming after /game or /role.
+For example,
+```
+/game/{gameid}/
+/game/{gameid}/monitor
+/role/{roleid}/
+/role/{roleid}/register
+/role/{roleid}/orderbeer
+...
+...
+```
+You can see all the full source code inside `urls.py`.
+
+
+
+#### Models
+This `model.py`file inside `api` contains all the models and automated codes related to this project.
+For example,
+```python
+from django.dispatch import receiver
+......
+.......
+
+class Role(models.Model):
+    """
+    Role model with with user, associated game, week as foreigin keys
+    """
+    roleName = models.CharField(max_length=30)
+    associatedGame = models.ForeignKey(
+        Game, on_delete=models.CASCADE, related_name='gameroles')
+    ordered = models.BooleanField(default=False)
+    downstreamPlayer = models.ForeignKey(
+        "self", null=True, blank=True, on_delete=models.CASCADE, related_name='%(class)s_downstreamPlayer')
+    upstreamPlayer = models.ForeignKey(
+        "self", null=True, blank=True, on_delete=models.CASCADE, related_name='%(class)s_upstreamPlayer')
+    playedBy = models.ForeignKey(User, null=True,  blank=True, limit_choices_to={
+                                 'is_instructor': False}, on_delete=models.CASCADE, related_name="playerrole")
+
+    class Meta:  # Can play as only one Role
+        unique_together = ('playedBy', 'associatedGame',)
+
+    def __str__(self):
+        return (self.roleName + " of Game " + str(self.associatedGame.id))
+        
+
+.......
+........
+# On Role Creation CREATE DEFAULT Week 1
+@receiver(post_save, sender=Role)
+def onRoleCreation(sender, instance, created, **kwargs):
+    """
+    Handles automatic creation of Weeks on RoleCreation with default values. 
+    """
+
+    if created: #if new role created , generate a default week 1
+        week = Week.objects.create(number=1, associatedRole=instance,
+                                   inventory=instance.associatedGame.starting_inventory,
+                                   cost=instance.associatedGame.starting_inventory*instance.associatedGame.holding_cost)
+        week.save()
+```
+
+#### Views
+We have separated all the views inside `api` app(folder) , functions according to the model. So, there are currently `role.py`, `game.py`, `user.py` handling different routes separately making it cleaner. Comments and description are given to each function so that it's easier to understand the code and the variable names are self explanatory.
+For example,
+```python
+from rest_framework.views import APIView
+.......
+.......
+class userview(APIView):
+    """
+    Displays User Info
+    """
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+
+    @swagger_auto_schema(operation_description="Returns Logged in user info")
+    def get(self, request, format="json"):
+        serialized = UserSerializer(request.user)
+        return Response(serialized.data, status=status.HTTP_200_OK)
+ 
+class registerview(generics.CreateAPIView):
+    """
+    Register new user
+    """
+    serializer_class = UserSerializer
+```
+This is a basic class based view that extends APIView from djangorestframework and handles  user request and returns user info using UserSerializer.
+
+#### Serializer 
+This `serializers.py` contains all the Serializers imported and extended from base serializers  contained djangorestframework.
+
+And a UserSerializer mentioned above would look like.
+```python
+from rest_framework import serializers
+....
+
+.....
+
+class UserSerializer(serializers.ModelSerializer):
+    """
+    User Serializer for Registeration.
+    """
+    class Meta:
+        model = User
+        fields = ('email', 'name', 'is_instructor', 'password',)
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        password = validated_data.pop('password', None)
+        # as long as the fields are the same, we can just use this
+        instance = self.Meta.model(**validated_data)
+        if password is not None:
+            instance.set_password(password)
+        instance.save()
+        return instance
+```
+
+#### Tests
+Contains all the test related functions. 
+To create a new test for API
+```python
+from rest_framework.test import APITestCase
+class GameApiTest(APITestCase):
+	 def setUp(self):
+		#all your setup codes
+		#creating test users,games,....
+	def test_yourtestfunctionname(self):
+		#testing setup,logic
+		self.assertEqual(5, TOCHECKVARIABLE)
+
+```
+For example,
+```python
+    def test_authentication_without_password(self):
+        """
+        Test to verify that a post call with missing fields ( password)
+        """
+        response = self.client.post(self.url, {"email": "john@snow.com"})
+        self.assertEqual(400, response.status_code)
+```
+
+
+##  TODO
+1. Maintain a connection between frontend and backend and notify frontend if there is any change like user has ordered or the week is complete and the user should reload the page.
+2. Optimize Responses by creating more Serialisers and improving data structuring specific for each endpoints. 
+3. Some methods uses duplicate  codes. Must refactor by creating functions  for better code visibility.
+4. Implement demand Pattern Model and integrate it with Game.
+5. Introduce new endpoints providing data suitable for Graphs used in the frontend.
+6. If Useful , maintain a relationship between User and Instructor for limited availability of game.
+7. and many more ideas that you might have on your mind.
+
+
+
 ## References
 1. [Django Documentation](https://docs.djangoproject.com/en/3.2/)
 Django was used in this project because it contains all the necessary features like Admin, Models, URL routing to get you started quickly.
