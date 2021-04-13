@@ -106,6 +106,3 @@ dist
 
 # TernJS port file
 .tern-port
-
-#backend
-backend_new/
