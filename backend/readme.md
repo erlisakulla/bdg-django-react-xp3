@@ -1,11 +1,6 @@
 
 # BACKEND README
 
-Quick Note: The  change  in the  backend  framework was  necessary because the previous  backend  had  implemented  only the  models  using  https://sequelize.org/ and nothing else was  implemented  and the token generation and login  were  also not working. We  tried  working on that  backend  but  it  was getting  very  difficult and  we  decided  to  change  it  completely before  it  was  too  late.  
-  
-This would  also  benefit to the  people  for upcoming sprints as the codebase is clean and all the  plethora  of  documentation  in  different  forms is  provided.  
-  
-First, We imported all the User, Role, Week, Game  Models  from  Node.js  and  converted  it to  Djangorestframework  compatible  Models. And only then we  started  working  on this  project.
 
 ## Software Requirements
 Install Python and Pip before working on the Backend.
