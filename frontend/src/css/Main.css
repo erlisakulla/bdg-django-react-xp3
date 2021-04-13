@@ -1,118 +1,240 @@
+html,
+body {
+  height: 100%;
+}
 
-.loginbox {
-    box-sizing: border-box;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 12%;
-    width: 100%;
-    height: 50%;
-    border: 15px solid #004180;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .mid {
-    box-sizing: border-box;
-    margin-left: auto;
-    margin-top: 40px;
-    border: 10px solid #a7c6e6;
-    text-align: center;
-  }
-  
-  .left {
-    box-sizing: border-box;
-    margin-right: auto;
-    margin-top: -301px;
-    width: 50%;
-    border: 10px solid #a7c6e6;
-  }
-  .right {
-    box-sizing: border-box;
-    margin-left: auto;
-    margin-top: 40px;
-    width: 50%;
-    border: 10px solid #a7c6e6;
-  }
-  
-  .ttop {
-    box-sizing: border-box;
-    margin-left: auto;
-    margin-top: 60px;
-    border: 10px solid #a7c6e6;
-    text-align: center;
-  }
-  
-  .box {
-    box-sizing: border-box;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 12%;
-    width: 100%;
-    height: 50%;
-  }
-  
-  .loginbox h2 {
-    color: #00008b;
-  }
-  h1 {
-    font-size: 200%;
-    margin-left: 11%;
-    text-align: center;
-    margin-right: 11%;
-    color: #00008b;
-  }
-  
-  .content-wrapper {
-    width: 100%;
-    max-width: 1336px;
-    margin: 0 auto;
-  }
-  .login {
-    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-    font-size: 16px;
-    width: 100%;
-    max-width: 500px;
-  }
-  .login label {
-    font-size: 22px;
-    font-weight: bold;
-  }
-  .login {
-    margin: 0 auto;
-  }
-  .login form {
-    display: block;
-  }
-  input {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  select {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  #userSubmit {
-    background-color: darkblue;
-    color: white;
-    width: 100px;
-    height: 50px;
-    margin-left: 20%;
-    margin-right: 20%;
-  }
-  
-  .buttonContainer {
-    width: 100%;
-  }
-  
+body {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: inline-block;
+  background-color: #f5f5f5;
+  width: 100%;
+}
+
+#forms {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-top: 10px;
+  width: 300px;
+}
+
+.welcome-text {
+  font-size: 200%;
+  margin-left: 11%;
+  text-align: center;
+  margin-right: 11%;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 1336px;
+  margin: 0 auto;
+  padding: 50px;
+}
+
+.login {
+  font-size: 16px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.table td, .table th {
+  text-align: center;   
+}
+
+.main-container {
+  padding: 30px;
+}
+
+.main-container-register {
+  width: 350px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+
+#deleteIcon {
+  color: #ff2b1c;
+  opacity: 70%;
+}
+
+#pauseIcon {
+  color: rgb(0, 89, 255);
+  opacity: 70%;
+}
+
+#editIcon {
+  color: rgb(44, 44, 44);
+  opacity: 70%;
+}
+
+#deleteIcon:hover, #pauseIcon:hover, #editIcon:hover {
+  opacity: 100%;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+#createGame {
+  padding-bottom: 20px;;
+}
+
+.modal-body {
+  text-align: center;
+}
+
+label {
+  font-weight: 500;
+}
+
+#demand_option label, #const_dem {
+  font-weight: 400;
+}
+
+#firstFormRow {
+  width:70%; 
+  margin: 0 auto;
+}
+
+#const_demand {
+  width: 150px;
+  margin: 0 auto;
+}
+
+.main-container-settings {
+  width: 350px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+#setting_button1, #setting_button2 {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.players-btn {
+  color: #0069d9;
+  background-color: white;
+  border: solid 1px #0069d9;
+  border-radius: 20px;
+}
+
+.plot-btn {
+  color: #0069d9;
+  background-color: white;
+  border: solid 1px #0069d9;
+  border-radius: 10px;
+}
+
+.plots-table-btn {
+  color: #6c757d;
+  background-color: white;
+  border: solid 1px #6c757d;
+  border-radius: 20px;
+}
+
+/* GAME VIEW STYLES */
+
+#div1 { 
+  top: 0;
+  left: 0;
+}
+
+#div2 { 
+  top: 0;   
+  left: 50%; 
+}
+
+#div3 { 
+  top: 50%; 
+  left: 0;   
+}
+
+#div4 { 
+  top: 50%; 
+  left: 50%; 
+} 
+
+.quadrant { 
+  position: fixed; 
+  width: 50%; 
+  height: 50%;
+  overflow: auto;
+  border: 1px solid;
+  text-align: center;
+  padding: 30px;
+}
+
+.table-input-screen {
+  border: 1px solid grey;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+}
+
+.table-cont, .all-orders-placed, .supply-chain-settings {
+  padding-top: 15px;
+}
+
+.value {
+  text-align: center;
+  column-width: 40px;
+  border-right: 1px solid grey;
+  font-weight: bold;
+}
+
+.table-weeks th {
+  font-weight: 600;
+  font-size: 14px;
+  background-color: #e8e8e8;
+  width: 50px;
+  line-height: 100%;
+}
+
+.table-weeks {
+  width: 90%;
+}
+
+.status-table {
+  width: 90%;
+}
+
+.plot-buttons {
+  text-align: center;
+}
+
+#plot-btn {
+  margin: 2px;
+}
+
+.settings-table {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: right;
+}
+
+#val {
+  text-align: left;
+  font-weight: 600;
+  color: #113170;
+  padding-left: 5px;
+}
+
+h5 {
+  font-weight: 700;
+}
+
+.modal-plot {
+  min-width: 730px;
+  max-width: 730px;
+  text-align: center;
+}
+
+.plot-btn {
+  margin-left: 7px;;
+}
+
+.beer-img {
+  width: 150px;
+}

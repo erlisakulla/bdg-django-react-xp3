@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/main/GameView.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/main/GameView.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from 'react';
+import '../../css/Main.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { useParams } from 'react-router-dom';
+import axiosInstance from '../../axios'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import TimelineIcon from '@material-ui/icons/Timeline';
+import SharedInfo from '../components/lists/SharedInfo';
+import WeeksInfo from '../components/lists/WeeksInfo';
+import InventoryPlot from '../components/plots/game/InventoryPlot';
+import DemandPlot from '../components/plots/game/DemandPlot';
+import IncShipPlot from '../components/plots/game/IncShipPlot';
+import OutShipPlot from '../components/plots/game/OutShipPlot';
+import OrderPlot from '../components/plots/game/OrderPlot';
+import PlotAll from '../components/plots/game/PlotAll';
+import crate from '../components/img/crate.png'
+
+/**
+ * Game display page 
+ *
+ * @component
+ * @param {string} gameid id of game passed as parameter in dynamic link
+ */
+function GameView() {
+  const { gameid } = useParams();
+
+  const [game, setGameSettings] = useState({
+    active: '',
+    backlog_cost: '',
+    holding_cost: '',
+    info_delay: '',
+    rounds_completed: '',
+    session_length: '',
+    starting_inventory: '',
+    wholesalerPresent: '',
+    distributorPresent: '',
+
+    is_completed: false,
+  });
+
+  const [week, setWeekSettings] = useState({
+    id: '',
+    number: '',
+    inventory: '',
+    backlog: '',
+    demand: '',
+    incoming_shipment: '',
+    outgoing_shipment: '',
+    order_placed: '',
+    cost: '',
+    associatedRole: '',
+  });
+
+  const [role, setRoleSettings] = useState({
+    id: '',
+    roleName: null,
+    associatedGame: '',
+    downstreamPlayer: '',
+    upstreamPlayer: '',
+  });
+
+  const [orderBeer, setOrder] = useState({
+    quantity: null,
+  });
+
+  const [upstreamRole, setUpstream] = useState({
+    roleName: '',
+  });
+
+  const [downstreamRole, setDownstream] = useState({
+    roleName: '',
+  });
+
+  const [ordersStatus, setOrdersStatus] = useState({
+    status: false,
+  })
+
+  useEffect(() => {
+    // Geting and setting game data
+    axiosInstance.get(`http://127.0.0.1:8000/api/game/${gameid}`)
+    .then((res) => {
+      setGameSettings(s => ({
+        // active: true,
+        active: res.data.active,
+        holding_cost: res.data.holding_cost,
+        backlog_cost: res.data.backlog_cost,
+        info_delay: res.data.info_delay,
+        rounds_completed: res.data.rounds_completed,
+        session_length: res.data.session_length,
+        starting_inventory: res.data.starting_inventory,
+        distributorPresent: res.data.distributorPresent,
+        wholesalerPresent: res.data.wholesalerPresent,
+        is_completed: false,
+      }));
+      // console.log(res.data);
+    })
+    .catch(error => {
+      if(error.response) {
+        console.log(error.response.data);
+        alert('Game not found');
+        window.location = "/monitor";
+      }
+    });
+
+    if (game.active === true) {
+      // Getting and setting role data
+      axiosInstance.get('http://127.0.0.1:8000/api/role/')
+      .then((res) => {
+        // console.log(res.data);
+        const allRoles = res.data;
+
+        for (var i = 0; i &lt; allRoles.length; i++) {
+          if (parseInt(gameid) === allRoles[i].associatedGame) {
+            const rid = allRoles[i].id;
+            axiosInstance.get(`http://127.0.0.1:8000/api/role/${rid}/`)
+            .then((res) => {
+              // console.log(res.data);
+              setRoleSettings(s => ({
+                id: res.data.id,
+                roleName: res.data.roleName,
+                associatedGame: res.data.associatedGame,
+                downstreamPlayer: res.data.downstreamPlayer,
+                upstreamPlayer: res.data.upstreamPlayer,
+              }));
+
+              // Getting and setting upstream player
+              if (res.data.roleName === "Factory") {
+                setUpstream(s => ({
+                  roleName: "Brewry",
+                }));
+              }
+              else {
+                axiosInstance.get(`http://127.0.0.1:8000/api/role/${res.data.upstreamPlayer}/`)
+                .then((res1) => {
+                  // console.log(res.data);
+                  setUpstream(s => ({
+                    roleName: res1.data.roleName,
+                  }));
+                })
+                .catch(error => {if(error.response){console.log(error.response.data);}});
+              }
+
+              // Gettign and setting downstream player
+              if (res.data.roleName === "Retailer") {
+                setDownstream(s => ({
+                  roleName: "Customer",
+                }));
+              }
+              else {
+                axiosInstance.get(`http://127.0.0.1:8000/api/role/${res.data.downstreamPlayer}/`)
+                .then((res2) => {
+                  // console.log(res.data);
+                  setDownstream(s => ({
+                    roleName: res2.data.roleName,
+                  }));
+                })
+                .catch(error => {if(error.response){console.log(error.response.data);}});
+              }
+            })
+            .catch(error => {if(error.response){console.log(error.response.data);}});
+
+            // Getting and setting current week data
+            axiosInstance.get(`http://127.0.0.1:8000/api/role/${rid}/getweek/`)
+            .then((res) => {
+              // console.log(res.data);
+              for (var i = 0; i &lt; res.data.length; i++) {
+                const data = res.data[i];
+                if (game.rounds_completed === i) {
+                  setWeekSettings(s => ({
+                    id: data.id,
+                    number: data.number,
+                    inventory: data.inventory,
+                    backlog: data.backlog,
+                    demand: data.demand,
+                    incoming_shipment: data.incoming_shipment,
+                    outgoing_shipment: data.outgoing_shipment,
+                    order_placed: data.order_placed,
+                    cost: data.cost,
+                    associatedRole: data.associatedRole,
+                  }));
+                }
+              }
+            })
+            .catch(error => {if(error.response){console.log(error.response.data);}});
+
+            // Getting next round ready status
+            axiosInstance.get(`http://127.0.0.1:8000/api/role/${rid}/nextroundstatus/`)
+            .catch(error => {
+              if (error.response) {
+                console.log(error.response);
+              }
+              else {
+                setOrdersStatus(s => ({
+                  status: true,
+                }));
+              }
+            });
+
+          }
+        }
+      }).catch(error => {if(error.response){console.log(error.response.data);}}); 
+    } 
+  }, [setGameSettings, setWeekSettings, setRoleSettings, gameid, game.rounds_completed, role.upstreamPlayer, role.id, game.active]);
+
+  // Order input changed
+  const onOrderChange = (e) => {
+    setOrder({quantity: e.target.value});
+    console.log(orderBeer.quantity);  
+  }
+
+  // Submitting order
+  const submitOrder = (e) => {
+    e.preventDefault();
+    axiosInstance.post(`http://127.0.0.1:8000/api/role/${role.id}/orderbeer/`, orderBeer)
+    .then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        alert("Successfully ordered " + orderBeer.quantity + " beers!");
+        window.location = `/gameview/${gameid}`;
+      }
+    })
+    .catch(error => {
+      if(error.response){ 
+        alert("Couldn't submit order.");
+        console.log(error.response.data);
+      }
+    });
+  }
+
+  // Checking if current player has submitted order
+  const orderIsPlaced = (
+    (week.order_placed === null &amp;&amp; game.is_completed === false) ?
+    &lt;>
+      &lt;div className="my-3">Place your order: &lt;/div>
+      &lt;form className="form-inline justify-content-center" onSubmit={submitOrder}>
+        &lt;div className="form-group mx-sm-3 mb-2">
+          &lt;input type="number" name="order_placed" id="order_placed" className="form-control text-center" onChange={onOrderChange} required/>
+        &lt;/div>
+        &lt;input type="submit" className="btn btn-primary mb-2"/>
+      &lt;/form>
+    &lt;/> : 
+    (week.order_placed != null &amp;&amp; game.is_completed === false) ? 
+    &lt;div className="order-is-placed">
+      Your order is: &lt;b>{week.order_placed}&lt;/b> &lt;br/>
+      Your shipment is: &lt;b>{week.incoming_shipment}&lt;/b>&lt;br/>
+      Inventory at week {week.number}: &lt;b>{week.inventory}&lt;/b> &lt;br/>
+      Current cost: &lt;b>{week.cost}&lt;/b> &lt;br/>
+      &lt;p>Please wait until all orders have been placed to proceed to the next week.&lt;/p>
+    &lt;/div> : 
+    (game.is_completed === true) ?
+    &lt;>
+      &lt;h3>Game completed! Click on the button to view Game Insights:&lt;/h3>
+      &lt;a href={`/insights/${gameid}`} type="button" className="btn btn-secondary">Game Insights &lt;TimelineIcon/>&lt;/a>
+    &lt;/> : null
+  );
+
+  // Checking if all orders have been placed
+  const nextWeekBtn = (
+    (ordersStatus.status === true) ?
+    &lt;div className="all-orders-placed">
+      &lt;p>All orders have been placed for week {week.number}. You can now proceed to next week.&lt;/p>
+      {/* &lt;a href={`/game/${gameid}/${weekid}`} type="button" className="btn btn-success">Next Week&lt;/a> */}
+      &lt;a href={`/gameview/${gameid}`} type="button" className="btn btn-success">Next Week &lt;NavigateNextIcon/>&lt;/a>
+    &lt;/div> : null
+  );
+
+  // Displaying gameview only if game is active
+  if (game.active === true) {
+    if (role.roleName === null) {
+      return (
+        &lt;>
+          &lt;h5 style={{textAlign:'center', fontWeight:'400', color:'grey', padding:'50px'}}>You're not registered for this game&lt;/h5>
+          &lt;div style={{textAlign: 'center'}}>&lt;a href="/join">&lt;ArrowBackIcon/>Back to Games List&lt;/a>&lt;br/>&lt;/div>
+        &lt;/>
+      );
+    }
+    else {
+      return (
+        &lt;div>
+          {/* -------SCREEN 1 ------- */}
+          &lt;div id="div1" className="quadrant">
+          &lt;div style={{width: '100%', textAlign: 'left'}}>&lt;a href="/join">&lt;ArrowBackIcon/>Back to Joined Games&lt;/a>&lt;br/>&lt;/div>
+
+            {/* Get week number from week instead */}
+            &lt;h5 style={{color:'#214da3'}}>{role.roleName} - GAME {gameid} - WEEK {week.number}&lt;/h5>
+            &lt;h5>INPUT SCREEN&lt;/h5>
+            
+            &lt;div className="table-cont">
+              &lt;table className="table-input-screen">
+                &lt;tbody>
+                  &lt;tr>
+                    &lt;td style={{textAlign:'right'}}>Demand from {downstreamRole.roleName}:&lt;/td>
+                    &lt;td className="value" id="demand">{week.demand}&lt;/td>
+                    &lt;td style={{textAlign:'right'}}>Beginning Inventory:&lt;/td>
+                    &lt;td className="value" id="inventory">{week.inventory}&lt;/td>
+                  &lt;/tr>
+                  &lt;tr style={{borderBottom:'1px solid grey'}}>
+                    &lt;td style={{textAlign:'right'}}>Backorder:&lt;/td>
+                    &lt;td className="value" id="backlog" style={{color:'red'}}>{week.backlog}&lt;/td>
+                    &lt;td style={{textAlign:'right'}}>Incoming Shipment:&lt;/td>
+                    &lt;td className="value" id="incoming_shipment" style={{color:'green'}}>{week.incoming_shipment}&lt;/td>
+                  &lt;/tr>
+                  &lt;tr>
+                    &lt;td style={{textAlign:'right'}}>Total Requirements:&lt;/td>
+                    &lt;td className="value" id="total_requirements" style={{color:'blue'}}>{week.demand + week.backlog}&lt;/td>
+                    &lt;td style={{textAlign:'right'}}>Total Available:&lt;/td>
+                    &lt;td className="value" id="total_available" style={{color:'blue'}}>{week.inventory + week.incoming_shipment}&lt;/td>
+                  &lt;/tr>
+                &lt;/tbody>
+              &lt;/table>
+            &lt;/div>
+
+            {orderIsPlaced}
+
+          &lt;/div>
+
+          {/* -------SCREEN 2 ------- */}
+          &lt;div id="div2" className="quadrant">
+            &lt;h5>INFORMATION FOR ALL WEEKS - {role.roleName}&lt;/h5>
+            &lt;div className="table-cont">
+
+              &lt;WeeksInfo gameid={gameid}/>
+              
+            &lt;/div>
+          &lt;/div>
+
+          {/* -------SCREEN 3 ------- */}
+          &lt;div id="div3" className="quadrant">
+            &lt;h5>STATUS OF OTHER SUPPLY CHAIN MEMBERS - WEEK {week.number}&lt;/h5>
+            &lt;div className="order-status">
+              &lt;p>Once all players have placed an order, you can proceed to next week.&lt;/p>
+
+              &lt;SharedInfo roleid={role.id}/>
+              
+            &lt;/div>
+
+            &lt;img src={crate} alt="Beer" className="beer-img"/>
+
+            {nextWeekBtn}
+            
+          &lt;/div>
+          
+          {/* -------SCREEN 4 ------- */}
+          &lt;div id="div4" className="quadrant">
+            &lt;h5>INVENTORY AND STATUS PLOTS - {role.roleName}&lt;/h5>
+            &lt;div className="plot-buttons">
+              &lt;div style={{display:'flex', justifyContent:'center'}}>
+                &lt;InventoryPlot gameid={gameid}/>
+                &lt;DemandPlot gameid={gameid}/>
+                &lt;IncShipPlot gameid={gameid}/>
+                &lt;OutShipPlot gameid={gameid}/>
+                &lt;OrderPlot gameid={gameid}/>
+                &lt;PlotAll gameid={gameid}/>
+              &lt;/div>
+              
+            &lt;/div>
+            
+            &lt;div className="supply-chain-settings">
+              &lt;h5>SUPPLY CHAIN SETTINGS - {role.roleName}&lt;/h5>
+              &lt;table className="settings-table">
+                &lt;tbody>
+                  &lt;tr>
+                    &lt;td>Holding cost:&lt;/td>
+                    &lt;td id="val">{game.holding_cost}&lt;/td>
+                  &lt;/tr>
+                  &lt;tr>
+                    &lt;td>Backorder cost:&lt;/td>
+                    &lt;td id="val">{game.backlog_cost}&lt;/td>
+                  &lt;/tr>
+                  &lt;tr>
+                    &lt;td>Downstream Player:&lt;/td>
+                    &lt;td id="val">{downstreamRole.roleName}&lt;/td>
+                  &lt;/tr>
+                  &lt;tr>
+                    &lt;td>Upstream Player:&lt;/td>
+                    {/* Show role name instead */}
+                    &lt;td id="val">{upstreamRole.roleName}&lt;/td>
+                  &lt;/tr>
+                  &lt;tr>
+                    &lt;td>Shipping Delay:&lt;/td>
+                    &lt;td id="val">{game.info_delay} weeks&lt;/td>
+                  &lt;/tr>
+                  &lt;tr>
+                    &lt;td>Information Delay:&lt;/td>
+                    &lt;td id="val">{game.info_delay} weeks&lt;/td>
+                  &lt;/tr>
+                &lt;/tbody>
+              &lt;/table>
+            &lt;/div>
+          &lt;/div>
+        &lt;/div>
+      );
+    }
+  }
+  else if (game.active === false) {
+    return (&lt;h5 style={{textAlign:'center', fontWeight:'400', color:'grey', padding:'50px'}}>Game not active&lt;/h5>);
+  }
+  else {
+    return null;
+  }
+}
+
+export default GameView;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="IncShipPlot.html">IncShipPlot</a></li><li><a href="InventoryPlot.html">InventoryPlot</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="OrderPlot.html">OrderPlot</a></li><li><a href="OutShipPlot.html">OutShipPlot</a></li><li><a href="PlotAll.html">PlotAll</a></li><li><a href="PlsyersList.html">PlsyersList</a></li><li><a href="SharedInfo.html">SharedInfo</a></li><li><a href="SignUp.html">SignUp</a></li><li><a href="WeeksInfo.html">WeeksInfo</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GameInsights">GameInsights</a></li><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#GameUpdateForm">GameUpdateForm</a></li><li><a href="global.html#GameView">GameView</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#MonitorGamesList">MonitorGamesList</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Apr 13 2021 16:56:38 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

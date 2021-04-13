@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/components/forms/GameRegisterForm.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/components/forms/GameRegisterForm.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Form } from 'react-bootstrap'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import axiosInstance from '../../../axios'
+
+/**
+ * Form component for registering to a game
+ *
+ * @component
+ */
+class GameRegisterForm extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.onSelectGame = this.onSelectGame.bind(this);
+    this.onSelectRole = this.onSelectRole.bind(this);
+    this.registerToGame = this.registerToGame.bind(this);
+    
+    /**
+     * Role data (/api/role)
+     */
+    this.state = {
+      errors: '',
+      games: '',
+      selected_game: '',
+      roles: '',
+      selected_role: '',
+
+      role_register: {
+        playedBy: 2,
+      }
+    }
+  }
+
+  /**
+   * Method to get all games
+   *
+   * @method
+   */
+  componentDidMount() {
+    axiosInstance.get('http://127.0.0.1:8000/api/game/all')
+    .then((res) => {
+      // const allGames = res.data;
+      // this.setState({games: allGames});
+      var i;
+      for (i = 0; i &lt; res.data.length; i++) {
+        const gid = res.data[i].id;
+
+        axiosInstance.get(`http://127.0.0.1:8000/api/game/${gid}/getroles`)
+        .then((res) => {          
+          if (res.data.length > 0) {
+            // displaying only games that have possible roles to chose from 
+            axiosInstance.get(`http://127.0.0.1:8000/api/game/${gid}/`)
+            .then((res) => {
+              const game = res.data;
+              this.setState(previousState => ({games: [...previousState.games, game]}));
+            }) 
+          }
+          // console.log(res.data);
+        })
+        .catch(error => {
+          if(error.response) {
+            console.log(error.response.data);
+          }
+        });
+      }
+    })
+    .catch(error => {
+      if(error.response){
+        console.log(error.response.data);
+      }
+    });
+  }
+
+  /**
+   * Method to get all roles of selected game
+   *
+   * @method
+   * @param {Object} e event handler
+   */
+  onSelectGame(e) {
+    this.setState({errors: null});
+
+    const sel = this.state;
+    sel.selected_game = e.target.value;
+    console.log(this.state.selected_game);
+    
+    const gameid = this.state.selected_game;
+    axiosInstance.get(`http://127.0.0.1:8000/api/game/${gameid}/getroles`)
+    .then((res) => {
+      const allRoles = res.data;
+      this.setState({roles: allRoles});
+      // console.log(res.data);
+    })
+    .catch(error => {
+      if(error.response) {
+        console.log(error.response.data);
+      }
+    });
+  }
+
+   /**
+   * Method to get selected role
+   *
+   * @method
+   * @param {Object} e event handler
+   */
+    onSelectRole(e) {
+      this.setState({errors: null});
+  
+      const sel = this.state;
+      sel.selected_role = e.target.value;
+      console.log(this.state.selected_role);
+    }
+  
+  registerToGame(e) {
+    e.preventDefault();
+    
+    let errorMessage = this.state.errors;
+    /**
+     * createdGame instances
+     */
+    const registerToGame = this.state.role_register;
+    const roleid = this.state.selected_role;
+    /**
+     * Axios post request
+     */
+    axiosInstance.patch(`http://127.0.0.1:8000/api/role/${roleid}/register/`, registerToGame, {crossDomain: true})
+    .then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        alert("Registered successfully");
+        // redirecting upon successful registration
+        window.location = "/join";
+      } 
+      else {
+        console.log(res.data);
+      }
+    })
+    .catch(error => {if(error.response){ 
+      errorMessage = "Couldn't register to game. Don't register for the same game. Please try again.";
+      this.setState({errors: errorMessage});
+      console.log(error.response.data);
+    }});
+  }
+
+  render(){
+    return(
+      &lt;div className="main-container-register">
+        &lt;Form style={{textAlign:'center'}} onSubmit={this.registerToGame}>
+          {/* ------- Game Selector ------- */}
+          &lt;Form.Label>Game&lt;/Form.Label>
+          &lt;Form.Control 
+            as="select" 
+            id="role_selector" 
+            custom 
+            defaultValue="def" 
+            onChange={this.onSelectGame}>
+              &lt;option value="def" disabled>Choose game..&lt;/option>
+              &lt;GamesList games={this.state.games}/>
+          &lt;/Form.Control>
+          {/* ------- Role Selector ------- */}
+          &lt;Form.Group>
+            &lt;Form.Label>Role&lt;/Form.Label>
+            &lt;Form.Control 
+              as="select" 
+              id="role_selector" 
+              custom 
+              defaultValue="def" 
+              onChange={this.onSelectRole}>
+                &lt;option value="def" disabled>Choose role..&lt;/option>
+                &lt;RolesList roles={this.state.roles}/>
+            &lt;/Form.Control>
+          &lt;/Form.Group>
+
+          &lt;div style={{color:'red', paddingBottom:'10px'}}>{this.state.errors}&lt;/div>
+
+          &lt;Button variant="primary" type="submit">
+            &lt;ExitToAppIcon/> Register to Game
+          &lt;/Button>
+        &lt;/Form> 
+      &lt;/div>
+    );
+  }
+}
+
+export default GameRegisterForm;
+
+/**
+ * Component to display all games in select
+ *
+ * @component
+ */
+const GamesList = (props) => {
+	const { games } = props;
+
+	if (!games || games.length === 0) {
+		return ( 
+			&lt;option value="none" disabled>No games to display&lt;/option>
+		);
+	}
+
+	return (
+    &lt;>
+      {games.map((game) => {
+        return(
+          &lt;option key={game.id} value={game.id}>Game {game.id}&lt;/option>
+        );
+      })}
+    &lt;/>
+	)
+}
+
+/**
+ * Component to display all roles of selected game
+ *
+ * @component
+ */
+const RolesList = (props) => {
+	const { roles } = props;
+
+	if (!roles || roles.length === 0) {
+		return ( 
+			&lt;option value="none" disabled>No roles to display&lt;/option>
+		);
+	}
+  
+  return (
+    &lt;>
+      {roles.map((role) => {
+        return(
+          &lt;option key={role.id} value={role.id}>{role.roleName}&lt;/option>
+        );
+      })}
+    &lt;/>
+	)
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="IncShipPlot.html">IncShipPlot</a></li><li><a href="InventoryPlot.html">InventoryPlot</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="OrderPlot.html">OrderPlot</a></li><li><a href="OutShipPlot.html">OutShipPlot</a></li><li><a href="PlotAll.html">PlotAll</a></li><li><a href="PlsyersList.html">PlsyersList</a></li><li><a href="SharedInfo.html">SharedInfo</a></li><li><a href="SignUp.html">SignUp</a></li><li><a href="WeeksInfo.html">WeeksInfo</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GameInsights">GameInsights</a></li><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#GameUpdateForm">GameUpdateForm</a></li><li><a href="global.html#GameView">GameView</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#MonitorGamesList">MonitorGamesList</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Apr 13 2021 16:56:38 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

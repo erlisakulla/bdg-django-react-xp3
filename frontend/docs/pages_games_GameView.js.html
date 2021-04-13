@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/games/GameView.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/games/GameView.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from 'react';
+import '../../css/Main.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { useParams } from 'react-router-dom';
+import axiosInstance from '../../axios'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+
+/**
+ * Game display page 
+ *
+ * @component
+ * @param {string} gameid id of game passed as parameter in dynamic link
+ */
+function GameView() {
+  const { gameid } = useParams();
+
+  // const allWeeks = null;
+  // const ordersStatus = null;
+
+  const [game, setGameSettings] = useState({
+    active: '',
+    backlog_cost: '',
+    holding_cost: '',
+    info_delay: '',
+    rounds_completed: '',
+    session_length: '',
+    starting_inventory: '',
+    wholesalerPresent: '',
+    distributorPresent: '',
+
+    is_completed: false,
+    current_week: 1,
+  });
+
+  // const [week, setWeekSettings] = useState({
+  const week = {
+    // id: '',
+    number: 1,
+    inventory: 0,
+    backlog: 0,
+    demand: 0,
+    incomingShipment: 0,
+    outgoingShipment: 0,
+    orderPlaced: null,
+    cost: 0,
+    associatedRole: '',
+
+    // if all orders are placed, patch game.current_week++ so when it reloads, state is saved
+    all_orders_placed: false,
+    order_is_placed: false,
+  };
+
+  const [role, setRoleSettings] = useState({
+    id: '',
+    roleName: null,
+    associatedGame: '',
+    downstreamPlayer: '',
+    upstreamPlayer: '',
+  });
+
+  useEffect(() => {
+    // Geting and setting game data
+    axiosInstance.get(`http://127.0.0.1:8000/api/game/${gameid}`)
+    .then((res) => {
+      setGameSettings(s => ({
+        active: true,
+        // active: res.data.active,
+        holding_cost: res.data.holding_cost,
+        backlog_cost: res.data.backlog_cost,
+        info_delay: res.data.info_delay,
+        rounds_completed: res.data.rounds_completed,
+        session_length: res.data.session_length,
+        starting_inventory: res.data.starting_inventory,
+        distributorPresent: res.data.distributorPresent,
+        wholesalerPresent: res.data.wholesalerPresent,
+        is_completed: false,
+      }));
+      console.log(res.data);
+    })
+    .catch(error => {
+      if(error.response) {
+        console.log(error.response.data);
+        alert('Game not found');
+        window.location = "/monitor";
+      }
+    });
+
+    if (game.active === true) {
+      // Getting and setting role data
+      // create a view /api/game/{gameid}/role/{id} to make this easier and load less data
+      axiosInstance.get('http://127.0.0.1:8000/api/role/')
+      .then((res) => {
+        console.log(res.data);
+        const allRoles = res.data;
+
+        var i, rid;
+        for (i = 0; i &lt; allRoles.length; i++) {
+          if (parseInt(gameid) === allRoles[i].associatedGame) {
+            rid = allRoles[i].id;
+            axiosInstance.get(`http://127.0.0.1:8000/api/role/${rid}/`)
+            .then((res) => {
+              console.log(res.data);
+              setRoleSettings(s => ({
+                id: res.data.id,
+                roleName: res.data.roleName,
+                associatedGame: res.data.associatedGame,
+                downstreamPlayer: res.data.downstreamPlayer,
+                upstreamPlayer: res.data.upstreamPlayer,
+              }));
+            })
+            .catch(error => {if(error.response){console.log(error.response.data);}});
+          } 
+        }      
+      }).catch(error => {if(error.response){console.log(error.response.data);}});  
+    } 
+  }, [setGameSettings, setRoleSettings, gameid, game.active]);
+      // // Getting and setting week data
+      // // axiosInstance.get(`/api/week/${week.id}`)
+      // if (role.roleName != null) {
+      //   axiosInstance.get(`/api/game/${gameid}/role/${role.id}/week/${week.number}/`)
+      //   .then((res) => {
+      //     setWeekSettings(s => ({
+      //       id: res.data.id,
+      //       number: res.data.number,
+      //       inventory: res.data.inventory,
+      //       backlog: res.data.backlog,
+      //       demand: res.data.demand,
+      //       incomingShipment: res.data.incomingShipment,
+      //       outgoingShipment: res.data.outgoingShipment,
+      //       orderPlaced: res.data.orderPlaced,
+      //       cost: res.data.cost,
+      //       associatedRole: res.data.associatedRole,
+      //     }));
+      //     console.log(res.data);
+      //   })
+      //   .catch(error => {if(error.response) {console.log(error.response.data)}});
+
+      //   // Gettings all weeks that have been completed
+      //   axiosInstance.get(`/api/game/${gameid}/role/${role.id}/getweeks/`)
+      //   .then((res) => {
+      //     console.log(res.data);
+      //     if (res.data.orderPlaced != null) {
+      //       const allweeks = res.data;
+      //       setState(previousState => ({allWeeks: [...previousState.allWeeks, allweeks]}));
+      //     }
+      //   })
+      //   .catch(error => {if(error.response) {console.log(error.response.data)}});
+
+      //   // Getting and setting order statuses
+      //   axiosInstance.get(`/api/game/${gameid}/week/${week.id}/getroles/`)
+      //   .then((res) => {
+      //     console.log(res.data);
+      //     const statuses = res.data;
+      //     setState(previousState => ({ordersStatus: [...previousState.ordersStatus, statuses]}));
+      //   })
+      // }
+      // else {
+      //   alert("You're not registered to this game");
+      // }
+      // .catch(error => {if(error.response) {console.log(error.response.data)}});
+	// }, [setGameSettings, setRoleSettings, gameid, game.active, role.id, role.number, role.roleName, week.id, week.number]);
+  
+  // Order input changed
+  const onOrderChange = (e) => {
+    week.orderPlaced = e.target.value;
+    console.log(week.orderPlaced);  
+  }
+  // Submitting order
+  const submitOrder = (e) => {
+    e.preventDefault();
+    const order = week.orderPlaced;
+
+    axiosInstance.patch(`http://127.0.0.1:8000/api/game/${gameid}/week/${week.id}`, order)
+    .then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        alert("Order submitted successfuly");
+        // post order and order status to week
+        // setWeekSettings({order_is_placed: true});
+      }
+    })
+    .catch(error => {
+      if(error.response){ 
+        alert("Couldn't submit order.");
+        console.log(error.response.data);
+      }
+    });;
+  }
+
+  // Checking if current player has submitted order
+  const orderIsPlaced = (
+    (week.order_is_placed === false &amp;&amp; game.is_completed === false) ?
+    &lt;>
+      &lt;div className="my-3">Place your order: &lt;/div>
+      &lt;form className="form-inline justify-content-center" onSubmit={submitOrder}>
+        &lt;div className="form-group mx-sm-3 mb-2">
+          &lt;input type="number" name="order_placed" id="order_placed" className="form-control text-center" onChange={onOrderChange} required/>
+        &lt;/div>
+        &lt;input type="submit" className="btn btn-primary mb-2"/>
+      &lt;/form>
+    &lt;/> : 
+    (week.order_is_placed === true &amp;&amp; game.is_completed === false) ? 
+    &lt;div class="order-is-placed">
+      Your order is: &lt;b>{week.orderPlaced}&lt;/b> &lt;br/>
+      Your shipment is: &lt;b>{week.incomingShipment}&lt;/b>&lt;br/>
+      Inventory at week {week.number}: &lt;b>{week.inventory}&lt;/b> &lt;br/>
+      Current cost: &lt;b>{week.cost}&lt;/b> &lt;br/>
+      &lt;p>Please wait until all orders have been placed to proceed to the next week.&lt;/p>
+    &lt;/div> : 
+    (game.is_completed === true) ?
+    &lt;h3>Game completed for you! Wait for others to finish their round!&lt;/h3> : 
+    null
+  );
+
+  // Checking if all orders have been placed
+  const nextWeekBtn = (
+    (week.all_orders_placed === true) ?
+    &lt;div className="all-orders-placed">
+      &lt;p>All orders have been placed for week {week.number}. You can now proceed to next week.&lt;/p>
+      {/* &lt;a href={`/game/${gameid}/${weekid}`} type="button" className="btn btn-success">Next Week&lt;/a> */}
+      &lt;a href={`/gameview/${gameid}`} type="button" className="btn btn-success">Next Week &lt;NavigateNextIcon/>&lt;/a>
+    &lt;/div> : null
+  );
+
+  // Checking for upstream and downstream roles
+  if (role.roleName === "Retailer") {
+    role.downstreamPlayer = "Customer";
+  }
+
+  if (role.roleName === "Factory") {
+    role.upstreamPlayer = "Brewry";
+  }
+
+  // For week 1, inventory = starting_inventory
+  if (week.number === 1) {
+    week.inventory = game.starting_inventory;
+  }
+
+  // Displaying gameview only if game is active
+  if (game.active === true) {
+    if (role.roleName === null) {
+      return (
+        &lt;>
+          &lt;h5 style={{textAlign:'center', fontWeight:'400', color:'grey', padding:'50px'}}>You're not registered for this game&lt;/h5>
+          &lt;div style={{textAlign: 'center'}}>&lt;a href="/monitor">&lt;ArrowBackIcon/>Back to Assigned Games&lt;/a>&lt;br/>&lt;/div>
+        &lt;/>
+      );
+    }
+    else {
+      return (
+        &lt;div>
+          {/* -------SCREEN 1 ------- */}
+          &lt;div id="div1" className="quadrant">
+          &lt;div style={{width: '100%', textAlign: 'left'}}>&lt;a href="/join">&lt;ArrowBackIcon/>Back to Assigned Games&lt;/a>&lt;br/>&lt;/div>
+
+            {/* Get week number from week instead */}
+            &lt;h5 style={{color:'#214da3'}}>{role.roleName} - GAME {gameid} - WEEK {week.number}&lt;/h5>
+            &lt;h5>INPUT SCREEN&lt;/h5>
+            
+            &lt;div className="table-cont">
+              &lt;table className="table-input-screen">
+                &lt;tbody>
+                  &lt;tr>
+                    &lt;td style={{textAlign:'right'}}>Demand from {role.downstreamPlayer}:&lt;/td>
+                    &lt;td className="value" id="demand">{week.demand}&lt;/td>
+                    &lt;td style={{textAlign:'right'}}>Beginning Inventory:&lt;/td>
+                    &lt;td className="value" id="inventory">{week.inventory}&lt;/td>
+                  &lt;/tr>
+                  &lt;tr style={{borderBottom:'1px solid grey'}}>
+                    &lt;td style={{textAlign:'right'}}>Backorder:&lt;/td>
+                    &lt;td className="value" id="backlog" style={{color:'red'}}>{week.backlog}&lt;/td>
+                    &lt;td style={{textAlign:'right'}}>Incoming Shipment:&lt;/td>
+                    &lt;td className="value" id="incoming_shipment" style={{color:'green'}}>{week.incomingShipment}&lt;/td>
+                  &lt;/tr>
+                  &lt;tr>
+                    &lt;td style={{textAlign:'right'}}>Total Requirements:&lt;/td>
+                    &lt;td className="value" id="total_requirements" style={{color:'blue'}}>{week.demand + week.backlog}&lt;/td>
+                    &lt;td style={{textAlign:'right'}}>Total Available:&lt;/td>
+                    &lt;td className="value" id="total_available" style={{color:'blue'}}>{week.inventory + week.incomingShipment}&lt;/td>
+                  &lt;/tr>
+                &lt;/tbody>
+              &lt;/table>
+            &lt;/div>
+
+            {orderIsPlaced}
+
+          &lt;/div>
+
+          {/* -------SCREEN 2 ------- */}
+          &lt;div id="div2" className="quadrant">
+            &lt;h5>INFORMATION FOR ALL WEEKS - {role.roleName}&lt;/h5>
+            &lt;div className="table-cont">
+              &lt;table className="table-input-screen table-weeks" id="table-weeks" border="1">
+                &lt;thead>
+                  &lt;tr className="week-info-head">
+                    &lt;th>Week Number&lt;/th>
+                    &lt;th>Inventory&lt;/th>
+                    &lt;th>Backlog&lt;/th>
+                    &lt;th>Demand&lt;/th>
+                    &lt;th>Incoming Shipment&lt;/th>
+                    &lt;th>Outgoing Shipment&lt;/th>
+                    &lt;th>Order Placed&lt;/th>
+                    &lt;th>Current Cost&lt;/th>
+                  &lt;/tr>
+                &lt;/thead>
+                &lt;tbody>
+                  {/* {allWeeks.map((w) => {
+                    return (
+                      &lt;tr key={w.id}>
+                        &lt;td>{w.number}&lt;/td>
+                        &lt;td>{w.inventory}&lt;/td>
+                        &lt;td>{w.backlog}&lt;/td>
+                        &lt;td>{w.demand}&lt;/td>
+                        &lt;td>{w.incomingShipment}&lt;/td>
+                        &lt;td>{w.outgoingShipment}&lt;/td>
+                        &lt;td>{w.orderPlaced}&lt;/td>
+                        &lt;td>{w.cost}&lt;/td>
+                      &lt;/tr>
+                    );
+                  })} */}
+                &lt;/tbody>
+              &lt;/table>
+            &lt;/div>
+          &lt;/div>
+
+          {/* -------SCREEN 3 ------- */}
+          &lt;div id="div3" className="quadrant">
+            &lt;h5>STATUS OF OTHER SUPPLY CHAIN MEMBERS - WEEK {week.number}&lt;/h5>
+            &lt;div className="order-status">
+              &lt;p>Once all players have placed an order, you can proceed to next week.&lt;/p>
+              &lt;table className="status-table">
+                &lt;thead>&lt;/thead>
+                {/* &lt;thead>
+                  &lt;tr>
+                    {ordersStatus.map((r) => {
+                      return (
+                        &lt;th>{r.roleName}&lt;/th>
+                      );
+                    })}
+                  &lt;/tr>
+                &lt;/thead>
+                &lt;tbody>
+                  &lt;tr>
+                    {ordersStatus.map((r) => {
+                      if (r.orderIsPlaced === false) {
+                        return (&lt;td style={{color:'red'}}>Order not placed&lt;/td>);
+                      }
+                      else {
+                        return (&lt;td style={{color:'green'}}>Order placed&lt;/td>);
+                      }
+                    })}
+                  &lt;/tr>
+                &lt;/tbody> */}
+
+                &lt;thead>
+                  &lt;tr>      
+                    &lt;th>Retailer&lt;/th>
+                    &lt;th>Wholesaler&lt;/th>
+                    &lt;th>Distributor&lt;/th> 
+                    &lt;th>Factory&lt;/th>   
+                  &lt;/tr>
+                &lt;/thead>
+                &lt;tbody>
+                  &lt;tr>
+                    &lt;td>Order not placed&lt;/td>
+                    &lt;td>Order placed&lt;/td>
+                    &lt;td>Order not placed&lt;/td>
+                    &lt;td>Order placed&lt;/td>
+                  &lt;/tr>
+                &lt;/tbody>
+              &lt;/table>
+            &lt;/div>
+
+            {nextWeekBtn}
+            
+          &lt;/div>
+          
+          {/* -------SCREEN 4 ------- */}
+          &lt;div id="div4" className="quadrant">
+            &lt;h5>INVENTORY AND STATUS PLOTS - {role.roleName}&lt;/h5>
+            &lt;div className="plot-buttons">
+              &lt;button type="button" className="btn btn-primary" id="plot-btn">Inventory&lt;/button>
+              &lt;button type="button" className="btn btn-primary" id="plot-btn">Demand&lt;/button>
+              &lt;button type="button" className="btn btn-primary" id="plot-btn">Incoming Shipment&lt;/button>
+              &lt;button type="button" className="btn btn-primary" id="plot-btn">Outgoing Shimpent&lt;/button>
+              &lt;button type="button" className="btn btn-primary" id="plot-btn">Order&lt;/button>
+              &lt;button type="button" className="btn btn-primary" id="plot-btn">Plot All&lt;/button>
+            &lt;/div>
+            
+            &lt;div className="supply-chain-settings">
+              &lt;h5>SUPPLY CHAIN SETTINGS - {role.roleName}&lt;/h5>
+              &lt;table className="settings-table">
+                &lt;tbody>
+                  &lt;tr>
+                    &lt;td>Holding cost:&lt;/td>
+                    &lt;td id="val">{game.holding_cost}&lt;/td>
+                  &lt;/tr>
+                  &lt;tr>
+                    &lt;td>Backorder cost:&lt;/td>
+                    &lt;td id="val">{game.backlog_cost}&lt;/td>
+                  &lt;/tr>
+                  &lt;tr>
+                    &lt;td>Downstream Player:&lt;/td>
+                    &lt;td id="val">{role.downstreamPlayer}&lt;/td>
+                  &lt;/tr>
+                  &lt;tr>
+                    &lt;td>Upstream Player:&lt;/td>
+                    {/* Show role name instead */}
+                    &lt;td id="val">{role.upstreamPlayer}&lt;/td>
+                  &lt;/tr>
+                  &lt;tr>
+                    &lt;td>Shipping Delay:&lt;/td>
+                    &lt;td id="val">{game.info_delay} weeks&lt;/td>
+                  &lt;/tr>
+                  &lt;tr>
+                    &lt;td>Information Delay:&lt;/td>
+                    &lt;td id="val">{game.info_delay} weeks&lt;/td>
+                  &lt;/tr>
+                &lt;/tbody>
+              &lt;/table>
+            &lt;/div>
+          &lt;/div>
+        &lt;/div>
+      );
+    }
+  }
+  else if (game.active === false) {
+    return (&lt;h5 style={{textAlign:'center', fontWeight:'400', color:'grey', padding:'50px'}}>Game not active&lt;/h5>);
+  }
+  else {
+    return null;
+  }
+}
+
+export default GameView;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="PlsyersList.html">PlsyersList</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GameInsights">GameInsights</a></li><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#GameUpdateForm">GameUpdateForm</a></li><li><a href="global.html#GameView">GameView</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#MonitorGamesList">MonitorGamesList</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#Plot">Plot</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 10 2021 02:06:51 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

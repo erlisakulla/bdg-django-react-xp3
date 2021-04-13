@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/games/Dashboard.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/games/Dashboard.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import '../../css/Main.css';
+import Navbar from '../components/Navbar';
+import CreateGameForm from '../components/GameCreationForm';
+import GamesList from '../components/GamesList';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Card, Nav } from 'react-bootstrap';
+import axiosInstance from '../../axios'
+
+/**
+ * Dashboard page 
+ *
+ * @component
+ */
+class Dashboard extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.componentDidMount = this.componentDidMount.bind(this);
+    
+    /**
+     * Games display states
+     */
+    this.state = {
+      is_instructor: '',
+      games: null,
+      message: 'No games to display',
+    }
+  }
+
+  /**
+   * Method to get all games and user data
+   *
+   * @method
+   */
+  componentDidMount() {
+    axiosInstance.get('http://127.0.0.1:8000/api/game/')
+    .then((res) => {
+      const allGames = res.data;
+      this.setState({games: allGames});
+      console.log(res.data);
+    })
+    .catch(error => {if(error.response){console.log(error.response.data);}});
+
+    axiosInstance.get('http://127.0.0.1:8000/api/user/')
+    .then((res) => {
+      const isInst = res.data.is_instructor;
+      this.setState({is_instructor: isInst});
+      console.log(res.data);
+    })
+    .catch(error => {if(error.response){console.log(error.response.data);}});
+  }
+
+  render() {
+    return (
+      &lt;> 
+        &lt;Navbar/>
+        
+        &lt;div className="main-container">
+          &lt;h2>Created Games&lt;/h2>
+          &lt;p>Here you can view, edit and delete all the games you have created.&lt;/p>
+          &lt;hr/>
+
+          &lt;Card>
+            &lt;Card.Header>
+              &lt;Nav variant="tabs">
+                { this.state.is_instructor === true ?
+                  &lt;Nav.Item>
+                    &lt;Nav.Link href="/create" className="active">Setup Games&lt;/Nav.Link>
+                  &lt;/Nav.Item> : null
+                }
+                { this.state.is_instructor === false ?
+                  &lt;Nav.Item>
+                    &lt;Nav.Link href="/join">Join Games&lt;/Nav.Link>
+                  &lt;/Nav.Item> : null
+                }
+                &lt;Nav.Item>
+                  &lt;Nav.Link href="/monitor">Monitor Games&lt;/Nav.Link>
+                &lt;/Nav.Item>
+              &lt;/Nav>
+            &lt;/Card.Header>
+            
+            &lt;Card.Body>
+              { this.state.is_instructor === true ?
+                &lt;>
+                  {/* Form for creating game */}
+                  &lt;CreateGameForm/>
+                  {/* ------- Created Games Table ------- */}
+                  &lt;GamesList games={this.state.games} message={this.state.message}/>
+                &lt;/> : 
+                &lt;h5 style={{textAlign:'center', fontWeight:'400', color:'grey'}}>Only instructors can create games&lt;/h5>
+              }
+            &lt;/Card.Body>
+          &lt;/Card>
+        &lt;/div>
+      &lt;/>
+    );
+  }
+}
+
+export default Dashboard;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="PlsyersList.html">PlsyersList</a></li><li><a href="SignUp.html">SignUp</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GameInsights">GameInsights</a></li><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#GameUpdateForm">GameUpdateForm</a></li><li><a href="global.html#GameView">GameView</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#MonitorGamesList">MonitorGamesList</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#Plot">Plot</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 10 2021 02:06:51 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

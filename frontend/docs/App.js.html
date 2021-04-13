@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: App.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: App.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import './css/App.css';
+import LogIn from './pages/auth/LogIn';
+import SignUp from './pages/auth/Register';
+import Dashboard from './pages/main/Dashboard';
+import MonitorGames from './pages/main/MonitorGame';
+import JoinGames from './pages/main/JoinGame';
+import GameView from './pages/main/GameView';
+import AccountSettings from './pages/auth/AccountSettings';
+import GameInsights from './pages/main/GameInsights';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+// import axiosInstance from './axios'
+
+/**
+ * Sets up paths to pages
+ *
+ * @component
+ */
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      /**
+       * Defines if user is logged in or not
+       */
+      logged_in: localStorage.getItem('access_token') ? true : false,
+      
+      /**
+       * User data (/api/token)
+       */
+      credentials: {
+        email: '',
+        password: '',
+      }
+    };
+  }
+
+  componentDidCatch(error, errorinfo) {}
+
+  render() {
+    return (
+      &lt;>
+        &lt;Router>
+          &lt;Switch>
+            &lt;LoggedInRoute exact logged_in={this.state.logged_in} path="/" component={LogIn}/>
+            &lt;LoggedInRoute exact logged_in={this.state.logged_in} path="/signup" component={SignUp}/>
+            &lt;PrivateRoute logged_in={this.state.logged_in} path="/create" component={Dashboard}/>
+            &lt;PrivateRoute logged_in={this.state.logged_in} path="/monitor" component={MonitorGames}/>
+            &lt;PrivateRoute logged_in={this.state.logged_in} path="/join" component={JoinGames}/>
+            &lt;PrivateRoute logged_in={this.state.logged_in} path="/gameview/:gameid" component={GameView}/>
+            &lt;PrivateRoute logged_in={this.state.logged_in} path="/insights/:gameid" component={GameInsights}/>
+            &lt;PrivateRoute logged_in={this.state.logged_in} path='/settings' component={AccountSettings} />
+          &lt;/Switch>
+        &lt;/Router>
+      &lt;/>
+    );
+  }
+}
+
+export default App;
+
+/**
+ * If user isn't logged in, gets redirected to login page
+ *
+ * @component
+ * @param {Component} component Route component to be made private
+ * @param {boolean} logged_in Boolean value whether user is logged in or not
+ */
+function PrivateRoute ({component: Component, logged_in, ...rest}) {
+  return (
+    &lt;Route
+      {...rest}
+      render = {(props) => (logged_in === true)
+        ? &lt;Component {...props}/>
+        : &lt;Redirect to={{pathname: '/', state: {from: props.location}}}/>
+      }
+    />
+  )
+}
+
+/**
+ * If user is logged in, gets redirected to /monitor
+ *
+ * @component
+ * @param {Component} component Route component to be redirected
+ * @param {boolean} logged_in Boolean value whether user is logged in or not
+ */
+function LoggedInRoute ({component: Component, logged_in, ...rest}) {
+  return (
+    &lt;Route
+      {...rest}
+      render = {(props) => (logged_in === true)
+        ? &lt;Redirect to={{pathname: '/monitor', state: {from: props.location}}}/>
+        : &lt;Component {...props}/>
+      }
+    />
+  )
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AccountSettings.html">AccountSettings</a></li><li><a href="App.html">App</a></li><li><a href="CreateGameForm.html">CreateGameForm</a></li><li><a href="CustomNavbar.html">CustomNavbar</a></li><li><a href="customNavbar.Settings.html">Settings</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="GameRegisterForm.html">GameRegisterForm</a></li><li><a href="IncShipPlot.html">IncShipPlot</a></li><li><a href="InventoryPlot.html">InventoryPlot</a></li><li><a href="JoinGames.html">JoinGames</a></li><li><a href="LogIn.html">LogIn</a></li><li><a href="MonitorGames.html">MonitorGames</a></li><li><a href="OrderPlot.html">OrderPlot</a></li><li><a href="OutShipPlot.html">OutShipPlot</a></li><li><a href="PlotAll.html">PlotAll</a></li><li><a href="PlsyersList.html">PlsyersList</a></li><li><a href="SharedInfo.html">SharedInfo</a></li><li><a href="SignUp.html">SignUp</a></li><li><a href="WeeksInfo.html">WeeksInfo</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GameInsights">GameInsights</a></li><li><a href="global.html#GamesList">GamesList</a></li><li><a href="global.html#GameUpdateForm">GameUpdateForm</a></li><li><a href="global.html#GameView">GameView</a></li><li><a href="global.html#LoggedInRoute">LoggedInRoute</a></li><li><a href="global.html#MonitorGamesList">MonitorGamesList</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#RegisteredGamesList">RegisteredGamesList</a></li><li><a href="global.html#RolesList">RolesList</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Apr 13 2021 16:56:38 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
