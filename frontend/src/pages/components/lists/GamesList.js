@@ -7,6 +7,8 @@ import { Table, Form } from 'react-bootstrap';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import axiosInstance from '../../../axios';
 import PlayersList from './PlayersList';
+import CheckIcon from '@material-ui/icons/Check';
+import ClearIcon from '@material-ui/icons/Clear';
 
 /**
  * Games List view 
@@ -90,10 +92,10 @@ function GamesList(props) {
 	 */
 	const YesOrNo = (props) => {
 		if (props.val === true) {
-			return <p style={{color:'green'}}>Yes</p>;
+			return <p style={{color:'green'}}><CheckIcon/></p>;
 		}
 		else {
-			return <p style={{color:'red'}}>No</p>;
+			return <p style={{color:'red'}}><ClearIcon/></p>;
 		}
 	}
 
@@ -134,9 +136,8 @@ function GamesList(props) {
 							<td><YesOrNo val={game.distributorPresent}/></td>
 							<td>{game.holding_cost}</td>
 							<td>{game.backlog_cost}</td>
-							<td>{game.rounds_completed}</td>
+							<td>{game.rounds_completed}/{game.session_length}</td>
 							<td>{game.session_length}</td>
-							{/* <td><YesOrNo val={game.active}/></td> */}
 							<td>
                 <Form.Check type="switch" id={`custom-switch-${game.id}`} defaultChecked={game.active} onChange={(e) => activateGame(e, game.id)}/>
               </td>

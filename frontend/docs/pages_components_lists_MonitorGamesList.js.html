@@ -30,6 +30,11 @@
 import '../../../css/Main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table, Button } from 'react-bootstrap';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import TodayIcon from '@material-ui/icons/Today';
+import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
+import VideogameAssetIcon from '@material-ui/icons/VideogameAsset';
 
 /**
  * Monitor Games List view 
@@ -39,7 +44,7 @@ import { Table, Button } from 'react-bootstrap';
  * @param {string} message Message shown if there are no games
  */
 function MonitorGamesList(props) {
-	const { games, message, is_instructor } = props;
+	const { games, message } = props;
 
 	if (!games || games.length === 0) {
 		return ( 
@@ -52,67 +57,59 @@ function MonitorGamesList(props) {
 	 */
 	let counter = 0;
 
-  if (is_instructor === true) {
-    return (
-      &lt;>
-        &lt;Table responsive className="gamesList">
-          &lt;thead>
-            &lt;tr>
-              &lt;th>#&lt;/th>
-              &lt;th>Game ID&lt;/th>
-              &lt;th>Time Delay&lt;/th>
-              &lt;th>Holding Cost&lt;/th>
-              &lt;th>Backorder Cost&lt;/th>
-              &lt;th>Current Week&lt;/th>
-              &lt;th>Factory Cost&lt;/th>
-              &lt;th>Distributor Cost&lt;/th>
-              &lt;th>Wholesaler Cost&lt;/th>
-              &lt;th>Retailer Cost&lt;/th>
-              &lt;th>Total Cost&lt;/th>
-              &lt;th>Plots&lt;/th>
-            &lt;/tr>
-          &lt;/thead>
-          &lt;tbody>
-            {games.map((game) => {
-              counter++;
-              return (
-                &lt;tr key={counter}>
-                  &lt;td>{counter}&lt;/td>
-                  &lt;th>{game.id}&lt;/th>
-                  &lt;td>{game.info_delay} weeks&lt;/td>
-                  &lt;td>{game.holding_cost}&lt;/td>
-                  &lt;td>{game.backlog_cost}&lt;/td>
-                  &lt;td>{game.current_week}/{game.session_length}&lt;/td>
-                  {/* Dummy data */}
-                  {/* Get data from weeks/roles and add it up */}
-                  &lt;td>{game.cost.Factory}&lt;/td>
-                  {
-                    (game.cost.Distributor) ?
-                    &lt;td>{game.cost.Distributor}&lt;/td> :
-                    &lt;td>---&lt;/td>
-                  }
-                  {
-                    (game.cost.Wholesaler) ?
-                    &lt;td>{game.cost.Wholesaler}&lt;/td> :
-                    &lt;td>---&lt;/td>
-                  }
-                  &lt;td>{game.cost.Retailer}&lt;/td>
-                  &lt;td>{game.cost.total}&lt;/td>
-                  &lt;td>&lt;Button variant="secondary" href={`/insights/${game.id}`}>Plots&lt;/Button>&lt;/td>
-                &lt;/tr>
-              );
-            })}
-          &lt;/tbody>
-        &lt;/Table>
-      &lt;/>
-    );
-  }
-  else {
-    return (
-      null
-    );
-  }
-	
+  return (
+    &lt;>
+      &lt;Table responsive className="gamesList">
+        &lt;thead>
+          &lt;tr>
+            &lt;th>#&lt;/th>
+            &lt;th>Game ID&lt;br/>&lt;VideogameAssetIcon/>&lt;/th>
+            &lt;th>Time Delay&lt;br/>&lt;AccessTimeIcon/>&lt;/th>
+            &lt;th>Holding Cost&lt;br/>&lt;LocalAtmIcon/>&lt;/th>
+            &lt;th>Backorder Cost&lt;br/>&lt;LocalAtmIcon/>&lt;/th>
+            &lt;th>Current Week&lt;br/>&lt;TodayIcon/>&lt;/th>
+            &lt;th>Factory Cost&lt;br/>&lt;LocalAtmIcon/>&lt;/th>
+            &lt;th>Distributor Cost&lt;br/>&lt;LocalAtmIcon/>&lt;/th>
+            &lt;th>Wholesaler Cost&lt;br/>&lt;LocalAtmIcon/>&lt;/th>
+            &lt;th>Retailer Cost&lt;br/>&lt;LocalAtmIcon/>&lt;/th>
+            &lt;th>Total Cost&lt;br/>&lt;LocalAtmIcon/>&lt;/th>
+            &lt;th>Plots&lt;br/>&lt;EqualizerIcon/>&lt;/th>
+          &lt;/tr>
+        &lt;/thead>
+        &lt;tbody>
+          {games.map((game) => {
+            counter++;
+            return (
+              &lt;tr key={counter}>
+                &lt;td>{counter}&lt;/td>
+                &lt;th>{game.game_id}&lt;/th>
+                &lt;td>{game.info_delay} weeks&lt;/td>
+                &lt;td>{game.holding_cost}&lt;/td>
+                &lt;td>{game.backlog_cost}&lt;/td>
+                &lt;td>{game.current_week}/{game.session_length}&lt;/td>
+                {/* Dummy data */}
+                {/* Get data from weeks/roles and add it up */}
+                &lt;td>{game.cost.Factory}&lt;/td>
+                {
+                  (game.cost.Distributor) ?
+                  &lt;td>{game.cost.Distributor}&lt;/td> :
+                  &lt;td>---&lt;/td>
+                }
+                {
+                  (game.cost.Wholesaler) ?
+                  &lt;td>{game.cost.Wholesaler}&lt;/td> :
+                  &lt;td>---&lt;/td>
+                }
+                &lt;td>{game.cost.Retailer}&lt;/td>
+                &lt;td>{game.cost.total}&lt;/td>
+                &lt;td>&lt;Button className="plots-table-btn" variant="secondary" href={`/insights/${game.game_id}`}>Plots&lt;/Button>&lt;/td>
+              &lt;/tr>
+            );
+          })}
+        &lt;/tbody>
+      &lt;/Table>
+    &lt;/>
+  );
 }
 
 export default MonitorGamesList;</code></pre>
@@ -131,7 +128,7 @@ export default MonitorGamesList;</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Apr 12 2021 19:34:11 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Apr 13 2021 16:56:38 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

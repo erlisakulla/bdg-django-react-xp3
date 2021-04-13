@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Form, Card, Nav } from 'react-bootstrap';
 import axiosInstance from '../../axios'
+import crate from '../components/img/crate.png'
 
 /**
  * Login Form
@@ -80,7 +81,10 @@ class LogIn extends Component {
         <section data-testid="log-in-page" className="content-wrapper">
           <div className="login">
             <h2 className="welcome-text">Welcome to the Beer Distribution Game!</h2>
-            <div className="box">
+            
+            <div className="box" style={{textAlign:'center'}}>
+              <img src={crate} alt="Beer" className="beer-img"/>
+              
               <Card id="forms">
                 <Card.Header>
                   <Nav variant="tabs">

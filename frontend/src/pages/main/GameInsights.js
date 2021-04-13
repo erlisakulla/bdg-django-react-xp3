@@ -21,10 +21,11 @@ function GameInsights(props) {
     console.log(selectedPlot);
   }
 
+  // This page is not fully implemented
   return (
     <> 
       <div className="main-container" style={{textAlign:'center'}}>
-        <div style={{textAlign: 'center'}}><a href="/join"><ArrowBackIcon/>Back to Joined Games</a><br/></div>
+        <div style={{textAlign: 'center'}}><a href="/monitor"><ArrowBackIcon/>Back to Monitor Games</a><br/></div>
 
         <h3>Game {gameid} Insights</h3>
 
@@ -54,21 +55,20 @@ function GameInsights(props) {
         <Card style={{padding:'50px', margin:'15px'}}>
           {
             // (selectedPlot === "Retailer") ?
-            //   <Plot plot={plotName} gameid={gameid}/> :
+            //   <RetailerPlot gameid={gameid}/> :
             // (selectedPlot === "Wholesaler") ?
-            //   <Plot plot={plotName} gameid={gameid}/> :
+            //   <WholesalerPlot gameid={gameid}/> :
             // (selectedPlot === "Distributor") ?
-            //   <Plot plot={plotName} gameid={gameid}/> :
+            //   <DistributorPlot gameid={gameid}/> :
             // (selectedPlot === "Factory") ?
-            //   <Plot plot={plotName} gameid={gameid}/> :
+            //   <FactoryPlot gameid={gameid}/> :
 
-            // For now plots display only current role data, but could be changed to display all roles
             // (selectedPlot === "Inventory") ?
             //   <InventoryPlot gameid={gameid}/> :
             // (selectedPlot === "Demand") ?
-            //   <Plot plot={plotName} gameid={gameid}/> :
+            //   <DemandPlot gameid={gameid}/> :
             // (selectedPlot === "Order") ?
-            //   <Plot plot={plotName} gameid={gameid}/> :
+            //   <OrderPlot gameid={gameid}/> :
             // null
           }
         </Card>

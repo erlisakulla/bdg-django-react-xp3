@@ -15,7 +15,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  margin-top: 12%;
+  margin-top: 10px;
   width: 300px;
 }
 
@@ -110,6 +110,27 @@ label {
 #setting_button1, #setting_button2 {
   width: 100%;
   margin: 0 auto;
+}
+
+.players-btn {
+  color: #0069d9;
+  background-color: white;
+  border: solid 1px #0069d9;
+  border-radius: 20px;
+}
+
+.plot-btn {
+  color: #0069d9;
+  background-color: white;
+  border: solid 1px #0069d9;
+  border-radius: 10px;
+}
+
+.plots-table-btn {
+  color: #6c757d;
+  background-color: white;
+  border: solid 1px #6c757d;
+  border-radius: 20px;
 }
 
 /* GAME VIEW STYLES */
@@ -212,4 +233,8 @@ h5 {
 
 .plot-btn {
   margin-left: 7px;;
+}
+
+.beer-img {
+  width: 150px;
 }

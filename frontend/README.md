@@ -48,12 +48,13 @@ Some main packages and libraries used in this project:
       - A student can't register to teh same game for more than one role
       - If a game doesn't have any available roles, it doesn't appear on the list
       - If a student has already registered for a role, it doesn't appear on the list
-    + Game View: 
+    + Gameplay: 
       - Order Beer 
       - Display supply chain data for each player and week
       - Automatically proceed to next week when all orders are placed
       - Plots with supply chain data
-    + Setting up Game Insights page
+      - *Demand is not fully implemented
+    + Setting up Game Insights page - not finished
     + Page permissions:
       - Logged in users can't access the Login or Register page - they get redirected to the Monitor Page
       - If not logged in, users can't access other pages - they get redirected to the Login page

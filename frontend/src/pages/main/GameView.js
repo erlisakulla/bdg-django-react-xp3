@@ -14,6 +14,7 @@ import IncShipPlot from '../components/plots/game/IncShipPlot';
 import OutShipPlot from '../components/plots/game/OutShipPlot';
 import OrderPlot from '../components/plots/game/OrderPlot';
 import PlotAll from '../components/plots/game/PlotAll';
+import crate from '../components/img/crate.png'
 
 /**
  * Game display page 
@@ -80,8 +81,8 @@ function GameView() {
     axiosInstance.get(`http://127.0.0.1:8000/api/game/${gameid}`)
     .then((res) => {
       setGameSettings(s => ({
-        active: true,
-        // active: res.data.active,
+        // active: true,
+        active: res.data.active,
         holding_cost: res.data.holding_cost,
         backlog_cost: res.data.backlog_cost,
         info_delay: res.data.info_delay,
@@ -200,7 +201,6 @@ function GameView() {
         }
       }).catch(error => {if(error.response){console.log(error.response.data);}}); 
     } 
-
   }, [setGameSettings, setWeekSettings, setRoleSettings, gameid, game.rounds_completed, role.upstreamPlayer, role.id, game.active]);
 
   // Order input changed
@@ -335,6 +335,8 @@ function GameView() {
               
             </div>
 
+            <img src={crate} alt="Beer" className="beer-img"/>
+
             {nextWeekBtn}
             
           </div>
@@ -342,8 +344,8 @@ function GameView() {
           {/* -------SCREEN 4 ------- */}
           <div id="div4" className="quadrant">
             <h5>INVENTORY AND STATUS PLOTS - {role.roleName}</h5>
-            <div className="plot-buttons" style={{textAlign:'center'}}>
-              <div style={{display:'flex', width:'fit-content'}}>
+            <div className="plot-buttons">
+              <div style={{display:'flex', justifyContent:'center'}}>
                 <InventoryPlot gameid={gameid}/>
                 <DemandPlot gameid={gameid}/>
                 <IncShipPlot gameid={gameid}/>

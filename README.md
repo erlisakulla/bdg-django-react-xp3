@@ -9,10 +9,10 @@ SE Sprint 03, Team 32, Date: 13.04.2021
   * [Further Implementation](#further-implementation)
 
 # Overview of Changes From Last Sprint
-* Complete change of backend framework - from Node.js to Django REST framework
+* Implementing Django REST framework
 * Significant changes in frontend design and structure
 * Connecting frontend and backend using `axios`
-  - User login and registration using axios and JWT token authentication
+  - Requests are handled using JWT token authentication
 * Implemented many functionalities, for more details check the backend and frontend README.md files
 
 # Project Overview
@@ -40,3 +40,4 @@ Despite most APIs, pages and components being implemented, there is still room f
 * Finishing up Game Insights page that displays the selected plots and other game data.
 * Adding Delete Account option.
 * Student gets notified when a game is activated from the instructor (maybe by email). Instructor can schedule a game to be activated at a specific time.
+* Implementing what happends when game is completed

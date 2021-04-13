@@ -1,7 +1,7 @@
 import React from 'react';
 import LogIn from '../pages/auth/LogIn';
 import SignUp from '../pages/auth/Register';
-import GameCreationForm from '../pages/components/GameCreationForm'
+import GameCreationForm from '../pages/components/forms/GameCreationForm'
 import { render, cleanup, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 

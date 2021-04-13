@@ -103,7 +103,7 @@ class InventoryPlot extends React.Component {
           
           <Modal.Footer>
             <Button variant="danger" onClick={() => this.handleModalShowHide()}>
-              Cancel
+              Close
             </Button>
           </Modal.Footer>
         </Modal>

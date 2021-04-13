@@ -33,7 +33,7 @@ class PlsyersList extends React.Component {
    * @method
    */
   componentDidMount() {
-    axiosInstance.get(`http://127.0.0.1:8000/api/game/${this.props.gameid}/getroles`)
+    axiosInstance.get(`http://127.0.0.1:8000/api/game/${this.props.gameid}/getsharedinfo/`)
     .then((res) => {
       this.setState({roles: res.data});
       // console.log(res.data);
@@ -56,9 +56,12 @@ class PlsyersList extends React.Component {
             <tbody>
               {this.state.roles.map((role) => {
                 return (
-                  <tr key={role.id}>
-                    <th>{role.roleName}</th>
-                    <td>{role.playedBy}</td>
+                  <tr key={role.RoleID}>
+                    <th>{role.Role}</th>
+                    <td>{
+                      (role.PlayedBy === null) ?
+                      <>---</> : role.PlayedBy
+                    }</td>
                   </tr>
                 );
               })}
@@ -71,7 +74,7 @@ class PlsyersList extends React.Component {
     return (
       <> 
         <OverlayTrigger trigger="click" placement="left" overlay={popover}>
-          <Button variant="primary">Players</Button>
+          <Button variant="primary" className="players-btn">Players</Button>
         </OverlayTrigger>
       </>
     );

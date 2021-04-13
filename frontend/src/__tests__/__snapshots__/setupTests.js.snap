@@ -15,7 +15,17 @@ exports[`matches snapshot 1`] = `
     </h2>
     <div
       className="box"
+      style={
+        Object {
+          "textAlign": "center",
+        }
+      }
     >
+      <img
+        alt="Beer"
+        className="beer-img"
+        src="crate.png"
+      />
       <div
         className="card"
         id="forms"
@@ -141,7 +151,17 @@ exports[`matches snapshot 2`] = `
     </h2>
     <div
       className="box"
+      style={
+        Object {
+          "textAlign": "center",
+        }
+      }
     >
+      <img
+        alt="Beer"
+        className="beer-img"
+        src="crate.png"
+      />
       <div
         className="card"
         id="forms"
@@ -574,7 +594,7 @@ Array [
       Monitor Games
     </h2>
     <p>
-      Here you can monitor all the games you have created.
+      Here you can monitor all the games you have joined.
     </p>
     <hr />
     <div
@@ -883,17 +903,20 @@ Array [
           <form
             className=""
             id="account_settings_form"
+            onSubmit={[Function]}
           >
             <div
               className="form-group"
             >
               <input
                 className="form-control"
-                id="current_password"
-                name="current_password"
+                id="old_password"
+                name="old_password"
+                onChange={[Function]}
                 placeholder="Current Password"
                 required={true}
                 type="password"
+                value=""
               />
             </div>
             <div
@@ -901,11 +924,13 @@ Array [
             >
               <input
                 className="form-control"
-                id="new_password"
-                name="new_password"
+                id="password"
+                name="password"
+                onChange={[Function]}
                 placeholder="New Password"
                 required={true}
                 type="password"
+                value=""
               />
             </div>
             <div
@@ -913,13 +938,26 @@ Array [
             >
               <input
                 className="form-control"
-                id="repeat_password"
-                name="repeat_password"
+                id="password2"
+                name="password2"
+                onChange={[Function]}
                 placeholder="Repeat New Password"
                 required={true}
                 type="password"
+                value=""
               />
             </div>
+            <small
+              className="text-muted form-text"
+              style={
+                Object {
+                  "paddingBottom": "15px",
+                  "textAlign": "center",
+                }
+              }
+            >
+              Password must contain at least 8 characters.
+            </small>
             <div
               className="form-group"
             >

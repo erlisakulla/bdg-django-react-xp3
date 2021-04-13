@@ -35,7 +35,7 @@ class MonitorGames extends Component {
     .then((res) => {
       const isInst = res.data.is_instructor;
       this.setState({is_instructor: isInst});
-      console.log(res.data);
+      // console.log(res.data);
 
       // If user is student, get games that they have joined
       if (this.state.is_instructor === false) {
@@ -46,14 +46,14 @@ class MonitorGames extends Component {
           // console.log(res.data);
 
           // getting games based on roles
-          var i, gameid;
+          var i, roleid;
           for (i = 0; i < allRoles.length; i++) {
-            gameid = allRoles[i].associatedGame;
-            axiosInstance.get(`http://127.0.0.1:8000/api/game/${gameid}`)
+            roleid = allRoles[i].id;
+            axiosInstance.get(`http://127.0.0.1:8000/api/role/${roleid}/monitor/`)
             .then((res) => {
               const game = res.data;
               this.setState(previousState => ({games: [...previousState.games, game]}));
-              // console.log(res.data);
+              console.log(res.data);
             })
             .catch(error => {if(error.response){console.log(error.response.data);}});
           }
@@ -69,7 +69,7 @@ class MonitorGames extends Component {
             gameid = allGames[i].id;
             axiosInstance.get(`http://127.0.0.1:8000/api/game/${gameid}/monitor`)
             .then((res) => {
-              // console.log(res.data);
+              console.log(res.data);
               const game = res.data;
               this.setState(previousState => ({games: [...previousState.games, game]}));
             })
@@ -116,7 +116,7 @@ class MonitorGames extends Component {
 
             <Card.Body>
               {/* ------- Table with created/joined games to monitor ------- */}
-              <MonitorGamesList games={this.state.games} message={this.state.message} is_instructor={this.state.is_instructor}/>
+              <MonitorGamesList games={this.state.games} message={this.state.message}/>
             </Card.Body>
           </Card>
         </div>
