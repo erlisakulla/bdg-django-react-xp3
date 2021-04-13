@@ -87,7 +87,7 @@ class gameview(viewsets.ModelViewSet):
         if(serializer.is_valid()):
             serializer.save(instructor=user)
             return Response(serializer.data)
-        return Response(serializer.error)
+        return Response(serializer.errors,status=status.HTTP_406_NOT_ACCEPTABLE)
 
         # retrieve for each game
     def retrieve(self, request, pk=None):

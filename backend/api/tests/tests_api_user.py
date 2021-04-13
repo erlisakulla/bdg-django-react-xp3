@@ -11,19 +11,7 @@ from rest_framework.test import force_authenticate
 
 from rest_framework.test import APITestCase
 
-class UserTest(TestCase):
-    """ Test module for Game model """
-
-    def setUp(self):
-        User.objects.create(
-            email='yahoo@gmail.com', name="ok", password="whatever111")
-
-    def test_user(self):
-        userok = User.objects.get(name='ok')
-        self.assertEqual(
-            userok.email, "yahoo@gmail.com")
       
-
 class UserRegistrationAPIViewTestCase(APITestCase):
     urlreg = '/api/register/'
     def test_missing_password(self):
