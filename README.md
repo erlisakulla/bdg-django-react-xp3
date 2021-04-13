@@ -25,7 +25,7 @@ git clone https://github.com/lorenzorota/se-03-team-32.git
 ```
 
 For full documentation on how to setup the project follow the links below:
-* Backend: [README.md](backend/backend/readme.md)
+* Backend: [README.md](backend/readme.md)
 * Frontend: [README.md](frontend/README.md)
 
 # Bonus

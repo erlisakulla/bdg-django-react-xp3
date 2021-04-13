@@ -45,7 +45,7 @@ Some main packages and libraries used in this project:
     + User Login, Register, Logout, Change Password
     + Game Create, Update, Delete, Monitor, Activate/Deactivate
     + Game / Role Register:
-      - A student can't register to teh same game for more than one role
+      - A student can't register to the same game for more than one role
       - If a game doesn't have any available roles, it doesn't appear on the list
       - If a student has already registered for a role, it doesn't appear on the list
     + Gameplay: 
