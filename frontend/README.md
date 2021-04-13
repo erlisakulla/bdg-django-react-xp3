@@ -90,20 +90,22 @@ frontend
 |   |   |   ├── LogIn.js                    # user log in page
 |   |   |   └── Register.js                 # user registration page
 │   |   ├── components                      # reusable components
-|   |   |   ├── plots                        
-|   |   |   |   ├── canvas.min.js           # CanvasJS library import
-|   |   |   |   ├── canvas.react.js         # CanvasJS for React utility
-|   |   |   |   └── ...                     # all plots are divided in 'game' and 'insights' plots
 |   |   |   ├── forms
 |   |   |   |   ├── GameCreationForm.js     # game creation form component (button and modal)
 |   |   |   |   ├── GameRegisterForm.js     # game registration form copmonent
 |   |   |   |   └── GameUpdateForm.js       # game update form copmonent (icon and modal)
+|   |   |   ├── img                        
+|   |   |   |   └── ...                     # all images are saved here
 |   |   |   ├── lists
 |   |   |   |   ├── GamesList.js            # component that maps games in table
 |   |   |   |   ├── MonitorGamesList.js     # container of games to monitor
 |   |   |   |   ├── RegisteredGamesList.js  # list of games user is registered for
 |   |   |   |   ├── SharedInfo.js           # order status info for each role
 |   |   |   |   └── WeeksInfo.js            # week info table
+|   |   |   ├── plots                        
+|   |   |   |   ├── canvas.min.js           # CanvasJS library import
+|   |   |   |   ├── canvas.react.js         # CanvasJS for React utility
+|   |   |   |   └── ...                     # all plots are divided in 'game' and 'insights' plots
 |   |   |   ├── Navbar.js                   # navbar component
 |   |   |   └── Option.js                   # component for using icons and tooltips
 |   |   └── main                             
