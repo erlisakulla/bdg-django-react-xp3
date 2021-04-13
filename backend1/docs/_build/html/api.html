@@ -1,0 +1,1115 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>api package &mdash; beergamebackend  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> beergamebackend
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">api package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-api.admin">api.admin module</a></li>
+<li><a class="reference internal" href="#module-api.apps">api.apps module</a></li>
+<li><a class="reference internal" href="#module-api.models">api.models module</a></li>
+<li><a class="reference internal" href="#module-api.serializers">api.serializers module</a></li>
+<li><a class="reference internal" href="#module-api">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">beergamebackend</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>api package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api-package">
+<h1>api package<a class="headerlink" href="#api-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.tests.html">api.tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.tests.html#module-api.tests.tests_api_game">api.tests.tests_api_game module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.tests.html#module-api.tests.tests_api_roles">api.tests.tests_api_roles module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.tests.html#module-api.tests.tests_api_user">api.tests.tests_api_user module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.tests.html#module-api.tests.tests_model">api.tests.tests_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.tests.html#module-api.tests">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.views.html">api.views package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.views.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.views.html#module-api.views.game">api.views.game module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.views.html#module-api.views.role">api.views.role module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.views.html#module-api.views.user">api.views.user module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.views.html#module-api.views">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-api.admin">
+<span id="api-admin-module"></span><h2>api.admin module<a class="headerlink" href="#module-api.admin" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-api.apps">
+<span id="api-apps-module"></span><h2>api.apps module<a class="headerlink" href="#module-api.apps" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="api.apps.ApiConfig">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.apps.</span></code><code class="sig-name descname"><span class="pre">ApiConfig</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.apps.ApiConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.apps.config.AppConfig</span></code></p>
+<dl class="py attribute">
+<dt id="api.apps.ApiConfig.name">
+<code class="sig-name descname"><span class="pre">name</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'api'</span></em><a class="headerlink" href="#api.apps.ApiConfig.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-api.models">
+<span id="api-models-module"></span><h2>api.models module<a class="headerlink" href="#module-api.models" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="api.models.CustomAccountManager">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.models.</span></code><code class="sig-name descname"><span class="pre">CustomAccountManager</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.models.CustomAccountManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.auth.base_user.BaseUserManager</span></code></p>
+<dl class="py method">
+<dt id="api.models.CustomAccountManager.create_superuser">
+<code class="sig-name descname"><span class="pre">create_superuser</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">email</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">other_fields</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.models.CustomAccountManager.create_superuser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="api.models.CustomAccountManager.create_user">
+<code class="sig-name descname"><span class="pre">create_user</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">email</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">other_fields</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.models.CustomAccountManager.create_user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="api.models.Game">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.models.</span></code><code class="sig-name descname"><span class="pre">Game</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.models.Game" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>Game model with all the required properties for a game to exist</p>
+<dl class="py exception">
+<dt id="api.models.Game.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-name descname"><span class="pre">DoesNotExist</span></code><a class="headerlink" href="#api.models.Game.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="api.models.Game.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></code><a class="headerlink" href="#api.models.Game.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Game.active">
+<code class="sig-name descname"><span class="pre">active</span></code><a class="headerlink" href="#api.models.Game.active" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Game.backlog_cost">
+<code class="sig-name descname"><span class="pre">backlog_cost</span></code><a class="headerlink" href="#api.models.Game.backlog_cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Game.distributorPresent">
+<code class="sig-name descname"><span class="pre">distributorPresent</span></code><a class="headerlink" href="#api.models.Game.distributorPresent" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Game.gameroles">
+<code class="sig-name descname"><span class="pre">gameroles</span></code><a class="headerlink" href="#api.models.Game.gameroles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Game.holding_cost">
+<code class="sig-name descname"><span class="pre">holding_cost</span></code><a class="headerlink" href="#api.models.Game.holding_cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Game.id">
+<code class="sig-name descname"><span class="pre">id</span></code><a class="headerlink" href="#api.models.Game.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Game.info_delay">
+<code class="sig-name descname"><span class="pre">info_delay</span></code><a class="headerlink" href="#api.models.Game.info_delay" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Game.info_sharing">
+<code class="sig-name descname"><span class="pre">info_sharing</span></code><a class="headerlink" href="#api.models.Game.info_sharing" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Game.instructor">
+<code class="sig-name descname"><span class="pre">instructor</span></code><a class="headerlink" href="#api.models.Game.instructor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Game.instructor_id">
+<code class="sig-name descname"><span class="pre">instructor_id</span></code><a class="headerlink" href="#api.models.Game.instructor_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Game.isDefaultGame">
+<code class="sig-name descname"><span class="pre">isDefaultGame</span></code><a class="headerlink" href="#api.models.Game.isDefaultGame" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Game.objects">
+<code class="sig-name descname"><span class="pre">objects</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#api.models.Game.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Game.rounds_completed">
+<code class="sig-name descname"><span class="pre">rounds_completed</span></code><a class="headerlink" href="#api.models.Game.rounds_completed" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Game.session_length">
+<code class="sig-name descname"><span class="pre">session_length</span></code><a class="headerlink" href="#api.models.Game.session_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Game.starting_inventory">
+<code class="sig-name descname"><span class="pre">starting_inventory</span></code><a class="headerlink" href="#api.models.Game.starting_inventory" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Game.wholesalerPresent">
+<code class="sig-name descname"><span class="pre">wholesalerPresent</span></code><a class="headerlink" href="#api.models.Game.wholesalerPresent" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="api.models.Role">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.models.</span></code><code class="sig-name descname"><span class="pre">Role</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.models.Role" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>Role model with with user, associated game, week as foreigin keys</p>
+<dl class="py exception">
+<dt id="api.models.Role.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-name descname"><span class="pre">DoesNotExist</span></code><a class="headerlink" href="#api.models.Role.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="api.models.Role.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></code><a class="headerlink" href="#api.models.Role.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Role.associatedGame">
+<code class="sig-name descname"><span class="pre">associatedGame</span></code><a class="headerlink" href="#api.models.Role.associatedGame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Role.associatedGame_id">
+<code class="sig-name descname"><span class="pre">associatedGame_id</span></code><a class="headerlink" href="#api.models.Role.associatedGame_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Role.downstreamPlayer">
+<code class="sig-name descname"><span class="pre">downstreamPlayer</span></code><a class="headerlink" href="#api.models.Role.downstreamPlayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Role.downstreamPlayer_id">
+<code class="sig-name descname"><span class="pre">downstreamPlayer_id</span></code><a class="headerlink" href="#api.models.Role.downstreamPlayer_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Role.id">
+<code class="sig-name descname"><span class="pre">id</span></code><a class="headerlink" href="#api.models.Role.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Role.objects">
+<code class="sig-name descname"><span class="pre">objects</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#api.models.Role.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Role.ordered">
+<code class="sig-name descname"><span class="pre">ordered</span></code><a class="headerlink" href="#api.models.Role.ordered" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Role.playedBy">
+<code class="sig-name descname"><span class="pre">playedBy</span></code><a class="headerlink" href="#api.models.Role.playedBy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Role.playedBy_id">
+<code class="sig-name descname"><span class="pre">playedBy_id</span></code><a class="headerlink" href="#api.models.Role.playedBy_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Role.roleName">
+<code class="sig-name descname"><span class="pre">roleName</span></code><a class="headerlink" href="#api.models.Role.roleName" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Role.role_downstreamPlayer">
+<code class="sig-name descname"><span class="pre">role_downstreamPlayer</span></code><a class="headerlink" href="#api.models.Role.role_downstreamPlayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Role.role_upstreamPlayer">
+<code class="sig-name descname"><span class="pre">role_upstreamPlayer</span></code><a class="headerlink" href="#api.models.Role.role_upstreamPlayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Role.roleweeks">
+<code class="sig-name descname"><span class="pre">roleweeks</span></code><a class="headerlink" href="#api.models.Role.roleweeks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Role.upstreamPlayer">
+<code class="sig-name descname"><span class="pre">upstreamPlayer</span></code><a class="headerlink" href="#api.models.Role.upstreamPlayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Role.upstreamPlayer_id">
+<code class="sig-name descname"><span class="pre">upstreamPlayer_id</span></code><a class="headerlink" href="#api.models.Role.upstreamPlayer_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="api.models.User">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.models.</span></code><code class="sig-name descname"><span class="pre">User</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_login</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_superuser</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_staff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_active</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_instructor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.models.User" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.auth.base_user.AbstractBaseUser</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.auth.models.PermissionsMixin</span></code></p>
+<dl class="py exception">
+<dt id="api.models.User.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-name descname"><span class="pre">DoesNotExist</span></code><a class="headerlink" href="#api.models.User.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="api.models.User.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></code><a class="headerlink" href="#api.models.User.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.User.REQUIRED_FIELDS">
+<code class="sig-name descname"><span class="pre">REQUIRED_FIELDS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">['name']</span></em><a class="headerlink" href="#api.models.User.REQUIRED_FIELDS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.User.USERNAME_FIELD">
+<code class="sig-name descname"><span class="pre">USERNAME_FIELD</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'email'</span></em><a class="headerlink" href="#api.models.User.USERNAME_FIELD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.User.email">
+<code class="sig-name descname"><span class="pre">email</span></code><a class="headerlink" href="#api.models.User.email" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.User.game_set">
+<code class="sig-name descname"><span class="pre">game_set</span></code><a class="headerlink" href="#api.models.User.game_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="api.models.User.get_next_by_start_date">
+<code class="sig-name descname"><span class="pre">get_next_by_start_date</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">start_date&gt;</span></em>, <em class="sig-param"><span class="pre">is_next=True</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.models.User.get_next_by_start_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="api.models.User.get_previous_by_start_date">
+<code class="sig-name descname"><span class="pre">get_previous_by_start_date</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">start_date&gt;</span></em>, <em class="sig-param"><span class="pre">is_next=False</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.models.User.get_previous_by_start_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.User.groups">
+<code class="sig-name descname"><span class="pre">groups</span></code><a class="headerlink" href="#api.models.User.groups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the forward and reverse sides of
+a many-to-many relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">Topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
+instances.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.User.id">
+<code class="sig-name descname"><span class="pre">id</span></code><a class="headerlink" href="#api.models.User.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.User.is_instructor">
+<code class="sig-name descname"><span class="pre">is_instructor</span></code><a class="headerlink" href="#api.models.User.is_instructor" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.User.is_staff">
+<code class="sig-name descname"><span class="pre">is_staff</span></code><a class="headerlink" href="#api.models.User.is_staff" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.User.logentry_set">
+<code class="sig-name descname"><span class="pre">logentry_set</span></code><a class="headerlink" href="#api.models.User.logentry_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.User.name">
+<code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#api.models.User.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.User.objects">
+<code class="sig-name descname"><span class="pre">objects</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;api.models.CustomAccountManager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#api.models.User.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.User.outstandingtoken_set">
+<code class="sig-name descname"><span class="pre">outstandingtoken_set</span></code><a class="headerlink" href="#api.models.User.outstandingtoken_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.User.playerrole">
+<code class="sig-name descname"><span class="pre">playerrole</span></code><a class="headerlink" href="#api.models.User.playerrole" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.User.start_date">
+<code class="sig-name descname"><span class="pre">start_date</span></code><a class="headerlink" href="#api.models.User.start_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.User.user_permissions">
+<code class="sig-name descname"><span class="pre">user_permissions</span></code><a class="headerlink" href="#api.models.User.user_permissions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the forward and reverse sides of
+a many-to-many relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">Topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
+instances.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="api.models.Week">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.models.</span></code><code class="sig-name descname"><span class="pre">Week</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.models.Week" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>Week model with all week properties listed below.</p>
+<dl class="py exception">
+<dt id="api.models.Week.DoesNotExist">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-name descname"><span class="pre">DoesNotExist</span></code><a class="headerlink" href="#api.models.Week.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="api.models.Week.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></code><a class="headerlink" href="#api.models.Week.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Week.associatedRole">
+<code class="sig-name descname"><span class="pre">associatedRole</span></code><a class="headerlink" href="#api.models.Week.associatedRole" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Week.associatedRole_id">
+<code class="sig-name descname"><span class="pre">associatedRole_id</span></code><a class="headerlink" href="#api.models.Week.associatedRole_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Week.backlog">
+<code class="sig-name descname"><span class="pre">backlog</span></code><a class="headerlink" href="#api.models.Week.backlog" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Week.cost">
+<code class="sig-name descname"><span class="pre">cost</span></code><a class="headerlink" href="#api.models.Week.cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Week.demand">
+<code class="sig-name descname"><span class="pre">demand</span></code><a class="headerlink" href="#api.models.Week.demand" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Week.id">
+<code class="sig-name descname"><span class="pre">id</span></code><a class="headerlink" href="#api.models.Week.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Week.incoming_shipment">
+<code class="sig-name descname"><span class="pre">incoming_shipment</span></code><a class="headerlink" href="#api.models.Week.incoming_shipment" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Week.inventory">
+<code class="sig-name descname"><span class="pre">inventory</span></code><a class="headerlink" href="#api.models.Week.inventory" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Week.number">
+<code class="sig-name descname"><span class="pre">number</span></code><a class="headerlink" href="#api.models.Week.number" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Week.objects">
+<code class="sig-name descname"><span class="pre">objects</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#api.models.Week.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Week.order_placed">
+<code class="sig-name descname"><span class="pre">order_placed</span></code><a class="headerlink" href="#api.models.Week.order_placed" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.models.Week.outgoing_shipment">
+<code class="sig-name descname"><span class="pre">outgoing_shipment</span></code><a class="headerlink" href="#api.models.Week.outgoing_shipment" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="api.models.onGameCreation">
+<code class="sig-prename descclassname"><span class="pre">api.models.</span></code><code class="sig-name descname"><span class="pre">onGameCreation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.models.onGameCreation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles automatic changes on GameCreation.
+Creating Roles based on is_distrubutor,wholesaler present
+and Default first week.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="api.models.onOrder">
+<code class="sig-prename descclassname"><span class="pre">api.models.</span></code><code class="sig-name descname"><span class="pre">onOrder</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.models.onOrder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles creation of new weeks based on previous week data after everyone submits
+the order.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="api.models.onRoleCreation">
+<code class="sig-prename descclassname"><span class="pre">api.models.</span></code><code class="sig-name descname"><span class="pre">onRoleCreation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.models.onRoleCreation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles automatic creation of Weeks on RoleCreation with default values.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-api.serializers">
+<span id="api-serializers-module"></span><h2>api.serializers module<a class="headerlink" href="#module-api.serializers" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="api.serializers.ChangePasswordSerializer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.serializers.</span></code><code class="sig-name descname"><span class="pre">ChangePasswordSerializer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.serializers.ChangePasswordSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.serializers.ModelSerializer</span></code></p>
+<p>Password Change Serializer for validating passwords</p>
+<dl class="py class">
+<dt id="api.serializers.ChangePasswordSerializer.Meta">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Meta</span></code><a class="headerlink" href="#api.serializers.ChangePasswordSerializer.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="api.serializers.ChangePasswordSerializer.Meta.fields">
+<code class="sig-name descname"><span class="pre">fields</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('old_password',</span> <span class="pre">'password',</span> <span class="pre">'password2')</span></em><a class="headerlink" href="#api.serializers.ChangePasswordSerializer.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.serializers.ChangePasswordSerializer.Meta.model">
+<code class="sig-name descname"><span class="pre">model</span></code><a class="headerlink" href="#api.serializers.ChangePasswordSerializer.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#api.models.User" title="api.models.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">api.models.User</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="api.serializers.ChangePasswordSerializer.update">
+<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validated_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.serializers.ChangePasswordSerializer.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="api.serializers.ChangePasswordSerializer.validate">
+<code class="sig-name descname"><span class="pre">validate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.serializers.ChangePasswordSerializer.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="api.serializers.ChangePasswordSerializer.validate_old_password">
+<code class="sig-name descname"><span class="pre">validate_old_password</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.serializers.ChangePasswordSerializer.validate_old_password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="api.serializers.GameSerializer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.serializers.</span></code><code class="sig-name descname"><span class="pre">GameSerializer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.serializers.GameSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.serializers.ModelSerializer</span></code></p>
+<p>User Serializer for Game View.</p>
+<dl class="py class">
+<dt id="api.serializers.GameSerializer.Meta">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Meta</span></code><a class="headerlink" href="#api.serializers.GameSerializer.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="api.serializers.GameSerializer.Meta.extra_kwargs">
+<code class="sig-name descname"><span class="pre">extra_kwargs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">{'instructor':</span> <span class="pre">{'read_only':</span> <span class="pre">True},</span> <span class="pre">'rounds_completed':</span> <span class="pre">{'read_only':</span> <span class="pre">True}}</span></em><a class="headerlink" href="#api.serializers.GameSerializer.Meta.extra_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.serializers.GameSerializer.Meta.fields">
+<code class="sig-name descname"><span class="pre">fields</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'__all__'</span></em><a class="headerlink" href="#api.serializers.GameSerializer.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.serializers.GameSerializer.Meta.model">
+<code class="sig-name descname"><span class="pre">model</span></code><a class="headerlink" href="#api.serializers.GameSerializer.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#api.models.Game" title="api.models.Game"><code class="xref py py-class docutils literal notranslate"><span class="pre">api.models.Game</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="api.serializers.NullSerializer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.serializers.</span></code><code class="sig-name descname"><span class="pre">NullSerializer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.serializers.NullSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.serializers.Serializer</span></code></p>
+<p>Using just for post requests without any body</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="api.serializers.OrderSerializer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.serializers.</span></code><code class="sig-name descname"><span class="pre">OrderSerializer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.serializers.OrderSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.serializers.Serializer</span></code></p>
+<p>Useful to validate quantity input</p>
+<dl class="py class">
+<dt id="api.serializers.OrderSerializer.Meta">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Meta</span></code><a class="headerlink" href="#api.serializers.OrderSerializer.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="api.serializers.OrderSerializer.Meta.fields">
+<code class="sig-name descname"><span class="pre">fields</span></code><em class="property"> <span class="pre">=</span> <span class="pre">['quantity']</span></em><a class="headerlink" href="#api.serializers.OrderSerializer.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="api.serializers.RoleSerializer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.serializers.</span></code><code class="sig-name descname"><span class="pre">RoleSerializer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.serializers.RoleSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.serializers.ModelSerializer</span></code></p>
+<p>Role Serializer for validating Role
+Only update on playedby is allowed by user
+other fields are readonly or meant to be changed on the backend.</p>
+<dl class="py class">
+<dt id="api.serializers.RoleSerializer.Meta">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Meta</span></code><a class="headerlink" href="#api.serializers.RoleSerializer.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="api.serializers.RoleSerializer.Meta.fields">
+<code class="sig-name descname"><span class="pre">fields</span></code><em class="property"> <span class="pre">=</span> <span class="pre">['id',</span> <span class="pre">'downstreamPlayer',</span> <span class="pre">'upstreamPlayer',</span> <span class="pre">'associatedGame',</span> <span class="pre">'roleName',</span> <span class="pre">'playedBy',</span> <span class="pre">'ordered']</span></em><a class="headerlink" href="#api.serializers.RoleSerializer.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.serializers.RoleSerializer.Meta.model">
+<code class="sig-name descname"><span class="pre">model</span></code><a class="headerlink" href="#api.serializers.RoleSerializer.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#api.models.Role" title="api.models.Role"><code class="xref py py-class docutils literal notranslate"><span class="pre">api.models.Role</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.serializers.RoleSerializer.Meta.read_only_fields">
+<code class="sig-name descname"><span class="pre">read_only_fields</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('id',</span> <span class="pre">'downstreamPlayer',</span> <span class="pre">'upstreamPlayer',</span> <span class="pre">'associatedGame',</span> <span class="pre">'roleName',</span> <span class="pre">'ordered')</span></em><a class="headerlink" href="#api.serializers.RoleSerializer.Meta.read_only_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.serializers.RoleSerializer.Meta.validators">
+<code class="sig-name descname"><span class="pre">validators</span></code><em class="property"> <span class="pre">=</span> <span class="pre">[&lt;UniqueTogetherValidator(queryset=&lt;QuerySet</span> <span class="pre">[&lt;Role:</span> <span class="pre">Retailer</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Factory</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Wholesaler</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Distributor</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Retailer</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">2&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Factory</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">2&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Wholesaler</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">2&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Distributor</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">2&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Retailer</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">3&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Factory</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">3&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Wholesaler</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">3&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Distributor</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">3&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Retailer</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">4&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Factory</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">4&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Wholesaler</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">4&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Distributor</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">4&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Retailer</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">5&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Factory</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">5&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Wholesaler</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">5&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Distributor</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">5&gt;,</span> <span class="pre">'...(remaining</span> <span class="pre">elements</span> <span class="pre">truncated)...']&gt;,</span> <span class="pre">fields=['associatedGame',</span> <span class="pre">'playedBy'])&gt;]</span></em><a class="headerlink" href="#api.serializers.RoleSerializer.Meta.validators" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="api.serializers.RoleWeekSerializer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.serializers.</span></code><code class="sig-name descname"><span class="pre">RoleWeekSerializer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.serializers.RoleWeekSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.serializers.ModelSerializer</span></code></p>
+<dl class="py class">
+<dt id="api.serializers.RoleWeekSerializer.Meta">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Meta</span></code><a class="headerlink" href="#api.serializers.RoleWeekSerializer.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="api.serializers.RoleWeekSerializer.Meta.fields">
+<code class="sig-name descname"><span class="pre">fields</span></code><em class="property"> <span class="pre">=</span> <span class="pre">['id',</span> <span class="pre">'playedBy',</span> <span class="pre">'roleweeks']</span></em><a class="headerlink" href="#api.serializers.RoleWeekSerializer.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.serializers.RoleWeekSerializer.Meta.model">
+<code class="sig-name descname"><span class="pre">model</span></code><a class="headerlink" href="#api.serializers.RoleWeekSerializer.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#api.models.Role" title="api.models.Role"><code class="xref py py-class docutils literal notranslate"><span class="pre">api.models.Role</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="api.serializers.UserSerializer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.serializers.</span></code><code class="sig-name descname"><span class="pre">UserSerializer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.serializers.UserSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.serializers.ModelSerializer</span></code></p>
+<p>User Serializer for Registeration.</p>
+<dl class="py class">
+<dt id="api.serializers.UserSerializer.Meta">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Meta</span></code><a class="headerlink" href="#api.serializers.UserSerializer.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="api.serializers.UserSerializer.Meta.extra_kwargs">
+<code class="sig-name descname"><span class="pre">extra_kwargs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">{'password':</span> <span class="pre">{'write_only':</span> <span class="pre">True}}</span></em><a class="headerlink" href="#api.serializers.UserSerializer.Meta.extra_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.serializers.UserSerializer.Meta.fields">
+<code class="sig-name descname"><span class="pre">fields</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('email',</span> <span class="pre">'name',</span> <span class="pre">'is_instructor',</span> <span class="pre">'password')</span></em><a class="headerlink" href="#api.serializers.UserSerializer.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.serializers.UserSerializer.Meta.model">
+<code class="sig-name descname"><span class="pre">model</span></code><a class="headerlink" href="#api.serializers.UserSerializer.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#api.models.User" title="api.models.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">api.models.User</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="api.serializers.UserSerializer.create">
+<code class="sig-name descname"><span class="pre">create</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validated_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.serializers.UserSerializer.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>We have a bit of extra checking around this in order to provide
+descriptive messages when something goes wrong, but this method is
+essentially just:</p>
+<blockquote>
+<div><p>return ExampleModel.objects.create(<a href="#id1"><span class="problematic" id="id2">**</span></a>validated_data)</p>
+</div></blockquote>
+<p>If there are many to many fields present on the instance then they
+cannot be set until the model is instantiated, in which case the
+implementation is like so:</p>
+<blockquote>
+<div><p>example_relationship = validated_data.pop(‘example_relationship’)
+instance = ExampleModel.objects.create(<a href="#id3"><span class="problematic" id="id4">**</span></a>validated_data)
+instance.example_relationship = example_relationship
+return instance</p>
+</div></blockquote>
+<p>The default implementation also does not handle nested relationships.
+If you want to support writable nested relationships you’ll need
+to write an explicit <cite>.create()</cite> method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="api.serializers.WeekSerializer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.serializers.</span></code><code class="sig-name descname"><span class="pre">WeekSerializer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.serializers.WeekSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.serializers.ModelSerializer</span></code></p>
+<p>Week Serializer takes all fields from Week Model.</p>
+<dl class="py class">
+<dt id="api.serializers.WeekSerializer.Meta">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Meta</span></code><a class="headerlink" href="#api.serializers.WeekSerializer.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="api.serializers.WeekSerializer.Meta.fields">
+<code class="sig-name descname"><span class="pre">fields</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'__all__'</span></em><a class="headerlink" href="#api.serializers.WeekSerializer.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.serializers.WeekSerializer.Meta.model">
+<code class="sig-name descname"><span class="pre">model</span></code><a class="headerlink" href="#api.serializers.WeekSerializer.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#api.models.Week" title="api.models.Week"><code class="xref py py-class docutils literal notranslate"><span class="pre">api.models.Week</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-api">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-api" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, IG.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
