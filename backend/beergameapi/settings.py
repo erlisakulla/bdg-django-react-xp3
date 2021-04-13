@@ -162,8 +162,9 @@ SIMPLE_JWT = {
 DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
 #Allowing this frontend to Request 
 
-CORS_ORIGIN_WHITELIST = 'http://localhost:3000',
+#CORS_ORIGIN_WHITELIST = '*',
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/

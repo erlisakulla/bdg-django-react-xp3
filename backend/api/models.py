@@ -223,7 +223,7 @@ def onOrder(sender, instance, created, **kwargs):
                 if shippingdelay<currentweek+1: #after delay
                     # ===========FACTORY INCOMING ======== #AUTOMATIC 
                     if role.upstreamPlayer==None:  
-                        oldweek= role.roleweeks.all(number=currentweek+1 -shippingdelay).first()
+                        oldweek= role.roleweeks.all().filter(number=currentweek+1 -shippingdelay).first()
                         demandrequest= oldweek.order_placed
                         rand=random.randint(5,demandrequest+15) #production
                         incomingshipment = min(demandrequest,rand)
