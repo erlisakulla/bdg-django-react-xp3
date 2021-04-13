@@ -105,7 +105,7 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
     @action(detail=True, methods=['get'])
     @swagger_auto_schema(operation_description="Returns Player Current Cost ",
-                         responses={200: "Players Cost", 403: "Not a Game Creator"})
+                         responses={200: "Players Cost", 403: "Not authorized"})
 
     def monitor(self, request, pk=None):
         role = self.get_object()
