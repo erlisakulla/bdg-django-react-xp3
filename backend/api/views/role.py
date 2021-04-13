@@ -16,7 +16,6 @@ from drf_yasg.utils import swagger_auto_schema
 import random
 
 
-
 # =======================ROLE RELATED VIEWS ==========================
 
 # viewsets hadnling multiple routes
@@ -46,9 +45,6 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
         return Response(serialized.data)
 
     # +++ CUSTOM URLS +++
-
-    # for route /api/role/{roleid}/register
-    # only patch update playedby field.
 
     @action(detail=True, methods=['post'])
     @swagger_auto_schema(operation_description="For Ordering Beer")
@@ -81,15 +77,16 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
 ##################### INFO SHARING ##########################
 
+
     @action(detail=True, methods=['get'])
     @swagger_auto_schema(operation_description="Returns Other Player Info", responses={200: ""})
     def getsharedinfo(self, request, pk=None):
         role = self.get_object()
         game = role.associatedGame
-        if role.playedBy != request.user and  request.user!=game.instructor:
+        if role.playedBy != request.user and request.user != game.instructor:
             return Response({"detail": "No Permission for this Role."}, status=status.HTTP_403_FORBIDDEN)
-  
-        if game.info_sharing or request.user==game.instructor:
+
+        if game.info_sharing or request.user == game.instructor:
             roles = game.gameroles.all()
             alldetail = []
             for role in roles:
@@ -102,19 +99,23 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
             return Response(alldetail)
         return Response({"detail": "info sharing disabled"}, status=status.HTTP_403_FORBIDDEN)
 
-
     @action(detail=True, methods=['get'])
     @swagger_auto_schema(operation_description="Returns Player Current Cost ",
                          responses={200: "Players Cost", 403: "Not authorized"})
-
+    # /role/{roleid}/monitor
     def monitor(self, request, pk=None):
+        """
+        Returns week/cost/status of game 
+        if infosharing =all players
+        else = only loggedin player
+        """
         role = self.get_object()
-        game=role.associatedGame
-        roles = game.gameroles.all() #all roles
+        game = role.associatedGame
+        roles = game.gameroles.all()  # all roles
 
-        if role.playedBy == request.user :
+        if role.playedBy == request.user:
             tosend = {}
-            tosend['game_id'] = game.pk #primarykey
+            tosend['game_id'] = game.pk  # primarykey
             tosend['info_delay'] = game.info_delay
             tosend['session_length'] = game.session_length
             tosend['current_week'] = game.rounds_completed+1
@@ -123,8 +124,8 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
             tosend['info_sharing'] = game.info_sharing
             tosend['cost'] = {}
             totalcost = 0
-            if not game.info_sharing: #if infosharing get all
-                roles=[role] #only include own role.
+            if not game.info_sharing:  # if infosharing get all
+                roles = [role]  # only include own role.
 
             for role in roles:
                 getcurrentweek = role.roleweeks.get(
@@ -137,10 +138,15 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
             return Response(tosend)
         return Response({"detail": "Not authorized for this role"}, status=status.HTTP_403_FORBIDDEN)
 
+    # /api/role/{id}/currentweek
 
     @action(detail=True, methods=['get'])
     @swagger_auto_schema(operation_description="CurrentWeek all details", responses={200: "CurrentWeek all details"})
     def currentweek(self, request, pk=None):
+        """
+        Returns all current week data for a registered Role.
+
+        """
         role = self.get_object()
         if role.playedBy == request.user:
 
@@ -172,6 +178,8 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
             return Response(alldetail)
         return Response({"detail": "Not Authroized"}, status=status.HTTP_403_FORBIDDEN)
 
+    # /api/role/{roleid}/nextroundstatus
+
     @action(detail=True, methods=['get'])
     @swagger_auto_schema(operation_description="Checks other players order status", responses={200: "Ready", 401: "Not Ready/ Unauthorized"})
     def nextroundstatus(self, request, pk=None):
@@ -192,6 +200,9 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     @action(detail=True, methods=['get'])
     @swagger_auto_schema(operation_description="Checks other players order status")
     def getweek(self, request, pk=None):
+        """
+        Returns All Week for that role.
+        """
         user = request.user
         role = self.get_object()
         weeks = role.roleweeks.all()
@@ -204,7 +215,12 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     # for /api/role/{roleid}/register
     # register yourself to that role
     @action(detail=True, methods=['patch'])
+
+
     def register(self, request, pk=None):
+        """
+        Patch endpoint for registering yourself.
+        """
         user = request.user
         role = self.get_object()
         if user.is_instructor:

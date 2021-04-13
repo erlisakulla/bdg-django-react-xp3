@@ -27,6 +27,9 @@ import random
 
 
 class userview(APIView):
+    """
+    Displays User Info
+    """
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
 
@@ -72,4 +75,7 @@ class ChangePasswordView(generics.UpdateAPIView):
 # only post method allowed for register
 
 class registerview(generics.CreateAPIView):
+    """
+    Register new user
+    """
     serializer_class = UserSerializer

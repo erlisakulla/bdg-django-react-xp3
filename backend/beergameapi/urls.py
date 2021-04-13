@@ -52,15 +52,14 @@ urlpatterns = [
     path("api/",include(router.urls)),
     path("api/user/",userview.as_view()),
     path("api/user/changepassword/",ChangePasswordView.as_view()),
-
     path("api/register/",registerview.as_view()),
     
-    #path("api/viewroles/",rolesview.as_view()),
-    # path("api/roleregister/<int:pk>",roleregister.as_view()),
+  
 
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
    re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
    re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenObtainPairView.as_view(), name='token_refresh'),

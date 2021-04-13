@@ -1,0 +1,479 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>api.views package &mdash; beergamebackend  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> beergamebackend
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">api.views package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-api.views.game">api.views.game module</a></li>
+<li><a class="reference internal" href="#module-api.views.role">api.views.role module</a></li>
+<li><a class="reference internal" href="#module-api.views.user">api.views.user module</a></li>
+<li><a class="reference internal" href="#module-api.views">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">beergamebackend</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>api.views package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/api.views.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api-views-package">
+<h1>api.views package<a class="headerlink" href="#api-views-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-api.views.game">
+<span id="api-views-game-module"></span><h2>api.views.game module<a class="headerlink" href="#module-api.views.game" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="api.views.game.GameCreatePermission">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.views.game.</span></code><code class="sig-name descname"><span class="pre">GameCreatePermission</span></code><a class="headerlink" href="#api.views.game.GameCreatePermission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.permissions.BasePermission</span></code></p>
+<p>Permission to Create Game</p>
+<dl class="py method">
+<dt id="api.views.game.GameCreatePermission.has_permission">
+<code class="sig-name descname"><span class="pre">has_permission</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">view</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.game.GameCreatePermission.has_permission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <cite>True</cite> if permission is granted, <cite>False</cite> otherwise.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.views.game.GameCreatePermission.message">
+<code class="sig-name descname"><span class="pre">message</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'creating</span> <span class="pre">only</span> <span class="pre">by</span> <span class="pre">the</span> <span class="pre">instructor</span> <span class="pre">'</span></em><a class="headerlink" href="#api.views.game.GameCreatePermission.message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="api.views.game.GameUserWritePermission">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.views.game.</span></code><code class="sig-name descname"><span class="pre">GameUserWritePermission</span></code><a class="headerlink" href="#api.views.game.GameUserWritePermission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.permissions.BasePermission</span></code></p>
+<p>Permission to Write Game</p>
+<dl class="py method">
+<dt id="api.views.game.GameUserWritePermission.has_object_permission">
+<code class="sig-name descname"><span class="pre">has_object_permission</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">view</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.game.GameUserWritePermission.has_object_permission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <cite>True</cite> if permission is granted, <cite>False</cite> otherwise.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.views.game.GameUserWritePermission.message">
+<code class="sig-name descname"><span class="pre">message</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'editing</span> <span class="pre">only</span> <span class="pre">by</span> <span class="pre">the</span> <span class="pre">instructor</span> <span class="pre">'</span></em><a class="headerlink" href="#api.views.game.GameUserWritePermission.message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="api.views.game.gameview">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.views.game.</span></code><code class="sig-name descname"><span class="pre">gameview</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.game.gameview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.viewsets.ModelViewSet</span></code></p>
+<p>Game View handling all game related endpoints</p>
+<dl class="py method">
+<dt id="api.views.game.gameview.all">
+<code class="sig-name descname"><span class="pre">all</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.game.gameview.all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="api.views.game.gameview.create">
+<code class="sig-name descname"><span class="pre">create</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.game.gameview.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="api.views.game.gameview.get_serializer_class">
+<code class="sig-name descname"><span class="pre">get_serializer_class</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#api.views.game.gameview.get_serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the class to use for the serializer.
+Defaults to using <cite>self.serializer_class</cite>.</p>
+<p>You may want to override this if you need to provide different
+serializations depending on the incoming request.</p>
+<p>(Eg. admins get full serialization, others get basic serialization)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="api.views.game.gameview.getroles">
+<code class="sig-name descname"><span class="pre">getroles</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.game.gameview.getroles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="api.views.game.gameview.getsharedinfo">
+<code class="sig-name descname"><span class="pre">getsharedinfo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.game.gameview.getsharedinfo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="api.views.game.gameview.getweeks">
+<code class="sig-name descname"><span class="pre">getweeks</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.game.gameview.getweeks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="api.views.game.gameview.list">
+<code class="sig-name descname"><span class="pre">list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.game.gameview.list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="api.views.game.gameview.monitor">
+<code class="sig-name descname"><span class="pre">monitor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.game.gameview.monitor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.views.game.gameview.permission_classes">
+<code class="sig-name descname"><span class="pre">permission_classes</span></code><em class="property"> <span class="pre">=</span> <span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.IsAuthenticated'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'api.views.game.GameCreatePermission'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'api.views.game.GameUserWritePermission'&gt;]</span></em><a class="headerlink" href="#api.views.game.gameview.permission_classes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.views.game.gameview.queryset">
+<code class="sig-name descname"><span class="pre">queryset</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;QuerySet</span> <span class="pre">[&lt;Game:</span> <span class="pre">Game</span> <span class="pre">object</span> <span class="pre">(1)&gt;,</span> <span class="pre">&lt;Game:</span> <span class="pre">Game</span> <span class="pre">object</span> <span class="pre">(2)&gt;,</span> <span class="pre">&lt;Game:</span> <span class="pre">Game</span> <span class="pre">object</span> <span class="pre">(3)&gt;,</span> <span class="pre">&lt;Game:</span> <span class="pre">Game</span> <span class="pre">object</span> <span class="pre">(4)&gt;,</span> <span class="pre">&lt;Game:</span> <span class="pre">Game</span> <span class="pre">object</span> <span class="pre">(5)&gt;,</span> <span class="pre">&lt;Game:</span> <span class="pre">Game</span> <span class="pre">object</span> <span class="pre">(6)&gt;,</span> <span class="pre">&lt;Game:</span> <span class="pre">Game</span> <span class="pre">object</span> <span class="pre">(8)&gt;]&gt;</span></em><a class="headerlink" href="#api.views.game.gameview.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="api.views.game.gameview.retrieve">
+<code class="sig-name descname"><span class="pre">retrieve</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.game.gameview.retrieve" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="api.views.game.gameview.toggleactive">
+<code class="sig-name descname"><span class="pre">toggleactive</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.game.gameview.toggleactive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-api.views.role">
+<span id="api-views-role-module"></span><h2>api.views.role module<a class="headerlink" href="#module-api.views.role" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="api.views.role.roleview">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.views.role.</span></code><code class="sig-name descname"><span class="pre">roleview</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.role.roleview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.mixins.RetrieveModelMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.viewsets.GenericViewSet</span></code></p>
+<dl class="py method">
+<dt id="api.views.role.roleview.currentweek">
+<code class="sig-name descname"><span class="pre">currentweek</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.role.roleview.currentweek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all current week data for a registered Role.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="api.views.role.roleview.get_serializer_class">
+<code class="sig-name descname"><span class="pre">get_serializer_class</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#api.views.role.roleview.get_serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the class to use for the serializer.
+Defaults to using <cite>self.serializer_class</cite>.</p>
+<p>You may want to override this if you need to provide different
+serializations depending on the incoming request.</p>
+<p>(Eg. admins get full serialization, others get basic serialization)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="api.views.role.roleview.getsharedinfo">
+<code class="sig-name descname"><span class="pre">getsharedinfo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.role.roleview.getsharedinfo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="api.views.role.roleview.getweek">
+<code class="sig-name descname"><span class="pre">getweek</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.role.roleview.getweek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns All Week for that role.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="api.views.role.roleview.list">
+<code class="sig-name descname"><span class="pre">list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.role.roleview.list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="api.views.role.roleview.monitor">
+<code class="sig-name descname"><span class="pre">monitor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.role.roleview.monitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns week/cost/status of game 
+if infosharing =all players
+else = only loggedin player</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="api.views.role.roleview.nextroundstatus">
+<code class="sig-name descname"><span class="pre">nextroundstatus</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.role.roleview.nextroundstatus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="api.views.role.roleview.orderbeer">
+<code class="sig-name descname"><span class="pre">orderbeer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.role.roleview.orderbeer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.views.role.roleview.permission_classes">
+<code class="sig-name descname"><span class="pre">permission_classes</span></code><em class="property"> <span class="pre">=</span> <span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.IsAuthenticated'&gt;]</span></em><a class="headerlink" href="#api.views.role.roleview.permission_classes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.views.role.roleview.queryset">
+<code class="sig-name descname"><span class="pre">queryset</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;QuerySet</span> <span class="pre">[&lt;Role:</span> <span class="pre">Retailer</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Factory</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Wholesaler</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Distributor</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Retailer</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">2&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Factory</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">2&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Wholesaler</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">2&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Distributor</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">2&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Retailer</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">3&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Factory</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">3&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Wholesaler</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">3&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Distributor</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">3&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Retailer</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">4&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Factory</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">4&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Wholesaler</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">4&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Distributor</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">4&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Retailer</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">5&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Factory</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">5&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Wholesaler</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">5&gt;,</span> <span class="pre">&lt;Role:</span> <span class="pre">Distributor</span> <span class="pre">of</span> <span class="pre">Game</span> <span class="pre">5&gt;,</span> <span class="pre">'...(remaining</span> <span class="pre">elements</span> <span class="pre">truncated)...']&gt;</span></em><a class="headerlink" href="#api.views.role.roleview.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="api.views.role.roleview.register">
+<code class="sig-name descname"><span class="pre">register</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.role.roleview.register" title="Permalink to this definition">¶</a></dt>
+<dd><p>Patch endpoint for registering yourself.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-api.views.user">
+<span id="api-views-user-module"></span><h2>api.views.user module<a class="headerlink" href="#module-api.views.user" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="api.views.user.ChangePasswordView">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.views.user.</span></code><code class="sig-name descname"><span class="pre">ChangePasswordView</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.user.ChangePasswordView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.generics.UpdateAPIView</span></code></p>
+<p>An endpoint for changing password.</p>
+<dl class="py method">
+<dt id="api.views.user.ChangePasswordView.get_object">
+<code class="sig-name descname"><span class="pre">get_object</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queryset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.user.ChangePasswordView.get_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the object the view is displaying.</p>
+<p>You may want to override this if you need to provide non-standard
+queryset lookups.  Eg if objects are referenced using multiple
+keyword arguments in the url conf.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.views.user.ChangePasswordView.model">
+<code class="sig-name descname"><span class="pre">model</span></code><a class="headerlink" href="#api.views.user.ChangePasswordView.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="api.html#api.models.User" title="api.models.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">api.models.User</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="api.views.user.ChangePasswordView.permission_classes">
+<code class="sig-name descname"><span class="pre">permission_classes</span></code><em class="property"> <span class="pre">=</span> <span class="pre">(&lt;class</span> <span class="pre">'rest_framework.permissions.IsAuthenticated'&gt;,)</span></em><a class="headerlink" href="#api.views.user.ChangePasswordView.permission_classes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.views.user.ChangePasswordView.serializer_class">
+<code class="sig-name descname"><span class="pre">serializer_class</span></code><a class="headerlink" href="#api.views.user.ChangePasswordView.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="api.html#api.serializers.ChangePasswordSerializer" title="api.serializers.ChangePasswordSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">api.serializers.ChangePasswordSerializer</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="api.views.user.ChangePasswordView.update">
+<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.user.ChangePasswordView.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="api.views.user.registerview">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.views.user.</span></code><code class="sig-name descname"><span class="pre">registerview</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.user.registerview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.generics.CreateAPIView</span></code></p>
+<p>Register new user</p>
+<dl class="py attribute">
+<dt id="api.views.user.registerview.serializer_class">
+<code class="sig-name descname"><span class="pre">serializer_class</span></code><a class="headerlink" href="#api.views.user.registerview.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="api.html#api.serializers.UserSerializer" title="api.serializers.UserSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">api.serializers.UserSerializer</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="api.views.user.userview">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">api.views.user.</span></code><code class="sig-name descname"><span class="pre">userview</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.user.userview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.views.APIView</span></code></p>
+<p>Displays User Info</p>
+<dl class="py method">
+<dt id="api.views.user.userview.get">
+<code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'json'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#api.views.user.userview.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.views.user.userview.permission_classes">
+<code class="sig-name descname"><span class="pre">permission_classes</span></code><em class="property"> <span class="pre">=</span> <span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.IsAuthenticated'&gt;]</span></em><a class="headerlink" href="#api.views.user.userview.permission_classes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="api.views.user.userview.serializer_class">
+<code class="sig-name descname"><span class="pre">serializer_class</span></code><a class="headerlink" href="#api.views.user.userview.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="api.html#api.serializers.UserSerializer" title="api.serializers.UserSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">api.serializers.UserSerializer</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-api.views">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-api.views" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, IG.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

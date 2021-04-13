@@ -25,6 +25,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
+    """
+    Password Change Serializer for validating passwords
+    """
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True, required=True)
     old_password = serializers.CharField(write_only=True, required=True)
@@ -67,6 +70,11 @@ class GameSerializer(serializers.ModelSerializer):
 # this will allow only players to play the game.
 
 class RoleSerializer(serializers.ModelSerializer):
+    """
+    Role Serializer for validating Role
+    Only update on playedby is allowed by user
+    other fields are readonly or meant to be changed on the backend.
+    """
     class Meta:
         model=Role
         fields=['id','downstreamPlayer','upstreamPlayer','associatedGame','roleName','playedBy','ordered']
@@ -82,22 +90,33 @@ class RoleSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.Serializer):
+    """
+    Useful to validate quantity input
+    """
     quantity=serializers.IntegerField(min_value=0)
     class Meta:
         fields=['quantity']
 
 
 class RoleWeekSerializer(serializers.ModelSerializer):
+
     roleweeks= serializers.PrimaryKeyRelatedField(many=True,read_only=True)
     class Meta:
         model=Role
         fields=['id','playedBy', 'roleweeks']
 
 class WeekSerializer(serializers.ModelSerializer):
+    """
+    Week Serializer takes all fields from Week Model.
+    """
+
     class Meta:
         model=Week
         fields="__all__"
 
 #for post methods without any body
 class NullSerializer(serializers.Serializer):
+    """
+    Using just for post requests without any body
+    """
     pass

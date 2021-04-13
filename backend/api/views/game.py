@@ -20,6 +20,9 @@ import random
 
 # permission to edit the game : only by instructor
 class GameUserWritePermission(BasePermission):
+    """
+    Permission to Write Game
+    """
     message = "editing only by the instructor "
 
     def has_object_permission(self, request, view, obj):
@@ -30,6 +33,9 @@ class GameUserWritePermission(BasePermission):
 
 # creation possible by only instructor
 class GameCreatePermission(BasePermission):
+    """
+    Permission to Create Game
+    """
     message = "creating only by the instructor "
 
     def has_permission(self, request, view):
@@ -47,7 +53,9 @@ class GameCreatePermission(BasePermission):
 
 
 class gameview(viewsets.ModelViewSet):
-
+    """
+    Game View handling all game related endpoints
+    """
     permission_classes = [IsAuthenticated,
                           GameCreatePermission, GameUserWritePermission]
 
@@ -73,7 +81,7 @@ class gameview(viewsets.ModelViewSet):
         serializer = GameSerializer(queryset, many=True)
         return Response(serializer.data)
 
-    def create(self, request):
+    def create(self, request): #for creating game
         user = request.user
         serializer = GameSerializer(data=request.data)
         if(serializer.is_valid()):
@@ -120,9 +128,11 @@ class gameview(viewsets.ModelViewSet):
         return Response(serialize.data)
 
     # for infosharing data
+    # /api/game/{gameid}/getsharedinfo
     @action(detail=True, methods=['get'])
     @swagger_auto_schema(operation_description="Returns all Player Status if infosharing enabled",
                          responses={200: "Other Players Info", 403: "Unauthorized"})
+
     def getsharedinfo(self, request, pk=None):
         game = self.get_object()
         if request.user!=game.instructor:
@@ -144,7 +154,7 @@ class gameview(viewsets.ModelViewSet):
     # get availiable roles #free roles
     # api/game/{gameid}/getroles
 
-    # api/game/{gameid}/getweek
+    # api/game/{gameid}/getweeks
     @action(detail=True, methods=['get'])
     def getweeks(self, request, pk=None):
         game = self.get_object()
@@ -160,7 +170,8 @@ class gameview(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     @swagger_auto_schema(operation_description="Returns Player Current Cost ",
                          responses={200: "Players Cost", 403: "Not a Game Creator"})
-
+    
+    # api/game/{gameid}/monitor
     def monitor(self, request, pk=None):
         game = self.get_object()
         if game.instructor == request.user :

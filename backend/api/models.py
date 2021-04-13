@@ -58,6 +58,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 # Game Model
 class Game(models.Model):
+    """
+    Game model with all the required properties for a game to exist
+    """
     session_length = models.IntegerField()
     distributorPresent = models.BooleanField()
     wholesalerPresent = models.BooleanField()
@@ -74,6 +77,9 @@ class Game(models.Model):
 
 
 class Role(models.Model):
+    """
+    Role model with with user, associated game, week as foreigin keys
+    """
     roleName = models.CharField(max_length=30)
     associatedGame = models.ForeignKey(
         Game, on_delete=models.CASCADE, related_name='gameroles')
@@ -93,6 +99,9 @@ class Role(models.Model):
 
 
 class Week(models.Model):
+    """
+    Week model with all week properties listed below.
+    """
     number = models.IntegerField()
     inventory = models.IntegerField(default=0)
     backlog = models.IntegerField(default=0)
@@ -112,6 +121,11 @@ class Week(models.Model):
 # ON GAME CREATION CREATE ALL REQUIRED ROLES AND DEFAULT WEEK 0
 @receiver(post_save, sender=Game)
 def onGameCreation(sender, instance, created, **kwargs):
+    """
+    Handles automatic changes on GameCreation.
+    Creating Roles based on is_distrubutor,wholesaler present
+    and Default first week. 
+    """
     if created:
         # dosomething
         retailer = Role.objects.create(
@@ -165,6 +179,10 @@ def onGameCreation(sender, instance, created, **kwargs):
 # On Role Creation CREATE DEFAULT Week 1
 @receiver(post_save, sender=Role)
 def onRoleCreation(sender, instance, created, **kwargs):
+    """
+    Handles automatic creation of Weeks on RoleCreation with default values. 
+    """
+
     if created:
         week = Week.objects.create(number=1, associatedRole=instance,
                                    inventory=instance.associatedGame.starting_inventory,
@@ -174,6 +192,10 @@ def onRoleCreation(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Role)
 def onOrder(sender, instance, created, **kwargs):
+    """
+    Handles creation of new weeks based on previous week data after everyone submits
+    the order.
+    """
     if not created and instance.ordered:  # if ordered
         game = instance.associatedGame
         roles = game.gameroles.all()
