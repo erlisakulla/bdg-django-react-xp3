@@ -53,7 +53,7 @@ class UserRegistrationAPIViewTestCase(APITestCase):
 
     def test_unique_email_validation(self):
         """
-        Test to verify that a post call with already exists name
+        Test to verify that a post call with already exists email
         """
         user_data_1 = {
             "name": "testuser",
@@ -82,13 +82,22 @@ class UserLoginAPIViewTestCase(APITestCase):
         user.save()
 
     def test_authentication_without_password(self):
+        """
+        Test to verify that a post call with missing fields ( password)
+        """
         response = self.client.post(self.url, {"email": "john@snow.com"})
         self.assertEqual(400, response.status_code)
 
-    def test_authentication_with_wrong_password(self):
+    def test_authentication_with_wrong_password(self): 
+        """
+        Test to verify that a post call with false password
+        """
         response = self.client.post(self.url, {"email": "test@test.com" , "password": "idontcare"})
         self.assertEqual(401, response.status_code)
     def test_authentication_with_valid_password(self):
+        """
+        Test to verify that a post call with valid account.
+        """
         response = self.client.post(self.url, {"email": "test@test.com" , "password": "passwordok"})
         self.assertEqual(200, response.status_code)
     
@@ -101,7 +110,9 @@ class ChangePassword(APITestCase):
         self.user.save()
 
     def test_change_password_noauth(self):
-
+        """
+        Test to check if change password possible without login
+        """
         changepassworddata={
             "old_password":"passwordok",
             "password":"Random@123",
@@ -112,6 +123,9 @@ class ChangePassword(APITestCase):
         self.assertEqual(401, response.status_code)
 
     def test_change_password_withauth(self):
+        """
+        Test to verify that a password change is successful with valid login details.
+        """
         self.client.force_authenticate(user=self.user)
 
         changepassworddata={
@@ -122,3 +136,5 @@ class ChangePassword(APITestCase):
         }
         response = self.client.put(self.url, changepassworddata)
         self.assertEqual(200, response.status_code)
+
+        

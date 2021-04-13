@@ -78,12 +78,18 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
         else:  # if no permission
             return Response({"detail": "Not Authorized"}, status=status.HTTP_401_UNAUTHORIZED)
 
+
+##################### INFO SHARING ##########################
+
     @action(detail=True, methods=['get'])
     @swagger_auto_schema(operation_description="Returns Other Player Info", responses={200: ""})
     def getsharedinfo(self, request, pk=None):
         role = self.get_object()
         game = role.associatedGame
-        if game.info_sharing:
+        if role.playedBy != request.user and  request.user!=game.instructor:
+            return Response({"detail": "No Permission for this Role."}, status=status.HTTP_403_FORBIDDEN)
+  
+        if game.info_sharing or request.user==game.instructor:
             roles = game.gameroles.all()
             alldetail = []
             for role in roles:
@@ -96,11 +102,47 @@ class roleview(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
             return Response(alldetail)
         return Response({"detail": "info sharing disabled"}, status=status.HTTP_403_FORBIDDEN)
 
+
+    @action(detail=True, methods=['get'])
+    @swagger_auto_schema(operation_description="Returns Player Current Cost ",
+                         responses={200: "Players Cost", 403: "Not a Game Creator"})
+
+    def monitor(self, request, pk=None):
+        role = self.get_object()
+        game=role.associatedGame
+        roles = game.gameroles.all() #all roles
+
+        if role.playedBy == request.user :
+            tosend = {}
+            tosend['game_id'] = game.pk #primarykey
+            tosend['info_delay'] = game.info_delay
+            tosend['session_length'] = game.session_length
+            tosend['current_week'] = game.rounds_completed+1
+            tosend['holding_cost'] = game.holding_cost
+            tosend['backlog_cost'] = game.backlog_cost
+            tosend['info_sharing'] = game.info_sharing
+            tosend['cost'] = {}
+            totalcost = 0
+            if not game.info_sharing: #if infosharing get all
+                roles=[role] #only include own role.
+
+            for role in roles:
+                getcurrentweek = role.roleweeks.get(
+                    number=game.rounds_completed+1)
+                tosend["cost"][role.roleName] = getcurrentweek.cost
+                totalcost += getcurrentweek.cost
+
+            tosend["cost"]['total'] = totalcost
+
+            return Response(tosend)
+        return Response({"detail": "Not authorized for this role"}, status=status.HTTP_403_FORBIDDEN)
+
+
     @action(detail=True, methods=['get'])
     @swagger_auto_schema(operation_description="CurrentWeek all details", responses={200: "CurrentWeek all details"})
     def currentweek(self, request, pk=None):
         role = self.get_object()
-        if role.playedBy == request.user or True:
+        if role.playedBy == request.user:
 
             upstream = role.upstreamPlayer
             downstream = role.downstreamPlayer

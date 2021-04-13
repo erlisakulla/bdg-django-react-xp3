@@ -99,7 +99,7 @@ class Week(models.Model):
     demand = models.IntegerField(default=0)
     incoming_shipment = models.IntegerField(default=0)
     outgoing_shipment = models.IntegerField(default=0)
-    order_placed = models.IntegerField(blank=True, null=True, default=0)
+    order_placed = models.IntegerField(blank=True, null=True)
     cost = models.IntegerField()
     associatedRole = models.ForeignKey(
         Role, on_delete=models.CASCADE, related_name="roleweeks")
